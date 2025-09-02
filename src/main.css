@@ -1,0 +1,47 @@
+/* Custom Styles */
+a:hover {
+  text-decoration: underline;
+  color: blue;
+}
+/* grid area */
+.layout-dashboard {
+  grid-template-areas:
+    "iPink iPink"
+    "iGold wallet"
+    "airpods iBlue";
+}
+.area-iPhone-pink {
+  grid-area: iPink;
+}
+
+.area-iPhone-gold {
+  grid-area: iGold;
+}
+
+.area-iPhone-wallet {
+  grid-area: wallet;
+}
+
+.area-airpods {
+  grid-area: airpods;
+}
+
+.area-iPhone-blue {
+  grid-area: iBlue;
+}
+
+@media (width > 800px) {
+  .layout-dashboard {
+    grid-template-areas:
+      "iGold iPink iPink"
+      "wallet airpods iBlue";
+  }
+}
+@import "tailwindcss";
+
+@theme {
+  --color-lightGray: #f5f5f7;
+}
+/* @import "tailwindcss/preflight";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities"; */
