@@ -1,7 +1,13 @@
-import { useState } from "react";
-import data from "../data/playPickData.jsx";
+import { useEffect, useState } from "react";
 import Slider from "./Slider.jsx";
+import axios from "axios";
+
 function PlayPicks() {
+  const [product, setProduct] = useState([]);
+  useEffect(() => {
+    getData({ setProduct });
+  }, []);
+
   const [index, setIndex] = useState(0);
   return (
     <div className="my-4 grid justify-center text-center">
@@ -10,7 +16,7 @@ function PlayPicks() {
         <Slider
           index={index}
           setIndex={setIndex}
-          data={data}
+          data={product}
           name="playPick slider"
         />
       </div>
@@ -22,6 +28,14 @@ function PlayPicks() {
       </a>
     </div>
   );
+}
+async function getData({ setProduct }) {
+  try {
+    const { data } = await axios.get("http://localhost:3005/playPickData");
+    setProduct(data);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export default PlayPicks;

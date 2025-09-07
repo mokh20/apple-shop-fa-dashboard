@@ -1,5 +1,5 @@
 import { useState } from "react";
-import data from "../data/airTagsData.jsx";
+import data from "../data/db.jsx";
 import Slider from "./Slider";
 
 function AirTags() {

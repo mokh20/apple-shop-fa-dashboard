@@ -1,9 +1,13 @@
-import { useState } from "react";
-import data from "../data/chargingEssentialsData.jsx";
+import { useEffect, useState } from "react";
 import Slider from "./Slider.jsx";
+import axios from "axios";
 
 function ChargingEssentials() {
   const [index, setIndex] = useState(0);
+  const [product, setProduct] = useState([]);
+  useEffect(() => {
+    getData({ setProduct });
+  }, []);
   return (
     <div className="py-8 my-8 grid justify-center text-center">
       <h2 className="text-3xl font-bold m-4">Charging Essentials</h2>
@@ -11,7 +15,7 @@ function ChargingEssentials() {
         <Slider
           index={index}
           setIndex={setIndex}
-          data={data}
+          data={product}
           name="charging slider"
         />
       </div>
@@ -24,5 +28,14 @@ function ChargingEssentials() {
     </div>
   );
 }
-
+async function getData({ setProduct }) {
+  try {
+    const { data } = await axios.get(
+      "http://localhost:3005/chargingEssentialsData"
+    );
+    setProduct(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
 export default ChargingEssentials;

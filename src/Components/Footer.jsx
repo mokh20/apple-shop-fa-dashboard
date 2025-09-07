@@ -1,6 +1,11 @@
-import data from "../data/quickAccessData.jsx";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function Footer() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    getData({ setData });
+  }, []);
   return (
     <section className="bg-lightGray mt-8 h-full">
       <Delivery />
@@ -29,7 +34,7 @@ function Footer() {
         </p>
       </div>
       <Navigate />
-      <QuickAccess />
+      <QuickAccess data={data} />
     </section>
   );
 }
@@ -93,7 +98,8 @@ function Navigate() {
   );
 }
 
-function QuickAccess() {
+function QuickAccess({ data }) {
+  console.log(typeof data);
   const groups = [
     [0, 2],
     [2, 4],
@@ -105,19 +111,31 @@ function QuickAccess() {
     <div className="flex flex-wrap items-start justify-between gap-4 mx-8 mt-4 border-b-2 border-b-gray-200">
       {groups.map(([start, end], groupId) => (
         <div key={groupId}>
-          {data.slice(start, end).map((d) => (
-            <div key={d.id} className="grid my-8">
-              <h3 className="mb-4 text-xl font-bold">{d.title}</h3>
-              <ul className="grid gap-4 h-full transition-all text-[#000000b8] p-0 text-normal">
-                {d.nav.map((nav, navId) => (
-                  <li key={navId}>{nav}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {data.length
+            ? data.slice(start, end).map((d) => (
+                <div key={d.id} className="grid my-8">
+                  <h3 className="mb-4 text-xl font-bold">{d.title}</h3>
+                  <ul className="grid gap-4 h-full transition-all text-[#000000b8] p-0 text-normal">
+                    {d.nav.map((nav, navId) => (
+                      <li key={navId}>{nav}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            : ""}
         </div>
       ))}
     </div>
   );
+}
+
+async function getData({ setData }) {
+  try {
+    const { data } = await axios.get("http://localhost:3005/quickAccessData");
+    setData(data);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
 }
 export default Footer;

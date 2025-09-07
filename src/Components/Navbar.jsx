@@ -26,14 +26,7 @@ function Navbar() {
         <i className="fi fi-rr-search"></i>
         <i className="fi fi-rr-basket-shopping-simple"></i>
         <div className="block sm:hidden">
-          <i
-            className="fi fi-rr-menu-burger"
-            onClick={
-              <div>
-                <RenderData />
-              </div>
-            }
-          ></i>
+          <i className="fi fi-rr-menu-burger"></i>
         </div>
       </div>
     </section>
