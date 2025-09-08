@@ -1,0 +1,375 @@
+{
+  "productsData": [
+    {
+      "name": "Satechi Magnetic Wallet Stand (MagSafe compatible) - Coral/Pink",
+      "price": 79.95,
+      "img": "/src/assets/imgs/play-picks/magnetic-wallet.png",
+      "id": 1,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Pro Max Clear Case with MagSafe",
+      "price": 49.0,
+      "img": "/src/assets/imgs/play-picks/pop-socket.png",
+      "id": 2,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone FineWoven Wallet with MagSafe - Deep Blue",
+      "price": 59.0,
+      "img": "/src/assets/imgs/play-picks/power-bank-green.png",
+      "id": 3,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "price": 249.0,
+      "img": "/src/assets/imgs/play-picks/portable-charger.png",
+      "id": 4,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16e Silicone Case - Winter Blue",
+      "price": 39.0,
+      "img": "/src/assets/imgs/play-picks/pop-socket.png",
+      "id": 5,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "mophie powerstation plus 10K - Teal",
+      "price": 79.95,
+      "img": "/src/assets/imgs/play-picks/wireless-charger.png",
+      "id": 6,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Pro Max Clear Case with MagSafe",
+      "price": 49.0,
+      "img": "/src/assets/imgs/play-picks/power-bank-red.png",
+      "id": 7,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone FineWoven Wallet with MagSafe - Deep Blue",
+      "price": 59.0,
+      "img": "/src/assets/imgs/play-picks/power-bank-green.png",
+      "id": 8,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "price": 249.0,
+      "img": "/src/assets/imgs/play-picks/pop-socket.png",
+      "id": 9,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16e Silicone Case - Winter Blue",
+      "price": 39.0,
+      "img": "/src/assets/imgs/play-picks/portable-charger.png",
+      "id": 10,
+      "category": "playPick",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+
+    {
+      "name": "mophie powerstation plus 10K - Teal",
+      "price": 79.95,
+      "img": "/src/assets/imgs/charging-essentials/lightning-adapter.png",
+      "id": 11,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Pro Max Clear Case with MagSafe",
+      "price": 49.0,
+      "img": "/src/assets/imgs/charging-essentials/magSafe-charger.png",
+      "id": 12,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone FineWoven Wallet with MagSafe - Deep Blue",
+      "price": 59.0,
+      "img": "/src/assets/imgs/charging-essentials/power-adapter-20w.png",
+      "id": 13,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "price": 249.0,
+      "img": "/src/assets/imgs/charging-essentials/lightning-adapter.png",
+      "id": 14,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16e Silicone Case - Winter Blue",
+      "price": 39.0,
+      "img": "/src/assets/imgs/charging-essentials/magSafe-charger.png",
+      "id": 15,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "mophie powerstation plus 10K - Teal",
+      "price": 79.95,
+      "img": "/src/assets/imgs/charging-essentials/power-adapter-20w.png",
+      "id": 16,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Pro Max Clear Case with MagSafe",
+      "price": 49.0,
+      "img": "/src/assets/imgs/charging-essentials/lightning-adapter.png",
+      "id": 17,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone FineWoven Wallet with MagSafe - Deep Blue",
+      "price": 59.0,
+      "img": "/src/assets/imgs/charging-essentials/magSafe-charger.png",
+      "id": 18,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "price": 249.0,
+      "img": "/src/assets/imgs/charging-essentials/lightning-adapter.png",
+      "id": 19,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16e Silicone Case - Winter Blue",
+      "price": 39.0,
+      "img": "/src/assets/imgs/charging-essentials/power-adapter-30w.png",
+      "id": 20,
+      "category": "chargingEssentials",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "mophie powerstation plus 10K - Teal",
+      "price": 79.95,
+      "img": "/src/assets/imgs/air-tags/airTag.png",
+      "id": 21,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Pro Max Clear Case with MagSafe",
+      "price": 49.0,
+      "img": "/src/assets/imgs/air-tags/airTag-4.png",
+      "id": 22,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone FineWoven Wallet with MagSafe - Deep Blue",
+      "price": 59.0,
+      "img": "/src/assets/imgs/air-tags/holder.png",
+      "id": 23,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "price": 249.0,
+      "img": "/src/assets/imgs/air-tags/holder-4.png",
+      "id": 24,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16e Silicone Case - Winter Blue",
+      "price": 39.0,
+      "img": "/src/assets/imgs/air-tags/key-ring.png",
+      "id": 25,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "mophie powerstation plus 10K - Teal",
+      "price": 79.95,
+      "img": "/src/assets/imgs/air-tags/airTag.png",
+      "id": 26,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Pro Max Clear Case with MagSafe",
+      "price": 49.0,
+      "img": "/src/assets/imgs/air-tags/airTag-4.png",
+      "id": 27,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone FineWoven Wallet with MagSafe - Deep Blue",
+      "price": 59.0,
+      "img": "/src/assets/imgs/air-tags/holder.png",
+      "id": 28,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "price": 249.0,
+      "img": "/src/assets/imgs/air-tags/holder-4.png",
+      "id": 29,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+    {
+      "name": "iPhone 16e Silicone Case - Winter Blue",
+      "price": 39.0,
+      "img": "/src/assets/imgs/air-tags/key-ring.png",
+      "id": 30,
+      "category": "airTags",
+      "overview": "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible"
+    },
+
+    {
+      "title": "Shop and Learn",
+      "nav": [
+        "Store",
+        "Mac",
+        "ipad",
+        "iPhone",
+        "Watch",
+        "Vision",
+        "AirPods",
+        " TV & Home",
+        "AirTag",
+        "Accessories",
+        "Gift Cards"
+      ],
+      "id": 31,
+      "category": "quickAccess"
+    },
+    {
+      "title": "Apple Wallet",
+      "nav": ["Wallet", "Apple Card", "Apple Pay", "Apple Cash"],
+      "id": 32,
+      "category": "quickAccess"
+    },
+
+    {
+      "title": "Account",
+      "nav": [
+        "Manage Your Apple Account",
+        "Apple Store Account",
+        "iCloud.com",
+        "iPhone",
+        "Watch"
+      ],
+      "id": 33,
+      "category": "quickAccess"
+    },
+    {
+      "title": "Entertainment",
+      "nav": [
+        "Apple One",
+        "Apple TV+",
+        "Apple Music",
+        "Apple Arcade",
+        "Apple Fitness+",
+        "Apple Music",
+        "Apple News+",
+        "Apple Podcasts",
+        "Apple Books",
+        "App Store"
+      ],
+      "id": 34,
+      "category": "quickAccess"
+    },
+
+    {
+      "title": "Apple Store",
+      "nav": [
+        "Find a Store",
+        "Genius Bar",
+        "Today at Apple",
+        "Apple Camp",
+        "Apple Store App",
+        "Certified Refurbished",
+        "Apple Trade In",
+        "Financing",
+        "Carrier Deals at Apple",
+        "Order Status",
+        "Shopping Help"
+      ],
+      "id": 35,
+      "category": "quickAccess"
+    },
+    {
+      "title": "For Business",
+      "nav": ["Apple and Business", "Shop for Business"],
+      "id": 36,
+      "category": "quickAccess"
+    },
+    {
+      "title": "For Education",
+      "nav": ["Apple and Education", "Shop for K-12", "Shop for College"],
+      "id": 37,
+      "category": "quickAccess"
+    },
+    {
+      "title": "For Healthcare",
+      "nav": [
+        "Apple in Healthcare",
+        "Health on Apple Watch",
+        ">Health Records on iPhone"
+      ],
+      "id": 38,
+      "category": "quickAccess"
+    },
+    {
+      "title": "For Government",
+      "nav": ["Shop for Government", "Shop for Veterans and Military"],
+      "id": 39,
+      "category": "quickAccess"
+    },
+    {
+      "title": "Apple Values",
+      "nav": [
+        "Accessibility",
+        "Education",
+        "Environment",
+        "Inclusion and Diversity",
+        "Privacy",
+        "Racial Equity and Justice",
+        "Supply Chain"
+      ],
+      "id": 40,
+      "category": "quickAccess"
+    },
+    {
+      "title": "About Apple",
+      "nav": [
+        "Newsroom",
+        "Apple Leadership",
+        "Career Opportunities",
+        "Investors",
+        "Ethics & Compliance",
+        "Events",
+        "Contact Apple"
+      ],
+      "id": 41,
+      "category": "quickAccess"
+    }
+  ]
+}

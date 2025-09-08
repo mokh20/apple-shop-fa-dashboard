@@ -1,8 +1,5 @@
 /* Custom Styles */
-a:hover {
-  text-decoration: underline;
-  color: blue;
-}
+
 /* grid area */
 .layout-dashboard {
   grid-template-areas:

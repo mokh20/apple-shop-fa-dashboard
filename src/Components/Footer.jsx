@@ -1,11 +1,11 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useProducts } from "../context/ProductsProvider";
 
 function Footer() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    getData({ setData });
-  }, []);
+  const products = useProducts();
+
+  const filteredProducts = products.filter(
+    (product) => product.category === "airTags"
+  );
   return (
     <section className="bg-lightGray mt-8 h-full">
       <Delivery />
@@ -34,7 +34,7 @@ function Footer() {
         </p>
       </div>
       <Navigate />
-      <QuickAccess data={data} />
+      <QuickAccess data={filteredProducts} />
     </section>
   );
 }
@@ -88,7 +88,7 @@ function Delivery() {
 
 function Navigate() {
   return (
-    <section className="flex gap-4 items-center text-[#818182]">
+    <section className="flex gap-4 items-center justify-items-center text-[#818182] mx-2">
       <i className="fi fi-brands-apple ml-8 sm:text-2xl  text-black"></i>
       <span>&gt;</span>
       <span>iPhone</span>
@@ -98,8 +98,7 @@ function Navigate() {
   );
 }
 
-function QuickAccess({ data }) {
-  console.log(typeof data);
+function QuickAccess() {
   const groups = [
     [0, 2],
     [2, 4],
@@ -107,35 +106,156 @@ function QuickAccess({ data }) {
     [6, 9],
     [9, 11],
   ];
+  const data = [
+    {
+      title: "Shop and Learn",
+      nav: [
+        "Store",
+        "Mac",
+        "ipad",
+        "iPhone",
+        "Watch",
+        "Vision",
+        "AirPods",
+        " TV & Home",
+        "AirTag",
+        "Accessories",
+        "Gift Cards",
+      ],
+      id: 31,
+      category: "quickAccess",
+    },
+    {
+      title: "Apple Wallet",
+      nav: ["Wallet", "Apple Card", "Apple Pay", "Apple Cash"],
+      id: 32,
+      category: "quickAccess",
+    },
+
+    {
+      title: "Account",
+      nav: [
+        "Manage Your Apple Account",
+        "Apple Store Account",
+        "iCloud.com",
+        "iPhone",
+        "Watch",
+      ],
+      id: 33,
+      category: "quickAccess",
+    },
+    {
+      title: "Entertainment",
+      nav: [
+        "Apple One",
+        "Apple TV+",
+        "Apple Music",
+        "Apple Arcade",
+        "Apple Fitness+",
+        "Apple Music",
+        "Apple News+",
+        "Apple Podcasts",
+        "Apple Books",
+        "App Store",
+      ],
+      id: 34,
+      category: "quickAccess",
+    },
+
+    {
+      title: "Apple Store",
+      nav: [
+        "Find a Store",
+        "Genius Bar",
+        "Today at Apple",
+        "Apple Camp",
+        "Apple Store App",
+        "Certified Refurbished",
+        "Apple Trade In",
+        "Financing",
+        "Carrier Deals at Apple",
+        "Order Status",
+        "Shopping Help",
+      ],
+      id: 35,
+      category: "quickAccess",
+    },
+    {
+      title: "For Business",
+      nav: ["Apple and Business", "Shop for Business"],
+      id: 36,
+      category: "quickAccess",
+    },
+    {
+      title: "For Education",
+      nav: ["Apple and Education", "Shop for K-12", "Shop for College"],
+      id: 37,
+      category: "quickAccess",
+    },
+    {
+      title: "For Healthcare",
+      nav: [
+        "Apple in Healthcare",
+        "Health on Apple Watch",
+        ">Health Records on iPhone",
+      ],
+      id: 38,
+      category: "quickAccess",
+    },
+    {
+      title: "For Government",
+      nav: ["Shop for Government", "Shop for Veterans and Military"],
+      id: 39,
+      category: "quickAccess",
+    },
+    {
+      title: "Apple Values",
+      nav: [
+        "Accessibility",
+        "Education",
+        "Environment",
+        "Inclusion and Diversity",
+        "Privacy",
+        "Racial Equity and Justice",
+        "Supply Chain",
+      ],
+      id: 40,
+      category: "quickAccess",
+    },
+    {
+      title: "About Apple",
+      nav: [
+        "Newsroom",
+        "Apple Leadership",
+        "Career Opportunities",
+        "Investors",
+        "Ethics & Compliance",
+        "Events",
+        "Contact Apple",
+      ],
+      id: 41,
+      category: "quickAccess",
+    },
+  ];
+  console.log(data.map((d) => d.name));
   return (
     <div className="flex flex-wrap items-start justify-between gap-4 mx-8 mt-4 border-b-2 border-b-gray-200">
       {groups.map(([start, end], groupId) => (
         <div key={groupId}>
-          {data.length
-            ? data.slice(start, end).map((d) => (
-                <div key={d.id} className="grid my-8">
-                  <h3 className="mb-4 text-xl font-bold">{d.title}</h3>
-                  <ul className="grid gap-4 h-full transition-all text-[#000000b8] p-0 text-normal">
-                    {d.nav.map((nav, navId) => (
-                      <li key={navId}>{nav}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            : ""}
+          {data.slice(start, end).map((d) => (
+            <div key={d.id} className="grid my-8">
+              <h3 className="mb-4 text-xl font-bold">{d.title}</h3>
+              <ul className="grid gap-4 h-full transition-all text-[#000000b8] p-0 text-normal">
+                {d.nav?.map((nav, navId) => (
+                  <li key={navId}>{nav}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       ))}
     </div>
   );
 }
 
-async function getData({ setData }) {
-  try {
-    const { data } = await axios.get("http://localhost:3005/quickAccessData");
-    setData(data);
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-  }
-}
 export default Footer;

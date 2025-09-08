@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function Slider({ data, index, setIndex, name }) {
   const nextBtn = () => setIndex((prev) => prev + 1);
   const prevBtn = () => setIndex((prev) => prev - 1);
@@ -51,22 +53,20 @@ export default function Slider({ data, index, setIndex, name }) {
 function RenderData({ data }) {
   return (
     <>
-      {data.map((d) => (
-        <div
-          className="grid justify-items-center justify-evenly items-center min-w-full h-full bg-lightGray my-4 mx-0 rounded-2xl  md:min-w-[250px] lg:min-w-[300px]"
-          key={d.id}
+      {data.map((item) => (
+        <Link
+          to={`/products/${item.id}`}
+          className="grid justify-items-center justify-evenly items-center min-w-full h-full bg-lightGray my-4 mx-0 rounded-2xl md:min-w-[250px] lg:min-w-[300px]"
+          key={item.id}
         >
-          <img src={d.img} alt={d.name} className="w-[150px]" />
-          <a
-            href="https://www.apple.com/shop/iphone/accessories"
-            className="grid w-full text-center text-sm font-medium xl:text-base"
-          >
-            {d.name}
-          </a>
-          <p className="text-[#8E8E90] text-sm font-medium xl:text-base">
-            ${d.price.toFixed(2)}
+          <img src={item.img} alt={item.name} className="w-[150px]" />
+          <p className="grid w-full text-center text-sm font-medium xl:text-base hover:underline hover:text-blue-700">
+            {item.name}
           </p>
-        </div>
+          <p className="text-[#8E8E90] text-sm font-medium xl:text-base">
+            ${item.price.toFixed(2)}
+          </p>
+        </Link>
       ))}
     </>
   );
