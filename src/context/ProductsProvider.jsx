@@ -1,20 +1,30 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 const ProductsContext = createContext();
 
 function ProductsProvider({ children }) {
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    async function getProducts() {
+  const getProducts = useCallback(async () => {
+    try {
       const { data } = await axios.get("http://localhost:3006/productsData");
       setProducts(data);
+    } catch (error) {
+      console.error("Error :", error);
     }
-    getProducts();
   }, []);
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
   return (
-    <ProductsContext.Provider value={products}>
+    <ProductsContext.Provider value={{ products, getProducts }}>
       {children}
     </ProductsContext.Provider>
   );

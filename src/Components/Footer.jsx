@@ -1,7 +1,7 @@
 import { useProducts } from "../context/ProductsProvider";
 
 function Footer() {
-  const products = useProducts();
+  const {products} = useProducts();
   const filteredProducts = products.filter(
     (product) => product.category === "quickAccess"
   );

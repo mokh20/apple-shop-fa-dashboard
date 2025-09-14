@@ -1,16 +1,17 @@
 import { useProducts } from "../context/ProductsProvider";
 import { useEffect } from "react";
 import { useCart } from "../context/CartProvider";
+import { Link } from "react-router";
 
 function Cart() {
-  const products = useProducts();
+  const { products } = useProducts();
   const { deleteItem, cartItems, setCartItems } = useCart();
-
+  const filtered = products.filter((product) => product.category === "cart");
   useEffect(() => {
-    const filtered = products.filter((product) => product.category === "cart");
     setCartItems(filtered);
-  }, [products]);
+  }, []);
 
+  // count total price cart
   const isCartEmpty = cartItems.length;
   const totalPrice = cartItems.length
     ? cartItems.reduce(
@@ -35,10 +36,12 @@ function Cart() {
               {cartItems?.map((data) => (
                 <div
                   key={data.id}
-                  className="grid items-center justify-evenly w-full border-b-2 border-b-gray-200 pb-4 sm:flex lg:gap-12"
+                  className="grid items-center justify-items-center justify-evenly w-full border-b-2 border-b-gray-200 pb-4 sm:flex sm:justify-between lg:gap-12"
                 >
                   <img src={data.img} alt="" className="w-40" />
-                  <p>{data.name}</p>
+                  <p className="hover:underline hover:text-blue-700">
+                    <Link to={`/products/${data.id}`}>{data.name}</Link>
+                  </p>
                   <div className="flex items-center text-xl h-full sm:text-2xl">
                     <div>{data.quantity}</div>
                     <i className="fi fi-rr-angle-small-down text-blue-500 mt-4"></i>

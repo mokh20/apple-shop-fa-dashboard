@@ -54,7 +54,6 @@ export default function Slider({ data, index, setIndex, name }) {
 function RenderData({ data }) {
   const { pathname } = useLocation();
 
-  // Scroll to top every time route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -84,7 +83,7 @@ function NavigateButton({ data, index, setIndex, name }) {
   const isMobile = window.innerWidth < 760;
   const limitBtn = isMobile ? 10 : 4;
   return (
-    <section className="flex justify-center w-full gap-4 mt-4">
+    <section className="flex justify-center w-full gap-4">
       {data
         .slice(0, limitBtn)
         .map(

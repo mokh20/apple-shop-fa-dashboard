@@ -260,12 +260,7 @@
     },
     {
       "title": "Apple Wallet",
-      "nav": [
-        "Wallet",
-        "Apple Card",
-        "Apple Pay",
-        "Apple Cash"
-      ],
+      "nav": ["Wallet", "Apple Card", "Apple Pay", "Apple Cash"],
       "id": "32",
       "category": "quickAccess"
     },
@@ -318,20 +313,13 @@
     },
     {
       "title": "For Business",
-      "nav": [
-        "Apple and Business",
-        "Shop for Business"
-      ],
+      "nav": ["Apple and Business", "Shop for Business"],
       "id": "36",
       "category": "quickAccess"
     },
     {
       "title": "For Education",
-      "nav": [
-        "Apple and Education",
-        "Shop for K-12",
-        "Shop for College"
-      ],
+      "nav": ["Apple and Education", "Shop for K-12", "Shop for College"],
       "id": "37",
       "category": "quickAccess"
     },
@@ -347,10 +335,7 @@
     },
     {
       "title": "For Government",
-      "nav": [
-        "Shop for Government",
-        "Shop for Veterans and Military"
-      ],
+      "nav": ["Shop for Government", "Shop for Veterans and Military"],
       "id": "39",
       "category": "quickAccess"
     },

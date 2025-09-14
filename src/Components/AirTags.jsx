@@ -3,7 +3,7 @@ import Slider from "./Slider";
 import { useProducts } from "../context/ProductsProvider";
 
 function AirTags() {
-  const products = useProducts();
+  const {products} = useProducts();
   const [index, setIndex] = useState(0);
 
   const filteredProducts = products.filter(
