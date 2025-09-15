@@ -1,5 +1,10 @@
 /* Custom Styles */
-
+.input-edit-form {
+  outline: none;
+  border: 1px solid gray;
+  border-radius: 8px;
+  padding: 0.3rem 1rem;
+}
 /* grid area */
 .layout-dashboard {
   grid-template-areas:
