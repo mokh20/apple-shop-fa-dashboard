@@ -1,4 +1,13 @@
 {
+  "userInfo": {
+    "userName": "محمد یوسفی",
+    "nationCode": "0024765465",
+    "number": "",
+    "email": "yosefi@gmail.com",
+    "profilePic": "/src/assets/imgs/profile.png",
+    "bankName": "",
+    "IBAN": ""
+  },
   "productsData": [
     {
       "name": "Satechi Magnetic Wallet Stand (MagSafe compatible) - Coral/Pink",

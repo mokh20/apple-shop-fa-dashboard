@@ -24,7 +24,7 @@ function Navbar({ showCart, setShowCart }) {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const { cartItems } = useCart();
   return (
-    <section className="relative flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]">
+    <section className="sticky top-0 z-10 flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]">
       <Link to={"/"}>
         <i className="fi fi-brands-apple mx-4 sm:text-2xl lg:ml-12"></i>
       </Link>

@@ -83,7 +83,7 @@ function NavigateButton({ data, index, setIndex, name }) {
   const isMobile = window.innerWidth < 760;
   const limitBtn = isMobile ? 10 : 4;
   return (
-    <section className="flex justify-center w-full gap-4">
+    <section className="flex justify-center w-full gap-4 mt-4">
       {data
         .slice(0, limitBtn)
         .map(
@@ -94,7 +94,7 @@ function NavigateButton({ data, index, setIndex, name }) {
                 name={name}
                 key={i}
                 onClick={() => setIndex(i)}
-                className={`text-sm px-2 py-1 rounded-md accent-gray-700`}
+                className={`text-sm  rounded-md accent-gray-700`}
                 checked={index === i}
                 readOnly
               />
