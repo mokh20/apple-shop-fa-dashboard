@@ -1,40 +1,125 @@
 import { Link } from "react-router";
 import { useCart } from "../context/CartProvider";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import Cart from "./Cart";
 
 function Dashboard() {
   const { cartItems } = useCart();
-  const [editOpen, setEditOpen] = useState(false);
-  const nameUser = "محمد یوسفی";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("cart");
+  const [userInfo, setUserInfo] = useState("");
+  async function getData() {
+    try {
+      const { data } = await axios.get("http://localhost:3006/userInfo");
+      setUserInfo(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    getData();
+  }, []);
   return (
-    <div className="relative">
-      <nav className="flex justify-between px-2 py-6 text-sm bg-[#F5F5F7] sm:p-6 sm:text-xl md:text-2xl md:p-8 ">
-        <div className="flex gap-4 md:gap-8">
-          <i className="fi fi-rr-basket-shopping-simple relative cursor-pointer">
-            <Link to="/cart">
-              <span className="absolute flex items-center justify-center top-3 left-2 h-3 w-3 text-[10px] bg-black text-white text-center font-medium rounded-full md:text-sm md:w-4 md:h-4 md:left-3 md:top-4">
-                {cartItems.length}
-              </span>
-            </Link>
-          </i>
-          <i className="fi fi-sr-employee-man-alt"></i>
-          <div className="flex gap-2" onClick={() => setEditOpen(true)}>
-            <i className="fi fi-rr-pencil"></i>
-            <span>ویرایش اطلاعات</span>
-          </div>
+    <div className="relative grid grid-cols-12" dir="rtl">
+      <Sidebar
+        setActiveSection={setActiveSection}
+        activeSection={activeSection}
+        setIsMenuOpen={setIsMenuOpen}
+        isMenuOpen={isMenuOpen}
+      />
+      <section className="flex flex-col col-span-12 lg:col-span-10">
+        <Navbar
+          userInfo={userInfo}
+          cartItems={cartItems}
+          setActiveSection={setActiveSection}
+          setIsMenuOpen={setIsMenuOpen}
+        />
+        {isMenuOpen && (
+          <div
+            className="fixed w-full h-screen opacity-40 bg-black z-10"
+            onClick={() => setIsMenuOpen(false)}
+          ></div>
+        )}
+        <div className="grid gap-1 p-4 items-center justify-items-center rounded-tr-3xl bg-lightGray min-h-screen max-h-full text-center">
+          {activeSection === "form" && (
+            <FormEdit userInfo={userInfo} setActiveSection={setActiveSection} />
+          )}
+          {activeSection === "cart" && <Cart />}
         </div>
-        <h2> سلام ؛ {nameUser}</h2>
-      </nav>
-      <main className="grid justify-center">
-        <div className="flex flex-row-reverse gap-1 p-4 items-center justify-center">
-          <span>{nameUser} </span>
-          <span>خوش آمدید </span>
-          <span className="text-red-500 text-3xl">♥</span>
-        </div>
-        {editOpen && <FormEdit nameUser={nameUser} setEditOpen={setEditOpen} />}
-      </main>
+      </section>
     </div>
+  );
+}
+
+function Sidebar({
+  activeSection,
+  setActiveSection,
+  isMenuOpen,
+  setIsMenuOpen,
+}) {
+  return (
+    <div
+      className={`h-screen bg-white fixed grid grid-cols-1 w-3xs col-span-2 px-8 justify-center items-center text-center pt-10 content-start gap-4 z-20 transition-all duration-500 ${
+        isMenuOpen ? "translate-x-0 " : "translate-x-full"
+      } lg:w-full lg:relative lg:translate-x-0`}
+      dir="ltr"
+    >
+      <div className="border-b-2 border-gray-200 pb-4 w-full font-medium flex text-center items-center justify-center">
+        <i
+          className="fi fi-rr-cross-small mt-2 text-2xl absolute left-7 lg:hidden"
+          onClick={() => setIsMenuOpen(false)}
+        ></i>
+        <Link to="/">صفحه اصلی</Link>
+      </div>
+      <div className="grid gap-6">
+        <span
+          onClick={() => {
+            setActiveSection(activeSection === "form" ? null : "form");
+            setIsMenuOpen(false);
+          }}
+          className={`cursor-pointer px-4 py-3 text-right ${
+            activeSection === "form" ? "active-siderbar-item " : ""
+          }`}
+        >
+          <h4>اطلاعات کاربر</h4>
+        </span>
+        <span>
+          <h4>اطلاعات مالی</h4>
+        </span>
+        <span
+          onClick={() => {
+            setActiveSection(activeSection === "cart" ? null : "cart");
+            setIsMenuOpen(false);
+          }}
+          className={`cursor-pointer px-4 py-3 text-right ${
+            activeSection === "cart" ? "active-siderbar-item " : ""
+          }`}
+        >
+          <h4>سفارشات</h4>
+        </span>
+        <span>
+          <h4>فاکتورها</h4>
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function Navbar({ userInfo, setIsMenuOpen }) {
+  return (
+    <nav className="flex col-span-full flex-row-reverse justify-between items-center px-2 py-6 text-sm font-medium bg-white sm:p-6 sm:text-xl md:text-2xl md:p-8 ">
+      <div className="flex gap-4 md:gap-8">
+        <img src={userInfo.profilePic} className="w-10"></img>
+      </div>
+      <div className="flex gap-8 items-center">
+        <i
+          className="fi fi-br-bars-staggered mt-2.5 text-lg sm:text-xl md:text-2xl lg:hidden"
+          onClick={() => setIsMenuOpen(true)}
+        ></i>
+        <h2> سلام؛ {userInfo.userName}</h2>
+      </div>
+    </nav>
   );
 }
 
