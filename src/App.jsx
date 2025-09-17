@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router";
 import Home from "./Pages/Home";
 import Product from "./Pages/Product";
-import Footer from "./Components/footer";
+import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import { useState } from "react";
 import Cart from "./Pages/Cart";
@@ -19,7 +19,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/products/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         </Routes>
       </main>
       {!hideLayout && <Footer />}

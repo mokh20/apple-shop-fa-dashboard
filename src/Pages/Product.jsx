@@ -6,7 +6,7 @@ import { useCart } from "../context/CartProvider";
 
 function Product() {
   const { id } = useParams();
-  const products = useProducts();
+  const { products } = useProducts();
   const [index, setIndex] = useState(0);
   const filteredProduct = products.find((data) => data.id == id);
   return (

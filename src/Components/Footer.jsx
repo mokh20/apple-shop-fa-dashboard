@@ -1,10 +1,11 @@
 import { useProducts } from "../context/ProductsProvider";
 
 function Footer() {
-  const {products} = useProducts();
+  const { products } = useProducts();
   const filteredProducts = products.filter(
     (product) => product.category === "quickAccess"
   );
+  console.log(products);
   return (
     <section className="bg-lightGray mt-8 h-full">
       <Delivery />
@@ -105,7 +106,7 @@ function QuickAccess({ filteredProducts }) {
     [6, 9],
     [9, 11],
   ];
-
+  console.log(filteredProducts);
   return (
     <div className="flex flex-wrap items-start justify-between gap-4 mx-8 mt-4 border-b-2 border-b-gray-200">
       {groups.map(([start, end], groupId) => (
