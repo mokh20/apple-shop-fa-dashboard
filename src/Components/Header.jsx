@@ -4,7 +4,7 @@ function Header() {
       <div className="w-full bg-lightGray bg-center relative min-h-[350px]">
         <span className="object-center  flex justify-center">
           <img
-            src="src/assets/imgs/header-accessories.png"
+            src="/imgs/header-accessories.png"
             alt=""
             className="max-h-[200px] absolute bottom-0 md:right-0 md:max-h-[250px] lg:max-h-[300px] xl:max-h-[350px]"
           />
