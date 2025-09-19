@@ -1,18 +1,10 @@
-import { useProducts } from "../context/ProductsProvider";
-import { useEffect } from "react";
 import { useCart } from "../context/CartProvider";
 import { Link } from "react-router";
 
 function Cart() {
-  const { products } = useProducts();
-  const { deleteItem, cartItems, setCartItems } = useCart();
-  const filtered = products.filter((product) => product.category === "cart");
-  useEffect(() => {
-    setCartItems(filtered);
-  }, []);
+  const { deleteItem, cartItems } = useCart();
 
   // count total price cart
-  const isCartEmpty = cartItems.length;
   const totalPrice = cartItems.length
     ? cartItems.reduce(
         (sum, product) => sum + product.quantity * product.price,
@@ -23,14 +15,14 @@ function Cart() {
   return (
     <div>
       <div className="m-12">
-        {!isCartEmpty ? (
+        {!cartItems.length ? (
           <p className="text-center font-medium sm:text-xl">
             Your Bag is empty.
           </p>
         ) : (
           <>
             <p className="text-center font-medium sm:text-xl">
-              Your bag total ${totalPrice.toFixed(2)}.
+              Your bag total ${totalPrice.toFixed(2)} .
             </p>
             <div className="grid justify-items-center lg:justify-center">
               {cartItems?.map((data) => (

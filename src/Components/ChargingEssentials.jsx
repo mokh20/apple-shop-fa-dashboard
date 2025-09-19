@@ -3,7 +3,7 @@ import Slider from "./Slider.jsx";
 import { useProducts } from "../context/ProductsProvider.jsx";
 
 function ChargingEssentials() {
-  const {products} = useProducts();
+  const { products } = useProducts();
   const [index, setIndex] = useState(0);
 
   const filteredProducts = products.filter(

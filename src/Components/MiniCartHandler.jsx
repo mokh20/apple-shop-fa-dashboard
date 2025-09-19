@@ -1,18 +1,9 @@
 import { useEffect } from "react";
-import { useProducts } from "../context/ProductsProvider";
 import { Link, useLocation } from "react-router";
 import { useCart } from "../context/CartProvider";
 
 function MiniCartHandler({ showCart, setShowCart }) {
-  const { products } = useProducts();
-  const { cartItems, setCartItems } = useCart();
-  const filteredProducts = products.filter(
-    (product) => product.category === "cart"
-  );
-  useEffect(() => {
-    setCartItems(filteredProducts);
-  }, [products]);
-
+  const { cartItems } = useCart();
   const pathname = useLocation();
 
   // Close cart on route change
