@@ -1,24 +1,17 @@
 import { useParams } from "react-router";
 import { useProducts } from "../context/ProductsProvider";
 import Slider from "../Components/Slider";
-import { useState } from "react";
 import { useCart } from "../context/CartProvider";
 
 function Product() {
   const { id } = useParams();
   const { products } = useProducts();
-  const [index, setIndex] = useState(0);
   const filteredProduct = products.find((data) => data.id == id);
   return (
     <div>
       <ProductDetail product={filteredProduct} />
       <ProductInfo product={filteredProduct} />
-      <Suggestion
-        index={index}
-        setIndex={setIndex}
-        data={products.slice(0, 10)}
-        name={filteredProduct?.category}
-      />
+      <Suggestion data={products.slice(0, 10)} />
     </div>
   );
 }
@@ -80,11 +73,11 @@ function ProductInfo({ product }) {
     </section>
   );
 }
-function Suggestion({ index, setIndex, data, name }) {
+function Suggestion({ data }) {
   return (
     <div className="text-center my-8 font-medium border-t-2 border-t-gray-200 mx-4 py-4">
       <h3 className="text-2xl mb-4">You may also like</h3>
-      <Slider index={index} setIndex={setIndex} data={data} name={name} />
+      <Slider data={data} />
     </div>
   );
 }

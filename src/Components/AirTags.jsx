@@ -1,11 +1,8 @@
-import { useState } from "react";
 import Slider from "./Slider";
 import { useProducts } from "../context/ProductsProvider";
 
 function AirTags() {
   const { products } = useProducts();
-  const [index, setIndex] = useState(0);
-
   const filteredProducts = products.filter(
     (product) => product.category === "airTags"
   );
@@ -16,12 +13,7 @@ function AirTags() {
         AirTag and Featured Accessories
       </h2>
       <div className="grid gap-4">
-        <Slider
-          index={index}
-          setIndex={setIndex}
-          data={filteredProducts}
-          name="airTags slider"
-        />
+        <Slider data={filteredProducts} />
       </div>
       <p className="text-[#06c] mt-12">Shop all AirTag accessories &gt;</p>
     </div>
