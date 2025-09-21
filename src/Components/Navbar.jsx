@@ -24,7 +24,7 @@ function Navbar({ showCart, setShowCart }) {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const { cartItems } = useCart();
   return (
-    <section className="sticky top-0 z-10 flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]">
+    <section className="sticky top-0 z-20 flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]">
       <Link to={"/"}>
         <i className="fi fi-brands-apple mx-4 sm:text-2xl lg:ml-12"></i>
       </Link>
@@ -41,9 +41,18 @@ function Navbar({ showCart, setShowCart }) {
             {cartItems.length}
           </span>
         </i>
+        <div
+          className={`fixed inset-0 bg-[#0000002c] top-32 ${
+            showCart ? "visible" : "invisible"
+          }`}
+          onClick={() => setShowCart(false)}
+        ></div>
         <i
           className="fi fi-sr-user cursor-pointer"
-          onMouseEnter={() => setIsLoginOpen(true)}
+          onMouseEnter={() => {
+            setShowCart(false);
+            setIsLoginOpen(true);
+          }}
           onMouseLeave={() => setIsLoginOpen(false)}
         ></i>
         <div className="block sm:hidden">
