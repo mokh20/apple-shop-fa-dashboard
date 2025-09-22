@@ -22,16 +22,28 @@ const datas = [
 
 function Navbar({ showCart, setShowCart }) {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartItems } = useCart();
   return (
     <section className="sticky top-0 z-20 flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]">
       <Link to={"/"}>
-        <i className="fi fi-brands-apple mx-4 sm:text-2xl lg:ml-12"></i>
+        <i className="fi fi-brands-apple mx-4 sm:text-lg lg:ml-12 lg:text-2xl"></i>
       </Link>
-      <div className="hidden justify-center text-[#2F2F2F] text-sm md:flex md:w-full md:justify-around">
+      <div className="hidden justify-center text-[#2F2F2F] text-xs md:flex md:w-full md:justify-around lg:text-sm">
         <RenderData />
       </div>
-      <div className="flex gap-8 mx-4 sm:text-xl md:text-2xl lg:mr-12">
+      <div
+        className={`flex flex-col fixed top-0 text-2xl font-medium pl-12 bg-white w-full h-screen z-30 transition-all duration-500 md:hidden ${
+          isMenuOpen ? "translate-y-0" : "-translate-y-full"
+        } `}
+      >
+        <i
+          className="fi fi-rr-cross-small m-4 text-2xl text-right lg:hidden"
+          onClick={() => setIsMenuOpen(false)}
+        ></i>
+        <RenderData />
+      </div>
+      <div className="flex gap-6 mx-4 sm:text-xl md:text-lg lg:text-2xl lg:mr-12">
         <i className="fi fi-rr-search"></i>
         <i
           className="fi fi-rr-basket-shopping-simple relative cursor-pointer"
@@ -55,7 +67,7 @@ function Navbar({ showCart, setShowCart }) {
           }}
           onMouseLeave={() => setIsLoginOpen(false)}
         ></i>
-        <div className="block sm:hidden">
+        <div className="block md:hidden" onClick={() => setIsMenuOpen(true)}>
           <i className="fi fi-rr-menu-burger"></i>
         </div>
       </div>
@@ -67,11 +79,11 @@ function Navbar({ showCart, setShowCart }) {
 
 function RenderData() {
   return (
-    <>
+    <div className="w-full grid gap-4 m-4 sm:m-0 md:flex md:justify-evenly">
       {datas.map((data) => (
         <span key={data}>{data}</span>
       ))}
-    </>
+    </div>
   );
 }
 
