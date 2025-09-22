@@ -1,11 +1,24 @@
-import { useProducts } from "../context/ProductsProvider";
+import { createClient } from "@supabase/supabase-js";
+import { useCallback, useEffect, useState } from "react";
 
 function Footer() {
-  const { products } = useProducts();
-  const filteredProducts = products.filter(
-    (product) => product.category === "quickAccess"
-  );
-  console.log(products);
+  const [items, setItems] = useState([]);
+  const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+  const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+  const getCart = useCallback(async () => {
+    try {
+      const { data } = await supabase.from("footer").select();
+      setItems(data);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }, []);
+  useEffect(() => {
+    getCart();
+  }, [getCart]);
+  console.log(items);
+  items.map((nav) => console.log(nav));
   return (
     <section className="bg-lightGray mt-8 h-full">
       <Delivery />
@@ -34,7 +47,7 @@ function Footer() {
         </p>
       </div>
       <Navigate />
-      <QuickAccess filteredProducts={filteredProducts} />
+      <QuickAccess items={items} />
     </section>
   );
 }
@@ -98,7 +111,7 @@ function Navigate() {
   );
 }
 
-function QuickAccess({ filteredProducts }) {
+function QuickAccess({ items }) {
   const groups = [
     [0, 2],
     [2, 4],
@@ -106,16 +119,34 @@ function QuickAccess({ filteredProducts }) {
     [6, 9],
     [9, 11],
   ];
-  console.log(filteredProducts);
+  const [isOpenId, setIsOpenId] = useState(false);
+  function handlerOpen(id) {
+    setIsOpenId((prev) => (prev === id ? null : id));
+  }
   return (
-    <div className="flex flex-wrap items-start justify-between gap-4 mx-8 mt-4 border-b-2 border-b-gray-200">
+    <div className="block flex-wrap items-start justify-between gap-4 mx-8 mt-4 border-b-2 border-b-gray-200 sm:flex">
       {groups.map(([start, end], groupId) => (
         <div key={groupId}>
-          {filteredProducts?.slice(start, end).map((d) => (
-            <div key={d.id} className="grid my-8">
-              <h3 className="mb-4 text-xl font-bold">{d.title}</h3>
-              <ul className="grid gap-4 h-full transition-all text-[#000000b8] p-0 text-normal">
-                {d.nav?.map((nav, navId) => (
+          {items?.slice(start, end).map((data) => (
+            <div
+              key={data.id}
+              className="grid my-8 border-b-2 border-gray-200 pb-4 sm:border-none sm:pb-0"
+              onClick={() => handlerOpen(data.id)}
+            >
+              <div className="flex justify-between items-center">
+                <h3 className="mb-4 text-xl font-bold">{data.title}</h3>
+                <i
+                  className={`fi fi-rr-angle-small-down ${
+                    isOpenId === data.id ? "fi-rr-angle-small-up" : ""
+                  } text-2xl sm:hidden`}
+                ></i>
+              </div>
+              <ul
+                className={`${
+                  isOpenId === data.id ? "visible h-full" : "invisible h-0"
+                } gap-4 transition-all text-[#000000b8] p-0 text-normal sm:grid sm:visible sm:h-full`}
+              >
+                {data.nav?.map((nav, navId) => (
                   <li key={navId}>{nav}</li>
                 ))}
               </ul>
