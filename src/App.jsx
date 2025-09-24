@@ -5,6 +5,7 @@ import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import { useState } from "react";
 import Cart from "./Pages/Cart";
+import Dashboard from "./Pages/Dashboard";
 function App() {
   const [showCart, setShowCart] = useState(false);
   // create condition for dashboard page
@@ -19,7 +20,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/products/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}

@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 import { useCart } from "../context/CartProvider";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import Cart from "./Cart";
+import { supabase } from "../lib/supabaseClient";
 
 function Dashboard() {
   const { cartItems } = useCart();
@@ -11,8 +11,8 @@ function Dashboard() {
   const [userInfo, setUserInfo] = useState("");
   async function getData() {
     try {
-      const { data } = await axios.get("http://localhost:3006/userInfo");
-      setUserInfo(data);
+      const { data } = await supabase.from("usersInfo").select("*");
+      setUserInfo(data[0]);
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +72,7 @@ function Sidebar({
         ></i>
         <Link to="/">صفحه اصلی</Link>
       </div>
-      <div className="grid gap-6">
+      <div className="grid gap-6 justify-items-end lg:justify-items-center">
         <span
           onClick={() => {
             setActiveSection(activeSection === "form" ? null : "form");
@@ -84,7 +84,7 @@ function Sidebar({
         >
           <h4>اطلاعات کاربر</h4>
         </span>
-        <span>
+        <span className="cursor-pointer px-4 py-3 text-right">
           <h4>اطلاعات مالی</h4>
         </span>
         <span
@@ -98,7 +98,7 @@ function Sidebar({
         >
           <h4>سفارشات</h4>
         </span>
-        <span>
+        <span className="cursor-pointer px-4 py-3 text-right">
           <h4>فاکتورها</h4>
         </span>
       </div>
@@ -123,7 +123,7 @@ function Navbar({ userInfo, setIsMenuOpen }) {
   );
 }
 
-function FormEdit({ nameUser, setEditOpen }) {
+function FormEdit({ userInfo, setActiveSection }) {
   const [newErrorValid, setNewErrorValid] = useState({});
   // validation nation code
   function isValidNationalCode(input) {
@@ -202,11 +202,13 @@ function FormEdit({ nameUser, setEditOpen }) {
   function handleSubmit(e) {
     e.preventDefault();
     const data = new FormData(e.target);
+    // get img
     if (imgFile) {
       data.append("uploadImg", imgFile);
     }
     const value = Object.fromEntries(data.entries());
     // final validation
+    // invalid
     const allErrorValid = {};
     if (!isValidEmail(value.emailuser)) {
       allErrorValid.email = "ایمیل معتبر نیست";
@@ -225,129 +227,129 @@ function FormEdit({ nameUser, setEditOpen }) {
       return;
     }
     setNewErrorValid(allErrorValid);
+    // final validation
+    // valid
     if (Object.keys(allErrorValid).length === 0) {
-      addNewInfo({ value });
+      editInfo({ value });
       formRef.current.reset();
       setImgPreviewUrl(null);
     }
   }
-  async function addNewInfo({ value }) {
-    const newInfo = {
-      userName: value.nameuser,
+  async function editInfo({ value }) {
+    const updatedField = {
       nationCode: value.nationcode,
       number: value.number,
       email: value.emailuser,
-      profilePic: value.uploadImg,
+      profilePic: `/imgs/${value.uploadImg}`,
     };
-
+    const newUserInfo = { ...userInfo, ...updatedField };
     try {
-      await axios.post("http://localhost:3006/productsData", newInfo);
+      await supabase
+        .from("usersInfo")
+        .update(newUserInfo)
+        .eq("id", userInfo.id);
     } catch (error) {
       throw new Error(error);
     }
   }
   return (
-    <>
-      <div className="grid items-center justify-center gap-4 text-center text-sm sm:text-xl mb-8">
-        <h3>ویرایش اطلاعات</h3>
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          className="grid gap-4 justify-center"
-        >
-          <div className="grid text-center justify-center justify-items-end w-full">
-            <div className="flex items-center gap-4 my-2 justify-items-end max-h-14 min-h-14">
-              <label htmlFor="nameuser">نام کاربری : </label>
-              <input
-                type="text"
-                id="nameuser"
-                name="nameuser"
-                defaultValue={nameUser}
-                readOnly
-                className="input-edit-form text-right"
-              />
-            </div>
-            <div className=" items-center gap-2 my-2 justify-items-end max-h-14 min-h-14">
-              <label htmlFor="nationcode">کدملی : </label>
-              <input
-                type="text"
-                id="nationcode"
-                name="nationcode"
-                onBlur={handleNationCode}
-                onChange={handleNationCode}
-                className="input-edit-form"
-              />
-              {isValidNationalCode && (
-                <p className="text-red-500 text-sm">
-                  {newErrorValid.nationCode}
-                </p>
-              )}
-            </div>
-            <div className="items-center gap-2 my-2 justify-items-end max-h-14 min-h-14">
-              <label htmlFor="number">شماره موبایل : </label>
-              <input
-                type="text"
-                id="number"
-                name="number"
-                onChange={handleNumber}
-                onBlur={handleNumber}
-                className="input-edit-form"
-              />
-              {isValidIranianPhone && (
-                <p className="text-red-500 text-sm">{newErrorValid.number}</p>
-              )}
-            </div>
-            <div className="items-center my-2 justify-items-end max-h-14 min-h-14">
-              <label htmlFor="emailuser">ایمیل : </label>
-              <input
-                type="email"
-                id="emailuser"
-                name="emailuser"
-                className="input-edit-form"
-                onChange={handleEmail}
-                onBlur={handleEmail}
-              />
-              {isValidEmail && (
-                <p className="text-red-500 text-sm">{newErrorValid.email}</p>
-              )}
-            </div>
-
-            <div className="flex items-center justify-center gap-10 sm:gap-20 w-full mr-2">
-              <input
-                type="file"
-                name="uploadImg"
-                id="uploadImg"
-                className="hidden"
-                onChange={handleUploadImg}
-              />
-              <label
-                htmlFor="uploadImg"
-                className="flex gap-4 cursor-pointer my-4"
-              >
-                <span>ویرایش عکس : </span>
-                <i className="fi fi-br-add-image text-lg sm:text-4xl"></i>
-              </label>
-
-              <img src={imgPreviewUrl} className="w-16 max-h-16 mx-8" alt="" />
-            </div>
-            <div className="text-sm mt-8 flex gap-8">
-              <button
-                className="border-2 border-gray-400 rounded-lg px-6 py-1"
-                type="submit"
-              >
-                ویرایش اطلاعات
-              </button>
-              <button
-                onClick={() => setEditOpen(false)}
-                className="border-2 border-gray-400 rounded-lg px-6 py-1"
-              >
-                بستن
-              </button>
-            </div>
+    <div className="grid  max-w-md items-center justify-center gap-4 text-center text-sm mb-8 p-2 rounded-lg bg-lightGray shadow-form sm:text-xl sm:p-6">
+      <h3>ویرایش اطلاعات</h3>
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        className="grid gap-4 justify-center"
+      >
+        <div className="grid text-center justify-center justify-items-end w-full">
+          <div className="flex items-center gap-4 my-2 justify-items-end max-h-14 min-h-14">
+            <label htmlFor="nameuser">نام کاربری : </label>
+            <input
+              type="text"
+              id="nameuser"
+              name="nameuser"
+              defaultValue={userInfo.userName}
+              readOnly
+              className="input-edit-form text-right"
+            />
           </div>
-        </form>
-      </div>
-    </>
+          <div className=" items-center gap-2 my-2 justify-items-end max-h-14 min-h-14">
+            <label htmlFor="nationcode">کدملی : </label>
+            <input
+              type="text"
+              id="nationcode"
+              name="nationcode"
+              onBlur={handleNationCode}
+              onChange={handleNationCode}
+              className="input-edit-form"
+            />
+            {isValidNationalCode && (
+              <p className="text-red-500 text-sm">{newErrorValid.nationCode}</p>
+            )}
+          </div>
+          <div className="items-center gap-2 my-2 justify-items-end max-h-14 min-h-14">
+            <label htmlFor="number">شماره موبایل : </label>
+            <input
+              type="text"
+              id="number"
+              name="number"
+              onChange={handleNumber}
+              onBlur={handleNumber}
+              className="input-edit-form"
+            />
+            {isValidIranianPhone && (
+              <p className="text-red-500 text-sm">{newErrorValid.number}</p>
+            )}
+          </div>
+          <div className="items-center my-2 justify-items-end max-h-14 min-h-14">
+            <label htmlFor="emailuser">ایمیل : </label>
+            <input
+              type="email"
+              id="emailuser"
+              name="emailuser"
+              className="input-edit-form"
+              onChange={handleEmail}
+              onBlur={handleEmail}
+            />
+            {isValidEmail && (
+              <p className="text-red-500 text-sm">{newErrorValid.email}</p>
+            )}
+          </div>
+
+          <div className="flex items-center justify-center gap-10 sm:gap-20 w-full mr-2">
+            <input
+              type="file"
+              name="uploadImg"
+              id="uploadImg"
+              className="hidden"
+              onChange={handleUploadImg}
+            />
+            <label
+              htmlFor="uploadImg"
+              className="flex gap-4 cursor-pointer my-4"
+            >
+              <span>ویرایش عکس : </span>
+              <i className="fi fi-br-add-image text-lg sm:text-4xl"></i>
+            </label>
+
+            <img src={imgPreviewUrl} className="w-16 max-h-16 mx-8" alt="" />
+          </div>
+          <div className="text-sm mt-8 flex gap-8">
+            <button
+              className="border-2 border-gray-400 rounded-lg px-6 py-1"
+              type="submit"
+            >
+              ویرایش اطلاعات
+            </button>
+            <button
+              onClick={() => setActiveSection(null)}
+              className="border-2 border-gray-400 rounded-lg px-6 py-1"
+            >
+              بستن
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }
 export default Dashboard;
