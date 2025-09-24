@@ -1,4 +1,3 @@
-import { createClient } from "@supabase/supabase-js";
 import {
   createContext,
   useCallback,
@@ -6,15 +5,12 @@ import {
   useEffect,
   useState,
 } from "react";
+import { supabase } from "../lib/supabaseClient";
 
 const ProductsContext = createContext();
 
 function ProductsProvider({ children }) {
   const [products, setProducts] = useState([]);
-  // API
-  const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-  const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const getProducts = useCallback(async () => {
     const { data } = await supabase.from("productsData").select("*");

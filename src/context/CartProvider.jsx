@@ -5,16 +5,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "../lib/supabaseClient";
 
 const CartContext = createContext();
 
 function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
-  // API
-  const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-  const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
   async function addToCart({ product }) {
     try {

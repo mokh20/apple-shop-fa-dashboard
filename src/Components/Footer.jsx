@@ -1,11 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
 import { useCallback, useEffect, useState } from "react";
+import { supabase } from "../lib/supabaseClient";
 
 function Footer() {
   const [items, setItems] = useState([]);
-  const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-  const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
   const getCart = useCallback(async () => {
     try {
       const { data } = await supabase.from("footer").select();
