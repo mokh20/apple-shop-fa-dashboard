@@ -45,6 +45,12 @@ function Dashboard() {
           {activeSection === "form" && (
             <FormEdit userInfo={userInfo} setActiveSection={setActiveSection} />
           )}
+          {activeSection === "paymentInfo" && (
+            <PaymentInfo
+              setActiveSection={setActiveSection}
+              userInfo={userInfo}
+            />
+          )}
           {activeSection === "cart" && <Cart />}
         </div>
       </section>
@@ -84,7 +90,17 @@ function Sidebar({
         >
           <h4>اطلاعات کاربر</h4>
         </span>
-        <span className="cursor-pointer px-4 py-3 text-right">
+        <span
+          onClick={() => {
+            setActiveSection(
+              activeSection === "paymentInfo" ? null : "paymentInfo"
+            );
+            setIsMenuOpen(false);
+          }}
+          className={`cursor-pointer px-4 py-3 text-right ${
+            activeSection === "paymentInfo" ? "active-siderbar-item " : ""
+          }`}
+        >
           <h4>اطلاعات مالی</h4>
         </span>
         <span
@@ -352,4 +368,100 @@ function FormEdit({ userInfo, setActiveSection }) {
     </div>
   );
 }
+
+function PaymentInfo({ setActiveSection, userInfo }) {
+  const [value, setValue] = useState("");
+  const formRef = useRef(null);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const value = Object.fromEntries(data.entries());
+    console.log(value);
+    editPaymentInfo({ value });
+    formRef.current.reset();
+  }
+
+  async function editPaymentInfo({ value }) {
+    const updatedField = {
+      bankName: value.bankName,
+      IBAN: value.IBAN,
+    };
+    const newUserInfo = { ...userInfo, ...updatedField };
+    try {
+      await supabase
+        .from("usersInfo")
+        .update(newUserInfo)
+        .eq("id", userInfo.id);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  function handlePersianInput(e) {
+    const inputText = e.target.value;
+    const persianText = /^[\u0600-\u06FF\s]*$/;
+    if (inputText === "" || persianText.test(inputText)) {
+      setValue(inputText);
+    }
+  }
+  return (
+    <div className="grid  max-w-md items-center justify-center gap-4 text-center text-sm mb-8 p-2 rounded-lg bg-lightGray shadow-form sm:text-xl sm:p-6">
+      <h3>اطلاعات مالی</h3>
+      <form
+        onSubmit={handleSubmit}
+        className="grid gap-4 justify-center"
+        ref={formRef}
+      >
+        <div className="grid text-center justify-center justify-items-end w-full">
+          <div className="grid items-center mb-6 justify-items-center max-h-14 min-h-14">
+            <label htmlFor="bankName">
+              <span className="mx-2">نام بانک :</span>
+              <input
+                type="text"
+                id="bankName"
+                name="bankName"
+                value={value}
+                placeholder="ملت"
+                className="input-edit-form text-right"
+                onChange={handlePersianInput}
+              />
+            </label>
+            <p className="text-gray-500 text-xs text-left mr-6 sm:mr-0 sm:ml-4">
+              تنها حروف فارسی مجاز است.
+            </p>
+          </div>
+          <div className="grid items-center mb-6 justify-items-center max-h-14 min-h-14">
+            <label htmlFor="IBAN">
+              <span className="ml-2">شماره شبا :</span>
+              <input
+                type="number"
+                id="IBAN"
+                name="IBAN"
+                className="input-edit-form"
+              />
+            </label>
+            <p className="text-gray-500 text-xs text-left mr-10 sm:mr-0">
+              تنها استفاده از اعداد مجاز است.
+            </p>
+          </div>
+          <div className="text-sm mt-8 flex gap-8">
+            <button
+              className="border-2 border-gray-400 rounded-lg px-6 py-1"
+              type="submit"
+            >
+              ویرایش اطلاعات
+            </button>
+            <button
+              onClick={() => setActiveSection(null)}
+              className="border-2 border-gray-400 rounded-lg px-6 py-1"
+            >
+              بستن
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
+
 export default Dashboard;
