@@ -14,8 +14,6 @@ function Footer() {
   useEffect(() => {
     getCart();
   }, [getCart]);
-  console.log(items);
-  items.map((nav) => console.log(nav));
   return (
     <section className="bg-lightGray mt-8 h-full">
       <Delivery />

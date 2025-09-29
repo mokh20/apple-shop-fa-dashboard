@@ -9,52 +9,78 @@ function Dashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("cart");
   const [userInfo, setUserInfo] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   async function getData() {
     try {
       const { data } = await supabase.from("usersInfo").select("*");
       setUserInfo(data[0]);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (activeSection) {
+      setIsLoading(true);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [activeSection]);
+
   useEffect(() => {
     getData();
   }, []);
+
   return (
-    <div className="relative grid grid-cols-12" dir="rtl">
-      <Sidebar
-        setActiveSection={setActiveSection}
-        activeSection={activeSection}
-        setIsMenuOpen={setIsMenuOpen}
-        isMenuOpen={isMenuOpen}
-      />
-      <section className="flex flex-col col-span-12 lg:col-span-10">
-        <Navbar
-          userInfo={userInfo}
-          cartItems={cartItems}
+    <>
+      <div className="relative grid grid-cols-12" dir="rtl">
+        <Sidebar
           setActiveSection={setActiveSection}
+          activeSection={activeSection}
           setIsMenuOpen={setIsMenuOpen}
+          isMenuOpen={isMenuOpen}
         />
-        {isMenuOpen && (
-          <div
-            className="fixed w-full h-screen opacity-40 bg-black z-10"
-            onClick={() => setIsMenuOpen(false)}
-          ></div>
-        )}
-        <div className="grid gap-1 p-4 items-center justify-items-center rounded-tr-3xl bg-lightGray min-h-screen max-h-full text-center">
-          {activeSection === "form" && (
-            <FormEdit userInfo={userInfo} setActiveSection={setActiveSection} />
+        <section className="flex flex-col col-span-12 lg:col-span-10">
+          <Navbar
+            userInfo={userInfo}
+            cartItems={cartItems}
+            setActiveSection={setActiveSection}
+            setIsMenuOpen={setIsMenuOpen}
+          />
+          {isMenuOpen && (
+            <div
+              className="fixed w-full h-screen opacity-40 bg-black z-10"
+              onClick={() => setIsMenuOpen(false)}
+            ></div>
           )}
-          {activeSection === "paymentInfo" && (
-            <PaymentInfo
-              setActiveSection={setActiveSection}
-              userInfo={userInfo}
-            />
-          )}
-          {activeSection === "cart" && <Cart />}
-        </div>
-      </section>
-    </div>
+          <div className="grid gap-1 p-4 items-center justify-items-center rounded-tr-3xl bg-lightGray min-h-screen max-h-full text-center">
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                {activeSection === "form" && (
+                  <FormEdit
+                    userInfo={userInfo}
+                    setActiveSection={setActiveSection}
+                  />
+                )}
+                {activeSection === "paymentInfo" && (
+                  <PaymentInfo
+                    setActiveSection={setActiveSection}
+                    userInfo={userInfo}
+                  />
+                )}
+                {activeSection === "cart" && <Cart />}
+              </>
+            )}
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
 
@@ -377,7 +403,6 @@ function PaymentInfo({ setActiveSection, userInfo }) {
     e.preventDefault();
     const data = new FormData(e.target);
     const value = Object.fromEntries(data.entries());
-    console.log(value);
     editPaymentInfo({ value });
     formRef.current.reset();
   }

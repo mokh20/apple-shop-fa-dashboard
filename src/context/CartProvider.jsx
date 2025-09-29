@@ -6,10 +6,12 @@ import {
   useState,
 } from "react";
 import { supabase } from "../lib/supabaseClient";
+import Spinner from "../Components/Spinner";
 
 const CartContext = createContext();
 
 function CartProvider({ children }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
 
   async function addToCart({ product }) {
@@ -47,11 +49,14 @@ function CartProvider({ children }) {
       setCartItems(data);
     } catch (error) {
       throw new Error(error);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
   useEffect(() => {
     getCart();
   }, [getCart]);
+  if (isLoading) return <Spinner />;
   return (
     <CartContext.Provider value={{ addToCart, deleteItem, cartItems }}>
       {children}
