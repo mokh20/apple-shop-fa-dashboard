@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { useProducts } from "../context/ProductsProvider";
-import Slider from "../Components/Slider";
+import Slider from "../components/ui/Slider";
 import { useCart } from "../context/CartProvider";
 
 function Product() {

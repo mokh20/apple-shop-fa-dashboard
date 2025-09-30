@@ -1,5 +1,5 @@
-import Slider from "./Slider";
-import { useProducts } from "../context/ProductsProvider";
+import Slider from "../ui/Slider";
+import { useProducts } from "../../context/ProductsProvider";
 
 function AirTags() {
   const { products } = useProducts();

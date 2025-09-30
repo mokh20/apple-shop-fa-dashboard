@@ -1,9 +1,9 @@
-import Accessories from "../Components/Accessories";
-import PlayPicks from "../Components/PlayPicks";
-import Header from "../Components/Header";
-import ChargingEssentials from "../Components/ChargingEssentials";
-import BuyPods from "../Components/BuyPods";
-import AirTags from "../Components/AirTags";
+import Accessories from "../components/home/Accessories";
+import PlayPicks from "../components/home/PlayPicks";
+import Header from "../components/home/Header";
+import ChargingEssentials from "../components/home/ChargingEssentials";
+import BuyPods from "../components/home/BuyPods";
+import AirTags from "../components/home/AirTags";
 
 function Home() {
   return (

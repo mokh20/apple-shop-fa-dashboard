@@ -3,6 +3,7 @@ import { useCart } from "../context/CartProvider";
 import { useEffect, useRef, useState } from "react";
 import Cart from "./Cart";
 import { supabase } from "../lib/supabaseClient";
+import Spinner from "../components/ui/Spinner";
 
 function Dashboard() {
   const { cartItems } = useCart();

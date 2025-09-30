@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { supabase } from "../lib/supabaseClient";
-import Spinner from "../Components/Spinner";
+import Spinner from "../components/ui/Spinner";
 
 const CartContext = createContext();
 

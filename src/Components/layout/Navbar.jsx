@@ -2,9 +2,9 @@ import "@flaticon/flaticon-uicons/css/all/all.css";
 import "@flaticon/flaticon-uicons/css/regular/rounded.css";
 import { Link } from "react-router";
 import { useState } from "react";
-import { useCart } from "../context/CartProvider";
-import LoginPopup from "./ProfilePopup";
-import MiniCartHandler from "./MiniCartHandler";
+import { useCart } from "../../context/CartProvider";
+import LoginPopup from "../ProfilePopup";
+import MiniCartHandler from "../MiniCartHandler";
 
 const datas = [
   "Store",

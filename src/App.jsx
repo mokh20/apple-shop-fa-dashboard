@@ -1,11 +1,12 @@
 import { Route, Routes, useLocation } from "react-router";
-import Home from "./Pages/Home";
-import Product from "./Pages/Product";
-import Footer from "./Components/Footer";
-import Navbar from "./Components/Navbar";
+import Home from "./pages/Home";
+import Product from "./pages/Product";
+import Footer from "./components/layout/Footer";
+import Navbar from "./components/layout/Navbar";
 import { useState } from "react";
-import Cart from "./Pages/Cart";
-import Dashboard from "./Pages/Dashboard";
+import Cart from "./pages/Cart";
+import Dashboard from "./pages/Dashboard";
+
 function App() {
   const [showCart, setShowCart] = useState(false);
   // create condition for dashboard page

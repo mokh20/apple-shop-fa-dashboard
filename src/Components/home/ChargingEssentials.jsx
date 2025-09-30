@@ -1,5 +1,5 @@
-import Slider from "./Slider.jsx";
-import { useProducts } from "../context/ProductsProvider.jsx";
+import Slider from "../ui/Slider.jsx";
+import { useProducts } from "../../context/ProductsProvider.jsx";
 
 function ChargingEssentials() {
   const { products } = useProducts();
