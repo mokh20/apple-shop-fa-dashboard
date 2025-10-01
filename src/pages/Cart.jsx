@@ -13,7 +13,7 @@ function Cart() {
     : 0;
 
   return (
-    <div>
+    <div dir="ltr">
       <div className="m-12">
         {!cartItems.length ? (
           <p className="text-center font-medium sm:text-xl">
@@ -43,10 +43,10 @@ function Cart() {
                       ${data.price?.toFixed(2)}
                     </p>
                     <p
-                      className="underline text-blue-500 cursor-pointer"
+                      className="text-blue-500 cursor-pointer text-center"
                       onClick={() => deleteItem(data.id)}
                     >
-                      Remove
+                      <i className="fi fi-rr-trash text-lg"></i>
                     </p>
                   </div>
                 </div>

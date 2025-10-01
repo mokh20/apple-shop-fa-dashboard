@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Product from "./pages/Product";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cart from "./pages/Cart";
 import Dashboard from "./pages/Dashboard";
 
@@ -13,6 +13,9 @@ function App() {
   const location = useLocation();
   const dashboardPath = ["/dashboard"];
   const hideLayout = dashboardPath.includes(location.pathname);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <div>
       {!hideLayout && <Navbar showCart={showCart} setShowCart={setShowCart} />}
