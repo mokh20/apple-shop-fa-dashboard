@@ -4,11 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import Cart from "./Cart";
 import { supabase } from "../lib/supabaseClient";
 import Spinner from "../components/ui/Spinner";
+import OrderHistory from "../components/OrderHistory";
 
 function Dashboard() {
   const { cartItems } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("cart");
+  const [activeSection, setActiveSection] = useState("orderHistory");
   const [userInfo, setUserInfo] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   async function getData() {
@@ -58,7 +59,11 @@ function Dashboard() {
               onClick={() => setIsMenuOpen(false)}
             ></div>
           )}
-          <div className="grid gap-1 p-4 items-center justify-items-center rounded-tr-3xl bg-lightGray min-h-screen max-h-full text-center">
+          <div
+            className={`grid gap-1 p-4 justify-items-center rounded-tr-3xl bg-lightGray min-h-screen max-h-full text-center ${
+              activeSection === "orderHistory" ? "items-start" : "items-center"
+            }`}
+          >
             {isLoading ? (
               <Spinner />
             ) : (
@@ -76,6 +81,7 @@ function Dashboard() {
                   />
                 )}
                 {activeSection === "cart" && <Cart />}
+                {activeSection === "orderHistory" && <OrderHistory />}
               </>
             )}
           </div>
@@ -141,7 +147,17 @@ function Sidebar({
         >
           <h4>سفارشات</h4>
         </span>
-        <span className="cursor-pointer px-4 py-3 text-right">
+        <span
+          className={`cursor-pointer px-4 py-3 text-right ${
+            activeSection === "orderHistory" ? "active-siderbar-item " : ""
+          }`}
+          onClick={() => {
+            setActiveSection(
+              activeSection === "orderHistory" ? null : "orderHistory"
+            );
+            setIsMenuOpen(false);
+          }}
+        >
           <h4>فاکتورها</h4>
         </span>
       </div>

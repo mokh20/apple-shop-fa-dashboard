@@ -5,6 +5,12 @@
   border-radius: 8px;
   padding: 0.3rem 1rem;
 }
+.order-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
 .swiper-pagination-bullet {
   background-color: rgb(88, 88, 88);
   padding: 4px;
