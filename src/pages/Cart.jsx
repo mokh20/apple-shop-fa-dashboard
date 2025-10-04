@@ -1,8 +1,9 @@
 import { useCart } from "../context/CartProvider";
 import { Link } from "react-router";
+import { supabase } from "../lib/supabaseClient";
 
 function Cart() {
-  const { deleteItem, cartItems } = useCart();
+  const { deleteItem, cartItems, setCartItems } = useCart();
 
   // count total price cart
   const totalPrice = cartItems.length
@@ -12,6 +13,19 @@ function Cart() {
       )
     : 0;
 
+  // change quantity item
+  async function handleQuantity(e, id) {
+    const quantity = Number(e.target.value);
+    setCartItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+    );
+    const { data } = await supabase
+      .from("cart")
+      .update({ quantity: quantity })
+      .eq("id", id)
+      .select();
+    console.log(data);
+  }
   return (
     <div dir="ltr">
       <div className="m-12">
@@ -34,9 +48,18 @@ function Cart() {
                   <p className="hover:underline hover:text-blue-700">
                     <Link to={`/products/${data.id}`}>{data.name}</Link>
                   </p>
-                  <div className="flex items-center text-xl h-full sm:text-2xl">
-                    <div>{data.quantity}</div>
-                    <i className="fi fi-rr-angle-small-down text-blue-500 mt-4"></i>
+                  <div className=" text-blue-500 text-xl sm:text-2xl">
+                    <select
+                      value={data.quantity}
+                      onChange={(e) => handleQuantity(e, data.id)}
+                      className="outline-0"
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
                   </div>
                   <div>
                     <p className="font-medium text-xl mb-4 sm:text-2xl">

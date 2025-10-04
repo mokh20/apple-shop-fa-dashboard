@@ -58,7 +58,9 @@ function CartProvider({ children }) {
   }, [getCart]);
   if (isLoading) return <Spinner />;
   return (
-    <CartContext.Provider value={{ addToCart, deleteItem, cartItems }}>
+    <CartContext.Provider
+      value={{ addToCart, deleteItem, cartItems, setCartItems }}
+    >
       {children}
     </CartContext.Provider>
   );
