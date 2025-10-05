@@ -80,7 +80,7 @@ function Dashboard() {
                     userInfo={userInfo}
                   />
                 )}
-                {activeSection === "cart" && <Cart />}
+                {activeSection === "cart" && <Cart thumbnailSize={true} />}
                 {activeSection === "orderHistory" && <OrderHistory />}
               </>
             )}
