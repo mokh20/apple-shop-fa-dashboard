@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import { supabase } from "../lib/supabaseClient";
 import Spinner from "./ui/Spinner";
 
@@ -35,59 +34,63 @@ function RenderData() {
   if (isLoading) return <Spinner />;
   return (
     <>
-      <p className="mb-4 font-medium text-xl">سفارشات</p>
-      <div className="grid gap-6 lg:gap-0 lg:flex lg:flex-col lg:bg-white">
-        <div className="hidden lg:flex ">
-          <div className="flex w-full justify-between mx-8 px-8 py-4 mt-4 border-2  border-gray-300 rounded-lg">
-            <span>کالاها</span>
-            <span>تاریخ</span>
-            <span>جمع کل</span>
-            <span>مرحله</span>
-          </div>
-        </div>
-        {orderList.map((order) => (
-          <div
-            key={order.orderId}
-            className="relative bg-white text-xs px-4 py-8 grid gap-4 rounded-lg h-full content-between sm:text-sm md:text-lg lg:m-8 lg:flex lg:flex-row-reverse lg:justify-between lg:items-center lg:bg-lightGray "
-          >
-            <div className="order-list-item">
-              <span className="lg:hidden">وضعیت سفارش :</span>
-              <span>تحویل داده شده به مشتری</span>
-            </div>
-            <div className="order-list-item">
-              <span className="lg:hidden">تاریخ ثبت سفارش :</span>
-              <div className="flex gap-4 flex-row-reverse">
-                <span>
+      <p className="my-6 font-medium text-xl">سفارشات</p>
+      <table className="w-full table-fixed bg-white">
+        <thead>
+          <tr className="h-20 border border-gray-400 text-xs sm:text-base">
+            <th>ردیف</th>
+            <th className="w-2/10 sm:w-3/10">تاریخ فاکتور</th>
+            <th>شماره فاکتور</th>
+            <th className="w-3/10">مبلغ</th>
+            <th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orderList.map((order, index) => (
+            <tr
+              key={order.orderId}
+              className="text-xs sm:text-sm md:text-lg lg:m-2 border-b border-gray-400"
+            >
+              {/* ردیف  */}
+              <td className="p-2 text-center">{toPersianDigits(index + 1)}</td>
+
+              {/* تاریخ  */}
+              <td className="p-2 text-center" dir="ltr">
+                <span className="mr-2">
                   {toPersianDigits(order.date.split("T")[0].replace(/-/g, "/"))}
                 </span>
                 |
-                <span>
+                <span className="ml-2">
                   {toPersianDigits(order.date.split("T")[1].slice(0, 5))}
                 </span>
-              </div>
-            </div>
-            <div className="order-list-item">
-              <span className="lg:hidden">مبلغ سفارش :</span>
-              <span>
+              </td>
+
+              {/* شماره فاکتور  */}
+              <td className="p-2 text-center">
+                {toPersianDigits(order.orderId)}
+              </td>
+
+              {/* مبلغ  */}
+              <td className="p-2 text-center">
                 {toPersianDigits(order.totalPrice.toLocaleString("en-US"))}{" "}
                 تومان
-              </span>
-            </div>
-            <div className="flex gap-2 mt-2">
-              {order.items.map((item) => (
-                <Link to={`/products/${item.id}`} key={item.id}>
-                  <div className="bg-lightGray">
-                    <img src={item.img} alt="" className="w-24" />
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className=" flex items-center w-8 justify-center pt-1 border-2 border-gray-300 rounded-md absolute left-0 top-0 cursor-pointer">
-              <i className="fi fi-rr-angle-small-left text-base md:text-xl"></i>
-            </div>
-          </div>
-        ))}
-      </div>
+              </td>
+
+              {/* عملیات  */}
+              <td className="py-8 px-2 text-center align-middle font-medium text-xs md:text-xl lg:text-2xl">
+                <i
+                  className="fi fi-tr-overview mx-2 cursor-pointer hover:text-blue-500 xl:mx-4"
+                  title="مشاهده فاکتور"
+                ></i>
+                <i
+                  className="fi fi-ts-print mx-2 cursor-pointer hover:text-blue-500 xl:mx-4"
+                  title="پرینت فاکتور"
+                ></i>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }
