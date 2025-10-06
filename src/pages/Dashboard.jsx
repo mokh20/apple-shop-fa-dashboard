@@ -102,7 +102,7 @@ function Sidebar({
   return (
     <div
       className={`h-screen bg-white fixed grid grid-cols-1 w-3xs col-span-2 px-8 justify-center items-center text-center pt-10 content-start gap-4 z-20 transition-all duration-500 ${
-        isMenuOpen ? "translate-x-0 " : "translate-x-full"
+        isMenuOpen ? "translate-x-0 visible " : "translate-x-full invisible"
       } lg:w-full lg:relative lg:translate-x-0`}
       dir="ltr"
     >

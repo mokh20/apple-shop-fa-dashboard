@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useReactToPrint } from "react-to-print";
 import { supabase } from "../lib/supabaseClient";
 import Spinner from "./ui/Spinner";
 
@@ -7,6 +8,12 @@ function OrderHistory() {
   const [orderId, setOrderId] = useState("");
   const [showOrder, setShowOrder] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  // access to print order element
+  const printOrder = useRef();
+  const printBtn = useReactToPrint({
+    documentTitle: "Title",
+    contentRef: printOrder,
+  });
 
   // get data from api
   async function getData() {
@@ -31,6 +38,8 @@ function OrderHistory() {
           setShowOrder={setShowOrder}
           setOrderId={setOrderId}
           orderList={orderList}
+          printBtn={printBtn}
+          printOrder={printOrder}
         />
       </div>
       {showOrder && (
@@ -38,13 +47,21 @@ function OrderHistory() {
           setShowOrder={setShowOrder}
           orderId={orderId}
           orderList={orderList}
+          printOrder={printOrder}
+          printBtn={printBtn}
         />
       )}
     </div>
   );
 }
 
-function RenderData({ orderList, setShowOrder, setOrderId }) {
+function RenderData({
+  orderList,
+  setShowOrder,
+  setOrderId,
+  printBtn,
+  printOrder,
+}) {
   //  convert digit to persian
   function toPersianDigits(order) {
     return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
@@ -107,6 +124,14 @@ function RenderData({ orderList, setShowOrder, setOrderId }) {
                 <i
                   className="fi fi-ts-print mx-2 cursor-pointer hover:text-blue-500 xl:mx-4"
                   title="پرینت فاکتور"
+                  onClick={() => {
+                    setShowOrder(true); //
+                    setOrderId(order.id);
+                    printBtn();
+                    setTimeout(() => {
+                      if (printOrder.current) printBtn();
+                    }, 50);
+                  }}
                 ></i>
               </td>
             </tr>
@@ -117,7 +142,7 @@ function RenderData({ orderList, setShowOrder, setOrderId }) {
   );
 }
 
-function OrderInfo({ setShowOrder, orderId, orderList }) {
+function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
   const orderItem = orderList.find((item) => item.id === orderId);
   const totalQuantity = orderItem.items.reduce(
     (sum, item) => sum + Number(item.quantity),
@@ -137,7 +162,7 @@ function OrderInfo({ setShowOrder, orderId, orderList }) {
     return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   }
   return (
-    <div className="absolute left-0 top-0 flex items-center justify-center z-30 md:w-full lg:left-1/12 xl:w-auto xl:fixed xl:inset-0 xl:mx-8">
+    <div className="w-[calc(100vw-2rem)] absolute left-0 top-0 flex items-center justify-center z-30 lg:left-1/12 xl:fixed xl:inset-0 xl:mx-8">
       {/* backDrop */}
       <div
         className="fixed inset-0 bg-[#00000075]"
@@ -154,9 +179,10 @@ function OrderInfo({ setShowOrder, orderId, orderList }) {
           <i
             className="fi fi-ts-print mx-2 cursor-pointer text-3xl hover:text-blue-500  xl:mx-4  "
             title="پرینت فاکتور"
+            onClick={printBtn}
           ></i>
         </div>
-        <div className="w-full px-8" dir="rtl">
+        <div className="w-full px-8" ref={printOrder} dir="rtl">
           <h3 className="my-2 text-center">فاکتور شما</h3>
           <table className="border border-gray-200 w-full text-right text-sm">
             <tbody>
