@@ -5,11 +5,17 @@
   border-radius: 8px;
   padding: 0.3rem 1rem;
 }
-.order-list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
+.order-item {
+  border: 1px solid lightgray;
+  padding: 1rem 0.5rem;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .swiper-pagination-bullet {
   background-color: rgb(88, 88, 88);

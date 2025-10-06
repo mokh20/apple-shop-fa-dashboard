@@ -61,7 +61,9 @@ function Dashboard() {
           )}
           <div
             className={`grid gap-1 p-4 justify-items-center rounded-tr-3xl bg-lightGray min-h-screen max-h-full text-center ${
-              activeSection === "orderHistory" ? "items-start" : "items-center"
+              activeSection === "orderHistory" || activeSection === "cart"
+                ? "items-start"
+                : "items-center"
             }`}
           >
             {isLoading ? (

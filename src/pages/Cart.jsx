@@ -16,7 +16,7 @@ function Cart({ thumbnailSize }) {
   const titleName = [
     { name: "ردیف", className: "w-1/12" },
     { name: "عکس کالا", className: "w-1/12" },
-    { name: "نام کالا", className: "w-5/12" },
+    { name: "نام کالا", className: "w-2/12 sm:w-5/12" },
     { name: "تعداد", className: "w-1/12" },
     { name: "قیمت", className: "w-1/12" },
     { name: "عملیات", className: "w-1/12" },
@@ -70,8 +70,10 @@ function Cart({ thumbnailSize }) {
                 <td className="sm:p-4">
                   <img
                     src={data.img}
-                    alt=""
-                    className={`${thumbnailSize ? "w-16" : "w-40"} mx-auto`}
+                    alt={data.title}
+                    className={`${
+                      thumbnailSize ? "w-12 sm:w-16" : "w-40"
+                    } mx-auto`}
                   />
                 </td>
                 <td className="p-4">
