@@ -69,7 +69,7 @@ function RenderData({
 
   return (
     <div>
-      <p className=" font-medium text-xl text-right m-8">فاکتورها</p>{" "}
+      <p className=" font-medium text-xl text-right m-8">فاکتورها</p>
       <table className="w-full table-fixed bg-white">
         <thead>
           <tr className="h-20 border border-gray-400 text-xs sm:text-base">
@@ -125,7 +125,7 @@ function RenderData({
                   className="fi fi-ts-print mx-2 cursor-pointer hover:text-blue-500 xl:mx-4"
                   title="پرینت فاکتور"
                   onClick={() => {
-                    setShowOrder(true); //
+                    setShowOrder(true);
                     setOrderId(order.id);
                     printBtn();
                     setTimeout(() => {
@@ -162,36 +162,40 @@ function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
     return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   }
   return (
-    <div className="w-[calc(100vw-2rem)] absolute left-0 top-0 flex items-center justify-center z-30 lg:left-1/12 xl:fixed xl:inset-0 xl:mx-8">
-      {/* backDrop */}
+    <div className="fixed inset-0 z-30 flex items-center justify-center">
+      {/* backdrop */}
       <div
-        className="fixed inset-0 bg-[#00000075]"
+        className="absolute inset-0 bg-[#00000075]"
         onClick={() => setShowOrder(false)}
       ></div>
-      {/* orderInfo */}
-      <div className="w-full bg-white p-6 rounded-xl shadow-lg flex flex-col gap-2 items-center z-40 relative h-11/12 overflow-y-scroll scrollbar-hide cursor-grab">
+      {/* orderInfo popup */}
+      <div className="relative w-[calc(100dvw-2rem)] max-h-[90vh] bg-white p-6 rounded-xl shadow-lg flex flex-col gap-2 items-center z-40 scrollbar-hide cursor-grab box-border lg:max-w-7xl">
         <div className="flex justify-between w-full">
           <i
-            className="fi fi-rr-cross-small text-3xl  cursor-pointer hover:text-blue-500 "
+            className="fi fi-rr-cross-small text-3xl cursor-pointer hover:text-blue-500"
             onClick={() => setShowOrder(false)}
             title="بستن"
           ></i>
           <i
-            className="fi fi-ts-print mx-2 cursor-pointer text-3xl hover:text-blue-500  xl:mx-4  "
+            className="fi fi-ts-print mx-2 cursor-pointer text-3xl hover:text-blue-500 xl:mx-4"
             title="پرینت فاکتور"
             onClick={printBtn}
           ></i>
         </div>
-        <div className="w-full px-8" ref={printOrder} dir="rtl">
+        <div
+          className="overflow-x-auto scrollbar-hide w-full"
+          ref={printOrder}
+          dir="rtl"
+        >
           <h3 className="my-2 text-center">فاکتور شما</h3>
-          <table className="border border-gray-200 w-full text-right text-sm">
+          <table className="border border-gray-200 min-w-[600px] text-right text-sm sm:w-full ">
             <tbody>
               <tr className="border-b border-gray-200">
                 <td className="p-4">
                   شماره فاکتور : {toPersianDigits(orderItem.orderId)}
                 </td>
                 <td className="w-1/3">
-                  <div className=" py-4 px-2 flex flex-col justify-end gap-2 text-right lg:flex-row">
+                  <div className="py-4 px-2 flex flex-col justify-end gap-2 text-right">
                     <h4> تاریخ فاکتور : </h4>
                     <div className="flex gap-4 flex-row-reverse">
                       <span>
@@ -226,7 +230,7 @@ function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
               </tr>
             </tbody>
           </table>
-          <table className="border border-gray-200 w-full text-sm text-center mt-4">
+          <table className="border border-gray-200 min-w-[600px] text-sm text-center mt-4 lg:w-full">
             <thead className="bg-lightGray">
               <tr className="h-20">
                 <th className="order-item w-1/12">ردیف</th>

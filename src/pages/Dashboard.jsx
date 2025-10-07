@@ -55,7 +55,7 @@ function Dashboard() {
           />
           {isMenuOpen && (
             <div
-              className="fixed w-full h-screen opacity-40 bg-black z-10"
+              className="fixed w-full h-screen opacity-40 bg-black z-10 lg:hidden"
               onClick={() => setIsMenuOpen(false)}
             ></div>
           )}
@@ -101,9 +101,9 @@ function Sidebar({
 }) {
   return (
     <div
-      className={`h-screen bg-white fixed grid grid-cols-1 w-3xs col-span-2 px-8 justify-center items-center text-center pt-10 content-start gap-4 z-20 transition-all duration-500 ${
-        isMenuOpen ? "translate-x-0 visible " : "translate-x-full invisible"
-      } lg:w-full lg:relative lg:translate-x-0`}
+      className={`h-screen bg-white fixed grid grid-cols-1 w-3xs col-span-2 px-4 justify-items-center items-center text-center pt-10 content-start gap-4 z-20 transition-all duration-500 ${
+        isMenuOpen ? "translate-x-0 visible " : "translate-x-full"
+      } lg:w-full lg:relative lg:translate-x-0 lg:justify-items-stretch`}
       dir="ltr"
     >
       <div className="border-b-2 border-gray-200 pb-4 w-full font-medium flex text-center items-center justify-center">
@@ -113,14 +113,14 @@ function Sidebar({
         ></i>
         <Link to="/">صفحه اصلی</Link>
       </div>
-      <div className="grid gap-6 justify-items-end lg:justify-items-center">
+      <div className="grid gap-6 justify-items-stretch">
         <span
           onClick={() => {
             setActiveSection(activeSection === "form" ? null : "form");
             setIsMenuOpen(false);
           }}
           className={`cursor-pointer px-4 py-3 text-right ${
-            activeSection === "form" ? "active-siderbar-item " : ""
+            activeSection === "form" ? "active-sidebar-item" : ""
           }`}
         >
           <h4>اطلاعات کاربر</h4>
@@ -133,7 +133,7 @@ function Sidebar({
             setIsMenuOpen(false);
           }}
           className={`cursor-pointer px-4 py-3 text-right ${
-            activeSection === "paymentInfo" ? "active-siderbar-item " : ""
+            activeSection === "paymentInfo" ? "active-sidebar-item" : ""
           }`}
         >
           <h4>اطلاعات مالی</h4>
@@ -144,14 +144,14 @@ function Sidebar({
             setIsMenuOpen(false);
           }}
           className={`cursor-pointer px-4 py-3 text-right ${
-            activeSection === "cart" ? "active-siderbar-item " : ""
+            activeSection === "cart" ? "active-sidebar-item" : ""
           }`}
         >
           <h4>سفارشات</h4>
         </span>
         <span
           className={`cursor-pointer px-4 py-3 text-right ${
-            activeSection === "orderHistory" ? "active-siderbar-item " : ""
+            activeSection === "orderHistory" ? "active-sidebar-item" : ""
           }`}
           onClick={() => {
             setActiveSection(
