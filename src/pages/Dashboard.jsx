@@ -113,7 +113,7 @@ function Sidebar({
         ></i>
         <Link to="/">صفحه اصلی</Link>
       </div>
-      <div className="grid gap-6 justify-items-stretch">
+      <div className="grid gap-6 justify-items-stretch w-full">
         <span
           onClick={() => {
             setActiveSection(activeSection === "form" ? null : "form");
