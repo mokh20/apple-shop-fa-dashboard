@@ -5,6 +5,7 @@ import Cart from "./Cart";
 import { supabase } from "../lib/supabaseClient";
 import Spinner from "../components/ui/Spinner";
 import OrderHistory from "../components/OrderHistory";
+import LanguageSwitcher from "../components/ui/LanguageSwitcher";
 
 function Dashboard() {
   const { cartItems } = useCart();
@@ -170,7 +171,8 @@ function Sidebar({
 function Navbar({ userInfo, setIsMenuOpen }) {
   return (
     <nav className="flex col-span-full flex-row-reverse justify-between items-center px-2 py-6 text-sm font-medium bg-white sm:p-6 sm:text-xl md:text-2xl md:p-8 ">
-      <div className="flex gap-4 md:gap-8">
+      <div className="flex gap-2 md:gap-4">
+        <LanguageSwitcher isDashboard={true} />
         <img src={userInfo.profilePic} className="w-10"></img>
       </div>
       <div className="flex gap-8 items-center">

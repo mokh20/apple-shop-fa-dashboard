@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useCart } from "../../context/CartProvider";
 import LoginPopup from "../ProfilePopup";
 import MiniCartHandler from "../MiniCartHandler";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 
 const datas = [
   "Store",
@@ -26,9 +27,12 @@ function Navbar({ showCart, setShowCart }) {
   const { cartItems } = useCart();
   return (
     <section className="sticky top-0 z-20 flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]">
-      <Link to={"/"}>
-        <i className="fi fi-brands-apple mx-4 sm:text-lg lg:ml-12 lg:text-2xl"></i>
-      </Link>
+      <div className="flex items-center sm:text-lg  lg:text-2xl lg:ml-1 xl:ml-2">
+        <LanguageSwitcher />
+        <Link to={"/"}>
+          <i className="fi fi-brands-apple sm:text-lg lg:mr-4 lg:text-2xl"></i>
+        </Link>
+      </div>
       <div className="hidden justify-center text-[#2F2F2F] text-xs md:flex md:w-full md:justify-around lg:text-sm">
         <RenderData />
       </div>
