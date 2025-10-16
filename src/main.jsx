@@ -5,15 +5,18 @@ import ProductsProvider from "./context/ProductsProvider.jsx";
 import App from "./App.jsx";
 import "./main.css";
 import CartProvider from "./context/CartProvider.jsx";
+import { LanguageProvider } from "./context/LanguageProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ProductsProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </CartProvider>
-    </ProductsProvider>
+    <LanguageProvider>
+      <ProductsProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CartProvider>
+      </ProductsProvider>
+    </LanguageProvider>
   </StrictMode>
 );

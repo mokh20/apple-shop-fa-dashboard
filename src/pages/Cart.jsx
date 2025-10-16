@@ -1,9 +1,11 @@
 import { useCart } from "../context/CartProvider";
 import { Link } from "react-router";
 import { supabase } from "../lib/supabaseClient";
+import { useLanguage } from "../context/LanguageProvider";
 
 function Cart({ thumbnailSize }) {
   const { deleteItem, cartItems, setCartItems } = useCart();
+  const { language } = useLanguage();
 
   // count total price cart
   const totalPrice = cartItems.length
@@ -34,6 +36,10 @@ function Cart({ thumbnailSize }) {
       .select();
     console.log(data);
   }
+  //  convert digit to persian
+  function toPersianDigits(order) {
+    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+  }
   return (
     <table
       dir="rtl"
@@ -59,14 +65,20 @@ function Cart({ thumbnailSize }) {
               colSpan={titleName.length}
               className="text-center font-medium sm:text-xl p-4"
             >
-              Your Bag is empty.
+              {`${
+                language === "En"
+                  ? "Your Bag is empty."
+                  : "سبد خرید شما خالی است."
+              }`}
             </td>
           </tr>
         ) : (
           <>
             {cartItems.map((data, index) => (
               <tr key={data.id} className="border-b">
-                <td>{index + 1}</td>
+                <td>
+                  {language === "En" ? index + 1 : toPersianDigits(index + 1)}
+                </td>
                 <td className="sm:p-4">
                   <img
                     src={data.img}
@@ -81,7 +93,9 @@ function Cart({ thumbnailSize }) {
                     to={`/products/${data.id}`}
                     className="hover:underline hover:text-blue-700"
                   >
-                    {data.name}
+                    {language === "En"
+                      ? data.name
+                      : toPersianDigits(data.name_fa)}
                   </Link>
                 </td>
                 <td className="p-4">
@@ -90,14 +104,20 @@ function Cart({ thumbnailSize }) {
                     onChange={(e) => handleQuantity(e, data.id)}
                     className="outline-0"
                   >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    {[1, 2, 3, 4, 5].map((num) => (
+                      <option key={num} value={num}>
+                        {language === "En" ? num : toPersianDigits(num)}
+                      </option>
+                    ))}
                   </select>
                 </td>
-                <td className="p-4 font-medium">${data.price?.toFixed(2)}</td>
+                <td className="p-4 font-medium">
+                  {language === "En"
+                    ? `$${data.price?.toFixed(2)}`
+                    : `${toPersianDigits(
+                        (data.price * 100000).toLocaleString()
+                      )} تومان`}
+                </td>
                 <td className="p-4">
                   <p
                     className="text-blue-500 cursor-pointer text-center"
@@ -119,7 +139,13 @@ function Cart({ thumbnailSize }) {
                   }`}
                 >
                   <span>جمع کل :</span>
-                  <div>${totalPrice.toFixed(2)}</div>
+                  <div>
+                    {language === "En"
+                      ? `$${totalPrice.toFixed(2)}`
+                      : `${toPersianDigits(
+                          (totalPrice * 100000).toLocaleString()
+                        )} تومان`}
+                  </div>
                 </div>
               </td>
             </tr>
