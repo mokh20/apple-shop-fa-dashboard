@@ -7,6 +7,7 @@ import "./main.css";
 import CartProvider from "./context/CartProvider.jsx";
 import { LanguageProvider } from "./context/LanguageProvider.jsx";
 
+import "./components/i18n.js";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <LanguageProvider>

@@ -83,7 +83,7 @@ function Dashboard() {
                     userInfo={userInfo}
                   />
                 )}
-                {activeSection === "cart" && <Cart thumbnailSize={true} />}
+                {activeSection === "cart" && <Cart thumbnailSize />}
                 {activeSection === "orderHistory" && <OrderHistory />}
               </>
             )}
@@ -172,7 +172,7 @@ function Navbar({ userInfo, setIsMenuOpen }) {
   return (
     <nav className="flex col-span-full flex-row-reverse justify-between items-center px-2 py-6 text-sm font-medium bg-white sm:p-6 sm:text-xl md:text-2xl md:p-8 ">
       <div className="flex gap-2 md:gap-4">
-        <LanguageSwitcher isDashboard={true} />
+        <LanguageSwitcher />
         <img src={userInfo.profilePic} className="w-10"></img>
       </div>
       <div className="flex gap-8 items-center">

@@ -6,27 +6,22 @@ import { useCart } from "../../context/CartProvider";
 import LoginPopup from "../ProfilePopup";
 import MiniCartHandler from "../MiniCartHandler";
 import LanguageSwitcher from "../ui/LanguageSwitcher";
-
-const datas = [
-  "Store",
-  "Mac",
-  "iPad",
-  "iPhone",
-  "Watch",
-  "Vision",
-  "Airpods",
-  "TV & Home",
-  "Entertainment",
-  "Accessories",
-  "Support",
-];
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageProvider";
 
 function Navbar({ showCart, setShowCart }) {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartItems } = useCart();
+  const { t } = useTranslation();
+  const { language } = useLanguage();
+  // return object
+  const navbarItems = t("navbar", { returnObjects: true });
   return (
-    <section className="sticky top-0 z-20 flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]">
+    <section
+      className="sticky top-0 z-20 flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]"
+      dir={language === "en" ? "ltr" : "rtl"}
+    >
       <div className="flex items-center sm:text-lg  lg:text-2xl lg:ml-1 xl:ml-2">
         <LanguageSwitcher />
         <Link to={"/"}>
@@ -34,7 +29,7 @@ function Navbar({ showCart, setShowCart }) {
         </Link>
       </div>
       <div className="hidden justify-center text-[#2F2F2F] text-xs md:flex md:w-full md:justify-around lg:text-sm">
-        <RenderData />
+        <RenderData navbarItems={navbarItems} />
       </div>
       <div
         className={`flex flex-col fixed top-0 text-2xl font-medium pl-12 bg-white w-full h-screen z-30 transition-all duration-500 md:hidden ${
@@ -45,7 +40,7 @@ function Navbar({ showCart, setShowCart }) {
           className="fi fi-rr-cross-small m-4 text-2xl text-right lg:hidden"
           onClick={() => setIsMenuOpen(false)}
         ></i>
-        <RenderData />
+        <RenderData navbarItems={navbarItems} />
       </div>
       <div className="flex gap-6 mx-4 sm:text-xl md:text-lg lg:text-2xl lg:mr-12">
         <i className="fi fi-rr-search"></i>
@@ -81,11 +76,12 @@ function Navbar({ showCart, setShowCart }) {
   );
 }
 
-function RenderData() {
+function RenderData({ navbarItems }) {
+  console.log(navbarItems);
   return (
     <div className="w-full grid gap-4 m-4 sm:m-0 md:flex md:justify-evenly">
-      {datas.map((data) => (
-        <span key={data}>{data}</span>
+      {navbarItems.map((item, index) => (
+        <span key={index}>{item}</span>
       ))}
     </div>
   );

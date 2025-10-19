@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import { useCart } from "../context/CartProvider";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageProvider";
 
 function MiniCartHandler({ showCart, setShowCart }) {
   const { cartItems } = useCart();
   const pathname = useLocation();
-
+  const { t } = useTranslation();
+  const { language } = useLanguage();
   // Close cart on route change
   useEffect(() => {
     setShowCart(false);
@@ -24,22 +27,22 @@ function MiniCartHandler({ showCart, setShowCart }) {
     >
       <div className="m-14">
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-medium mb-8">Bag</h2>
+          <h2 className="text-xl font-medium mb-8">{t("miniCart.title")}</h2>
           <Link to="/cart">
             <button className="rounded-full bg-blue-400 text-white px-4 h-10 cursor-pointer">
-              Review Bag
+              {t("miniCart.review")}
             </button>
           </Link>
         </div>
         {!cartItems.length ? (
-          <p className="md:text-xl">Your Bag is empty.</p>
+          <p className="md:text-xl">{t("miniCart.emptyBag")}</p>
         ) : (
           cartItems.slice(0, 3).map((data) => (
             <Link to={`/products/${data.id}`} key={data.id}>
               <div className="flex items-center gap-4">
                 <img src={data.img} alt="" className="w-24" />
                 <p className="text-xs sm:text-sm md:text-base hover:underline hover:text-blue-700">
-                  {data.name}
+                  {language === "en" ? data.name : data.name_fa}
                 </p>
               </div>
             </Link>
@@ -47,7 +50,7 @@ function MiniCartHandler({ showCart, setShowCart }) {
         )}
         {cartItems.length > 3 && (
           <p className="text-gray-500 mt-4">
-            {cartItems.length - 3} more items in your bag
+            +{cartItems.length - 3} {t("miniCart.quantityInfo")}
           </p>
         )}
       </div>

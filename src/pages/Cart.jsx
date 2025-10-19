@@ -2,11 +2,12 @@ import { useCart } from "../context/CartProvider";
 import { Link } from "react-router";
 import { supabase } from "../lib/supabaseClient";
 import { useLanguage } from "../context/LanguageProvider";
+import { useTranslation } from "react-i18next";
 
 function Cart({ thumbnailSize }) {
   const { deleteItem, cartItems, setCartItems } = useCart();
   const { language } = useLanguage();
-
+  const { t } = useTranslation();
   // count total price cart
   const totalPrice = cartItems.length
     ? cartItems.reduce(
@@ -16,12 +17,12 @@ function Cart({ thumbnailSize }) {
     : 0;
   // title of table
   const titleName = [
-    { name: "ردیف", className: "w-1/12" },
-    { name: "عکس کالا", className: "w-1/12" },
-    { name: "نام کالا", className: "w-2/12 sm:w-5/12" },
-    { name: "تعداد", className: "w-1/12" },
-    { name: "قیمت", className: "w-1/12" },
-    { name: "عملیات", className: "w-1/12" },
+    { key: "row", className: "w-1/12" },
+    { key: "image", className: "w-1/12" },
+    { key: "name", className: "w-2/12 sm:w-5/12" },
+    { key: "quantity", className: "w-1/12" },
+    { key: "price", className: "w-1/12" },
+    { key: "actions", className: "w-1/12" },
   ];
   // change quantity item
   async function handleQuantity(e, id) {
@@ -42,17 +43,17 @@ function Cart({ thumbnailSize }) {
   }
   return (
     <table
-      dir="rtl"
+      dir={language === "en" ? "ltr" : "rtl"}
       className="w-full table-fixed text-xs sm:text-sm md:text-base "
     >
       <thead className=" bg-gray-100 h-24">
         <tr>
           {titleName.map((title) => (
             <th
-              key={title.name}
+              key={title.key}
               className={`p-4 border-b ${title.className} text-center`}
             >
-              {title.name}
+              {t(`cartTable.${title.key}`, title.key)}
             </th>
           ))}
         </tr>
@@ -66,7 +67,7 @@ function Cart({ thumbnailSize }) {
               className="text-center font-medium sm:text-xl p-4"
             >
               {`${
-                language === "En"
+                language === "en"
                   ? "Your Bag is empty."
                   : "سبد خرید شما خالی است."
               }`}
@@ -77,7 +78,7 @@ function Cart({ thumbnailSize }) {
             {cartItems.map((data, index) => (
               <tr key={data.id} className="border-b">
                 <td>
-                  {language === "En" ? index + 1 : toPersianDigits(index + 1)}
+                  {language === "en" ? index + 1 : toPersianDigits(index + 1)}
                 </td>
                 <td className="sm:p-4">
                   <img
@@ -93,7 +94,7 @@ function Cart({ thumbnailSize }) {
                     to={`/products/${data.id}`}
                     className="hover:underline hover:text-blue-700"
                   >
-                    {language === "En"
+                    {language === "en"
                       ? data.name
                       : toPersianDigits(data.name_fa)}
                   </Link>
@@ -106,13 +107,13 @@ function Cart({ thumbnailSize }) {
                   >
                     {[1, 2, 3, 4, 5].map((num) => (
                       <option key={num} value={num}>
-                        {language === "En" ? num : toPersianDigits(num)}
+                        {language === "en" ? num : toPersianDigits(num)}
                       </option>
                     ))}
                   </select>
                 </td>
                 <td className="p-4 font-medium">
-                  {language === "En"
+                  {language === "en"
                     ? `$${data.price?.toFixed(2)}`
                     : `${toPersianDigits(
                         (data.price * 100000).toLocaleString()
@@ -140,7 +141,7 @@ function Cart({ thumbnailSize }) {
                 >
                   <span>جمع کل :</span>
                   <div>
-                    {language === "En"
+                    {language === "en"
                       ? `$${totalPrice.toFixed(2)}`
                       : `${toPersianDigits(
                           (totalPrice * 100000).toLocaleString()

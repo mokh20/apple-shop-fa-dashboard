@@ -1,20 +1,20 @@
 import { useLanguage } from "../../context/LanguageProvider";
 
-function LanguageSwitcher({ isDashboard }) {
-  const { setLanguage } = useLanguage();
+function LanguageSwitcher() {
+  const { language, changeLanguage } = useLanguage();
+
   function handlerLanguage(e) {
-    const languageValue = e.target.value;
-    setLanguage(languageValue);
+    changeLanguage(e.target.value);
   }
   return (
     <div className="flex items-center gap-4 relative mr-6" dir="rtl">
       <select
         className="appearance-none outline-none text-xs cursor-pointer ml-2 xl:text-base hover:text-blue-500"
-        defaultValue={isDashboard ? "فارسی" : "En"}
+        value={language}
         onChange={(e) => handlerLanguage(e)}
       >
-        <option value="Fa">فارسی</option>
-        <option value="En">EN</option>
+        <option value="fa">فارسی</option>
+        <option value="en">EN</option>
       </select>
     </div>
   );

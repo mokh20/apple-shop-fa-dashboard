@@ -1,0 +1,29 @@
+{
+  "navbar": [
+    "Store",
+    "Mac",
+    "iPad",
+    "iPhone",
+    "Watch",
+    "Vision",
+    "Airpods",
+    "TV & Home",
+    "Entertainment",
+    "Accessories",
+    "Support"
+  ],
+  "cartTable": {
+    "row": "Row",
+    "image": "Product Image",
+    "name": "Product Name",
+    "quantity": "Quantity",
+    "price": "Price",
+    "actions": "Actions"
+  },
+  "miniCart": {
+    "title": "Bag",
+    "review": "Review Bag",
+    "emptyBag": "Your Bag is empty.",
+    "quantityInfo": "more items in your bag"
+  }
+}
