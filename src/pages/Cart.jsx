@@ -44,7 +44,7 @@ function Cart({ thumbnailSize }) {
   return (
     <table
       dir={language === "en" ? "ltr" : "rtl"}
-      className="w-full table-fixed text-xs sm:text-sm md:text-base "
+      className="w-full table-fixed text-xs sm:text-sm md:text-base"
     >
       <thead className=" bg-gray-100 h-24">
         <tr>

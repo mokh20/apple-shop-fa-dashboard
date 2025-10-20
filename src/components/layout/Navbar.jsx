@@ -32,12 +32,14 @@ function Navbar({ showCart, setShowCart }) {
         <RenderData navbarItems={navbarItems} />
       </div>
       <div
-        className={`flex flex-col fixed top-0 text-2xl font-medium pl-12 bg-white w-full h-screen z-30 transition-all duration-500 md:hidden ${
+        className={`flex flex-col fixed top-0 text-2xl font-medium bg-white w-full h-screen z-30 transition-all duration-500 md:hidden ${
           isMenuOpen ? "translate-y-0" : "-translate-y-full"
-        } `}
+        } ${language === "en" ? "pl-12" : "pr-12"} `}
       >
         <i
-          className="fi fi-rr-cross-small m-4 text-2xl text-right lg:hidden"
+          className={`fi fi-rr-cross-small m-4 text-2xl ${
+            language === "en" ? "text-right" : "text-left"
+          } lg:hidden`}
           onClick={() => setIsMenuOpen(false)}
         ></i>
         <RenderData navbarItems={navbarItems} />

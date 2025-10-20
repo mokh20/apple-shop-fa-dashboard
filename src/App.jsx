@@ -30,7 +30,7 @@ function App() {
     window.scrollTo(0, 0);
   }, [location]);
   return (
-    <div>
+    <div className={language === "fa" ? "font-vazir" : "font-sans"}>
       {isLoading ? (
         <Spinner />
       ) : (
