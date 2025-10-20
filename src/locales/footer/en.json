@@ -1,0 +1,26 @@
+{
+  "delivery": {
+    "fastDelivery": {
+      "title": "Fast delivery",
+      "detail": "Enjoy two-hour delivery, free delivery."
+    },
+    "easyReturns": {
+      "title": "Free and easy returns",
+      "detail": "Complete your return online or take it to an Apple Store."
+    },
+    "shopAppleCard": {
+      "title": "Shop with Apple Card",
+      "detail": "Get 3% Daily Cash back when you shop at Apple with Apple Card."
+    },
+    "makeThemYours": {
+      "title": "Make them yours",
+      "detail": "Engrave your AirPods with your initials or favorite emoji — free. Only at Apple."
+    },
+    "more": "Learn more >"
+  },
+  "information": {
+    "p1": "To access and use all Apple Card features and products available only to Apple Card users, you must add Apple Card to Wallet on an iPhone or iPad that supports and has the latest version of iOS or iPadOS. Apple Card is subject to credit approval, available only for qualifying applicants in the United States, and issued by Goldman Sachs Bank USA, Salt Lake City Branch.",
+    "p2": "Apple Payments Services LLC, a subsidiary of Apple Inc., is a service provider of Goldman Sachs Bank USA for Apple Card and Savings accounts. Neither Apple Inc. nor Apple Payments Services LLC is a bank.",
+    "p3": "If you reside in the U.S. territories, please call Goldman Sachs at 877-255-5923 with questions about Apple Card. We approximate your location from your internet IP address by matching it to a geographic region or from the location entered during your previous visit to Apple."
+  }
+}

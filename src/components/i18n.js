@@ -1,17 +1,24 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import translationEn from "../locales/translationEn.json";
-import translationFa from "../locales/translationFa.json";
+
+// English
+import commonEn from "../locales/common/en.json";
+import footerEn from "../locales/footer/en.json";
+// Persian
+import commonFa from "../locales/common/fa.json";
+import footerFa from "../locales/footer/fa.json";
 
 const resources = {
-  en: { translation: translationEn },
-  fa: { translation: translationFa },
+  en: { common: commonEn, footer: footerEn },
+  fa: { common: commonFa, footer: footerFa },
 };
 
 i18n.use(initReactI18next).init({
   resources,
   fallbackLng: "en",
   lng: "en",
+  ns: ["common", "footer"],
+  defaultNS: "common",
   interpolation: {
     escapeValue: false,
   },

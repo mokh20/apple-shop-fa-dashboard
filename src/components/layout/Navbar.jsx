@@ -17,6 +17,11 @@ function Navbar({ showCart, setShowCart }) {
   const { language } = useLanguage();
   // return object
   const navbarItems = t("navbar", { returnObjects: true });
+
+  //  convert digit to persian
+  function toPersianDigits(order) {
+    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+  }
   return (
     <section
       className="sticky top-0 z-20 flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]"
@@ -50,8 +55,10 @@ function Navbar({ showCart, setShowCart }) {
           className="fi fi-rr-basket-shopping-simple relative cursor-pointer"
           onClick={() => setShowCart((prev) => !prev)}
         >
-          <span className="absolute flex items-center justify-center top-3 left-2 h-3 w-3 text-[10px] bg-black text-white text-center font-medium rounded-full md:text-sm md:w-4 md:h-4 md:left-3 md:top-4">
-            {cartItems.length}
+          <span className="absolute flex items-center justify-center top-2 left-2 h-4 w-4 text-[10px] bg-black text-white text-center font-medium rounded-full md:text-sm md:w-5 md:h-5 md:left-3 md:top-4">
+            {language === "en"
+              ? cartItems.length
+              : toPersianDigits(cartItems.length)}
           </span>
         </i>
         <div
@@ -79,7 +86,6 @@ function Navbar({ showCart, setShowCart }) {
 }
 
 function RenderData({ navbarItems }) {
-  console.log(navbarItems);
   return (
     <div className="w-full grid gap-4 m-4 sm:m-0 md:flex md:justify-evenly">
       {navbarItems.map((item, index) => (

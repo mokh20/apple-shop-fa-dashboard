@@ -14,6 +14,11 @@ function MiniCartHandler({ showCart, setShowCart }) {
     setShowCart(false);
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  //  convert digit to persian
+  function toPersianDigits(order) {
+    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+  }
   return (
     <div
       className={`w-full min-h-[400px] absolute bg-[#F9F9FC] transition-all z-10 ${
@@ -42,7 +47,9 @@ function MiniCartHandler({ showCart, setShowCart }) {
               <div className="flex items-center gap-4">
                 <img src={data.img} alt="" className="w-24" />
                 <p className="text-xs sm:text-sm md:text-base hover:underline hover:text-blue-700">
-                  {language === "en" ? data.name : data.name_fa}
+                  {language === "en"
+                    ? data.name
+                    : toPersianDigits(data.name_fa)}
                 </p>
               </div>
             </Link>
@@ -50,7 +57,11 @@ function MiniCartHandler({ showCart, setShowCart }) {
         )}
         {cartItems.length > 3 && (
           <p className="text-gray-500 mt-4">
-            +{cartItems.length - 3} {t("miniCart.quantityInfo")}
+            +{" "}
+            {language === "en"
+              ? cartItems.length - 3
+              : toPersianDigits(cartItems.length - 3)}{" "}
+            {t("miniCart.quantityInfo")}
           </p>
         )}
       </div>
