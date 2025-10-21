@@ -87,6 +87,7 @@ function Cart({ thumbnailSize }) {
                     className={`${
                       thumbnailSize ? "w-12 sm:w-16" : "w-40"
                     } mx-auto`}
+                    loading="lazy"
                   />
                 </td>
                 <td className="p-4">

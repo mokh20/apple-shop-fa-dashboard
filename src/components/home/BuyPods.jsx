@@ -12,7 +12,11 @@ function BuyPods() {
       >
         Buy AirPods &gt;
       </a>
-      <img src="/imgs/buy-airpods/airpods-engraving.jpg" alt="airpods" />
+      <img
+        src="/imgs/buy-airpods/airpods-engraving.jpg"
+        alt="airpods"
+        loading="lazy"
+      />
     </div>
   );
 }

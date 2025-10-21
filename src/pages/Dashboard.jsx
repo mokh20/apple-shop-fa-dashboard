@@ -173,7 +173,7 @@ function Navbar({ userInfo, setIsMenuOpen }) {
     <nav className="flex col-span-full flex-row-reverse justify-between items-center px-2 py-6 text-sm font-medium bg-white sm:p-6 sm:text-xl md:text-2xl md:p-8 ">
       <div className="flex gap-2 md:gap-4">
         <LanguageSwitcher />
-        <img src={userInfo.profilePic} className="w-10"></img>
+        <img src={userInfo.profilePic} className="w-10" loading="lazy"></img>
       </div>
       <div className="flex gap-8 items-center">
         <i
@@ -394,7 +394,12 @@ function FormEdit({ userInfo, setActiveSection }) {
               <i className="fi fi-br-add-image text-lg sm:text-4xl"></i>
             </label>
 
-            <img src={imgPreviewUrl} className="w-16 max-h-16 mx-8" alt="" />
+            <img
+              src={imgPreviewUrl}
+              className="w-16 max-h-16 mx-8"
+              alt=""
+              loading="lazy"
+            />
           </div>
           <div className="text-sm mt-8 flex gap-8">
             <button

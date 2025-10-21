@@ -58,7 +58,7 @@ function ProductDetail({ product, setMessage }) {
                 </div>
               </div>
             </div>
-            <img src={`${product?.img}`} alt={product?.name} />
+            <img src={`${product?.img}`} alt={product?.name} loading="lazy" />
           </div>
           <div className="grid my-4 gap-4 md:items-end md:ml-8">
             <span className="flex items-center gap-2">

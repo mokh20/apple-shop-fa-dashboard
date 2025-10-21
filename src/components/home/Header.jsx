@@ -7,6 +7,7 @@ function Header() {
             src="/imgs/header-accessories.png"
             alt=""
             className="max-h-[200px] absolute bottom-0 md:right-0 md:max-h-[250px] lg:max-h-[300px] xl:max-h-[350px]"
+            loading="lazy"
           />
         </span>
         <div className="absolute top-6 left-0 w-full flex flex-col justify-center text-sm text-center items-center gap-4 md:w-[60%] md:left-[10%] md:items-start md:justify-center md:h-full md:top-0  md:text-left md:gap-12">

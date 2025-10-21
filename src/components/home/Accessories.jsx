@@ -59,7 +59,12 @@ function RenderData() {
           className={`area-${data.tag} grid justify-items-center items-center w-full h-full bg-lightGray my-4 mx-0 rounded-2xl`}
           key={data.id}
         >
-          <img src={data.img} alt={data.name} className="w-[150px]" />
+          <img
+            src={data.img}
+            alt={data.name}
+            className="w-[150px]"
+            loading="lazy"
+          />
           <a
             href="https://www.apple.com/shop/iphone/accessories"
             className="grid w-full text-center text-sm font-medium xl:text-base"

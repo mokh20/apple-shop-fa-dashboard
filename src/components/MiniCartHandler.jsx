@@ -45,7 +45,7 @@ function MiniCartHandler({ showCart, setShowCart }) {
           cartItems.slice(0, 3).map((data) => (
             <Link to={`/products/${data.id}`} key={data.id}>
               <div className="flex items-center gap-4">
-                <img src={data.img} alt="" className="w-24" />
+                <img src={data.img} alt="" className="w-24" loading="lazy" />
                 <p className="text-xs sm:text-sm md:text-base hover:underline hover:text-blue-700">
                   {language === "en"
                     ? data.name

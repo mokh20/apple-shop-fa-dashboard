@@ -19,12 +19,11 @@ function Footer() {
     getCart();
   }, [getCart]);
   return (
-    <section
-      className="bg-lightGray mt-8 h-full"
+    <footer
+      className="bg-lightGray  h-full  mt-auto"
       dir={language === "en" ? "ltr" : "rtl"}
     >
       <Delivery t={t} />
-
       <div className="border-b-2 mx-8 py-4 mb-4 border-b-gray-200 gap-4 grid">
         <p>{t("information.p1")}</p>
         <p>{t("information.p2")}</p>
@@ -32,7 +31,7 @@ function Footer() {
       </div>
       <Navigate language={language} />
       <QuickAccess items={items} language={language} />
-    </section>
+    </footer>
   );
 }
 
@@ -138,9 +137,9 @@ function QuickAccess({ items, language }) {
                 ></i>
               </div>
               <ul
-                className={`${
-                  isOpenId === data.id ? "visible h-full" : "invisible h-0"
-                } gap-4 transition-all text-[#000000b8] p-0 text-normal sm:grid sm:visible sm:h-full`}
+                className={`transition-all overflow-hidden ${
+                  isOpenId === data.id ? "max-h-[500px]" : "max-h-0"
+                } gap-4 transition-all text-[#000000b8] p-0 text-normal sm:grid sm:visible sm:max-h-full`}
               >
                 {(language === "en" ? data.nav : data.nav_fa)?.map(
                   (nav, navId) => (
