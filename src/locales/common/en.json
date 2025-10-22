@@ -18,7 +18,8 @@
     "name": "Product Name",
     "quantity": "Quantity",
     "price": "Price",
-    "actions": "Actions"
+    "actions": "Actions",
+    "totalPrice": "Total Price"
   },
   "miniCart": {
     "title": "Bag",

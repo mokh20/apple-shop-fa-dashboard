@@ -140,7 +140,7 @@ function Cart({ thumbnailSize }) {
                     thumbnailSize ? "mx-4" : "mx-8"
                   }`}
                 >
-                  <span>جمع کل :</span>
+                  <span>{t(`cartTable.totalPrice`)} :</span>
                   <div>
                     {language === "en"
                       ? `$${totalPrice.toFixed(2)}`

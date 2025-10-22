@@ -18,7 +18,8 @@
     "name": "نام کالا",
     "quantity": "تعداد",
     "price": "قیمت",
-    "actions": "عملیات"
+    "actions": "عملیات",
+    "totalPrice": "جمع کل"
   },
   "miniCart": {
     "title": "سبد خرید",

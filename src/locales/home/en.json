@@ -1,0 +1,35 @@
+{
+  "header": {
+    "title": "Accessorize in a snap.",
+    "detail": "Find a MagSafe case, wallet, or charger that's right for you.",
+    "more": "Shop MagSafe"
+  },
+  "accessories": {
+    "title": "Featured iPhone Accessories",
+    "more": "Show Case & Protection",
+    "items": {
+      "item1": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "item2": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "item3": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "item4": "iPhone 16 Plus Silicone Case with MagSafe-Peony",
+      "item5": "iPhone 16 Plus Silicone Case with MagSafe-Peony"
+    }
+  },
+  "playPicks": {
+    "title": "Play Picks",
+    "more": "Playful Picks"
+  },
+  "chargingEssentials": {
+    "title": "Charging Essentials",
+    "more": "Shop Charging Essentials"
+  },
+  "buyPods": {
+    "title": "Say it in a way only you can.",
+    "detail": "Discover new engraving options for AirPods. Mix emoji, names, initials,and numbers.",
+    "more": "Buy AirPods"
+  },
+  "airTags": {
+    "title": "AirTag and Featured Accessories",
+    "more": "Shop all AirTag accessories"
+  }
+}

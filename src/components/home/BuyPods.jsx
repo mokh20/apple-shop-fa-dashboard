@@ -1,16 +1,17 @@
+import { useTranslation } from "react-i18next";
+
 function BuyPods() {
+  const { t } = useTranslation("home");
+
   return (
     <div className="bg-lightGray text-center grid justify-center p-4 gap-4">
-      <h2 className="text-3xl font-bold m-4">Say it in a way only you can.</h2>
-      <p>
-        Discover new engraving options for AirPods. Mix emoji, names, initials,
-        and numbers.
-      </p>
+      <h2 className="text-3xl font-bold m-4">{t(`buyPods.title`)}</h2>
+      <p>{t(`buyPods.detail`)}</p>
       <a
         href="https://www.apple.com/shop/iphone/accessories"
         className="text-[#06c] my-4"
       >
-        Buy AirPods &gt;
+        {t(`buyPods.more`)} &gt;
       </a>
       <img
         src="/imgs/buy-airpods/airpods-engraving.jpg"
