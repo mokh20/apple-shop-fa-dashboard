@@ -15,14 +15,16 @@ function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
   async function addToCart({ product }) {
+    console.log(product);
     try {
       const newProduct = {
         name: product.name,
+        name_fa: product.name_fa,
         price: product.price,
         id: product.id,
         img: product.img,
-        overview:
-          "The PopSockets MagSafe Grip for iPhone magnetically snaps on and off your phone so you can easily swap between PopSockets MagSafe accessories. Comes with a magnetic adapter ring that makes any case MagSafe compatible",
+        overview: product.overview,
+        overview_fa: product.overview_fa,
         quantity: 1,
       };
 
