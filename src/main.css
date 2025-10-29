@@ -21,6 +21,15 @@
   background-color: rgb(88, 88, 88);
   padding: 4px;
 }
+.sidebar-item {
+  cursor: pointer;
+  padding: 0.7rem 1rem;
+  border-radius: 24px;
+  border-end-end-radius: 18px;
+  border-start-end-radius: 18px;
+}
+
+.sidebar-item:hover,
 .active-sidebar-item {
   background: #6faafd;
   color: white;

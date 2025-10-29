@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { supabase } from "../lib/supabaseClient";
 import Spinner from "./ui/Spinner";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageProvider";
 
 function OrderHistory() {
   const [orderList, setOrderList] = useState([]);
@@ -62,22 +64,36 @@ function RenderData({
   printBtn,
   printOrder,
 }) {
+  const { t } = useTranslation("dashboard");
+  const { language } = useLanguage();
   //  convert digit to persian
   function toPersianDigits(order) {
     return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   }
 
+  function formatByLang(value) {
+    return language === "en" ? value : toPersianDigits(value);
+  }
+
   return (
     <div>
-      <p className=" font-medium text-xl text-right m-8">فاکتورها</p>
+      <p
+        className={`font-medium text-xl m-8 ${
+          language === "en" ? "text-left" : "text-right"
+        }`}
+      >
+        {t("orderHistory.title")}
+      </p>
       <table className="w-full table-fixed bg-white">
         <thead>
           <tr className="h-20 border border-gray-400 text-xs sm:text-base">
-            <th>ردیف</th>
-            <th className="w-2/10 sm:w-3/10">تاریخ فاکتور</th>
-            <th>شماره فاکتور</th>
-            <th className="w-2/10 sm:w-3/10">مبلغ</th>
-            <th>عملیات</th>
+            <th>{t("orderHistory.row")}</th>
+            <th className="w-2/10 sm:w-3/10">
+              {t("orderHistory.invoiceDate")}
+            </th>
+            <th>{t("orderHistory.invoiceNumber")}</th>
+            <th className="w-2/10 sm:w-3/10">{t("orderHistory.amount")}</th>
+            <th>{t("orderHistory.actions")}</th>
           </tr>
         </thead>
         <tbody>
@@ -87,35 +103,36 @@ function RenderData({
               className=" text-xs sm:text-sm md:text-lg lg:m-2 border-b border-gray-400"
             >
               {/* ردیف  */}
-              <td className="p-2 text-center">{toPersianDigits(index + 1)}</td>
+              <td className="p-2 text-center">{formatByLang(index + 1)}</td>
 
               {/* تاریخ  */}
               <td className="p-2 text-center" dir="ltr">
                 <span className="mr-2">
-                  {toPersianDigits(order.date.split("T")[0].replace(/-/g, "/"))}
+                  {formatByLang(order.date.split("T")[0].replace(/-/g, "/"))}
                 </span>
                 |
                 <span className="ml-2">
-                  {toPersianDigits(order.date.split("T")[1].slice(0, 5))}
+                  {formatByLang(order.date.split("T")[1].slice(0, 5))}
                 </span>
               </td>
 
               {/* شماره فاکتور  */}
-              <td className="p-2 text-center">
-                {toPersianDigits(order.orderId)}
-              </td>
+              <td className="p-2 text-center">{formatByLang(order.orderId)}</td>
 
               {/* مبلغ  */}
               <td className="p-2 text-center">
-                {toPersianDigits(order.totalPrice.toLocaleString("en-US"))}{" "}
-                تومان
+                {language === "en"
+                  ? `$${(order.totalPrice / 100000).toFixed(2)}`
+                  : `${toPersianDigits(
+                      order.totalPrice.toLocaleString()
+                    )} تومان`}
               </td>
 
               {/* عملیات  */}
               <td className="py-8 px-2 text-center align-middle font-medium text-xs md:text-xl lg:text-2xl">
                 <i
                   className="fi fi-tr-overview mx-2 cursor-pointer hover:text-blue-500 xl:mx-4"
-                  title="مشاهده فاکتور"
+                  title={t("orderHistory.viewInvoice")}
                   onClick={() => {
                     setShowOrder(true);
                     setOrderId(order.id);
@@ -123,7 +140,7 @@ function RenderData({
                 ></i>
                 <i
                   className="fi fi-ts-print mx-2 cursor-pointer hover:text-blue-500 xl:mx-4"
-                  title="پرینت فاکتور"
+                  title={t("orderHistory.print")}
                   onClick={() => {
                     setShowOrder(true);
                     setOrderId(order.id);
@@ -143,6 +160,12 @@ function RenderData({
 }
 
 function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
+  const { t } = useTranslation("dashboard");
+  // translate
+  const { language } = useLanguage();
+  function formatByLang(value) {
+    return language === "en" ? value : toPersianDigits(value);
+  }
   const orderItem = orderList.find((item) => item.id === orderId);
   const totalQuantity = orderItem.items.reduce(
     (sum, item) => sum + Number(item.quantity),
@@ -174,39 +197,38 @@ function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
           <i
             className="fi fi-rr-cross-small text-3xl cursor-pointer hover:text-blue-500"
             onClick={() => setShowOrder(false)}
-            title="بستن"
+            title={t("invoice.closeBtn")}
           ></i>
           <i
             className="fi fi-ts-print mx-2 cursor-pointer text-3xl hover:text-blue-500 xl:mx-4"
-            title="پرینت فاکتور"
+            title={t("invoice.print")}
             onClick={printBtn}
           ></i>
         </div>
         <div
           className="overflow-x-auto scrollbar-hide w-full"
           ref={printOrder}
-          dir="rtl"
+          dir={language === "fa" && "rtl"}
         >
-          <h3 className="my-2 text-center">فاکتور شما</h3>
+          <h3 className="my-2 text-center">{t("invoice.title")}</h3>
           <table className="border border-gray-200 min-w-[600px] text-right text-sm sm:w-full ">
             <tbody>
               <tr className="border-b border-gray-200">
-                <td className="p-4">
-                  شماره فاکتور : {toPersianDigits(orderItem.orderId)}
+                <td className={`${language === "en" && "text-left"} p-4`}>
+                  {t("invoice.invoiceInfo.number")} :{" "}
+                  {formatByLang(orderItem.orderId)}
                 </td>
                 <td className="w-1/3">
-                  <div className="py-4 px-2 flex flex-col justify-end gap-2 text-right">
-                    <h4> تاریخ فاکتور : </h4>
+                  <div className="py-4 px-2 flex justify-end gap-2 text-right">
+                    <h4> {t("invoice.invoiceInfo.date")} : </h4>
                     <div className="flex gap-4 flex-row-reverse">
                       <span>
-                        {toPersianDigits(
+                        {formatByLang(
                           orderItem.date.split("T")[0].replace(/-/g, "/")
                         )}
                       </span>
                       <span>
-                        {toPersianDigits(
-                          orderItem.date.split("T")[1].slice(0, 5)
-                        )}
+                        {formatByLang(orderItem.date.split("T")[1].slice(0, 5))}
                       </span>
                     </div>
                   </div>
@@ -215,16 +237,22 @@ function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
               <tr className="border-b border-gray-200">
                 <td>
                   <div className="py-4 px-2 flex gap-4">
-                    <h4>نام مشتری :</h4>
+                    <h4>{t("invoice.invoiceInfo.customerName")} :</h4>
                     <span>{orderItem.userName}</span>
                   </div>
                 </td>
               </tr>
               <tr className="border-b border-gray-200 w-full">
                 <td colSpan={3}>
-                  <div className="py-4 px-2 flex gap-2 ">
-                    <h4 className="w-32 sm:w-16 md:w-12 lg:w-10">آدرس :</h4>
-                    <p>{orderItem.address}</p>
+                  <div
+                    className={`${
+                      language === "en" && "flex justify-between"
+                    } py-4 px-2 flex gap-2`}
+                  >
+                    <h4 className="w-26 md:w-22 lg:w-16">
+                      {t("invoice.invoiceInfo.address")} :
+                    </h4>
+                    <p dir="rtl">{orderItem.address}</p>
                   </div>
                 </td>
               </tr>
@@ -233,49 +261,68 @@ function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
           <table className="border border-gray-200 min-w-[600px] text-sm text-center mt-4 lg:w-full">
             <thead className="bg-lightGray">
               <tr className="h-20">
-                <th className="order-item w-1/12">ردیف</th>
-                <th className="order-item w-3/12">نام کالا</th>
-                <th className="order-item">تعداد</th>
-                <th className="order-item w-2/12">مبلغ</th>
-                <th className="order-item">تخفیف</th>
-                <th className="order-item">مالیات</th>
-                <th className="order-item">جمع کل</th>
+                <th className="order-item w-1/12">
+                  {t("invoice.tableInvoice.row")}
+                </th>
+                <th className="order-item w-3/12">
+                  {t("invoice.tableInvoice.productName")}
+                </th>
+                <th className="order-item">
+                  {t("invoice.tableInvoice.quantity")}
+                </th>
+                <th className="order-item w-2/12">
+                  {t("invoice.tableInvoice.price")}
+                </th>
+                <th className="order-item">
+                  {t("invoice.tableInvoice.discount")}
+                </th>
+                <th className="order-item">{t("invoice.tableInvoice.tax")}</th>
+                <th className="order-item">
+                  {t("invoice.tableInvoice.total")}
+                </th>
               </tr>
             </thead>
             <tbody>
               {orderItem.items.map((item, index) => (
                 <tr key={item.id} className="order-item">
                   <td>{toPersianDigits(index + 1)}</td>
-                  <td className="text-right order-item">{item.name}</td>
+                  <td
+                    className={`${
+                      language === "en" ? "text-left" : "text-right"
+                    } order-item`}
+                  >
+                    {language === "en" ? item.name : item.name_fa}
+                  </td>
                   <td>{item.quantity}</td>
                   <td className="order-item">
-                    {toPersianDigits(
-                      (item.price * 100000).toLocaleString("en-US")
-                    )}{" "}
-                    تومان
+                    {language === "en"
+                      ? `$${item.price.toFixed(2)}`
+                      : `${toPersianDigits(
+                          (item.price * 100000).toLocaleString()
+                        )} تومان`}
                   </td>
                   <td> - </td>
                   <td className="order-item">-</td>
                   <td>
-                    {toPersianDigits(
-                      (item.price * 100000 * item.quantity).toLocaleString(
-                        "en-US"
-                      )
-                    )}{" "}
-                    تومان
+                    {language === "en"
+                      ? `$${(item.price * item.quantity).toFixed(2)}`
+                      : `${toPersianDigits(
+                          (item.price * 100000 * item.quantity).toLocaleString()
+                        )} تومان`}
                   </td>
                 </tr>
               ))}
               <tr>
                 <td className="order-item" colSpan={2}>
-                  جمع کل :
+                  {t("invoice.tableInvoice.total")}
                 </td>
-                <td className="order-item">{toPersianDigits(totalQuantity)}</td>
+                <td className="order-item">{formatByLang(totalQuantity)}</td>
                 <td className="order-item">
-                  {toPersianDigits(
-                    (totalPrice * 100000).toLocaleString("en-US")
-                  )}{" "}
-                  تومان
+                  {language === "en"
+                    ? `$${totalPrice.toFixed(2)}`
+                    : `${toPersianDigits(
+                        (totalPrice * 100000).toLocaleString()
+                      )} تومان`}
                 </td>
                 <td className="order-item" colSpan={2}>
                   {" "}
@@ -283,10 +330,11 @@ function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
                 </td>
 
                 <td className="order-item">
-                  {toPersianDigits(
-                    (grandTotalPrice * 100000).toLocaleString("en-US")
-                  )}{" "}
-                  تومان
+                  {language === "en"
+                    ? `$${grandTotalPrice.toFixed(2)}`
+                    : `${toPersianDigits(
+                        (grandTotalPrice * 100000).toLocaleString()
+                      )} تومان`}
                 </td>
               </tr>
             </tbody>

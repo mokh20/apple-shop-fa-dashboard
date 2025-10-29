@@ -1,0 +1,64 @@
+{
+  "sidebar": {
+    "home": "صفحه اصلی",
+    "userInfo": "اطلاعات کاربر",
+    "paymentInfo": "اطلاعات مالی",
+    "cart": "سفارشات",
+    "orderHistory": "فاکتورها"
+  },
+  "formEdit": {
+    "formEditErrors": {
+      "nationCode": "کد ملی معتبر نیست",
+      "number": "شماره موبایل معتبر نیست",
+      "email": "ایمیل معتبر نیست",
+      "uploadImg": "خطا در آپلود عکس ، لطفا از عکسی با فرمت png یا jpg استفاده کنید. "
+    },
+    "title": "ویرایش اطلاعات",
+    "userName": "نام کاربری",
+    "nationCode": "کد ملی",
+    "phone": "شماره موبایل",
+    "email": "ایمیل",
+    "editImg": "ویرایش عکس",
+    "submitBtn": "ثبت اطلاعات",
+    "closeBtn": "بستن"
+  },
+  "paymentInfo": {
+    "title": "اطلاعات مالی",
+    "bankName": "نام بانک",
+    "iban": "شماره شبا",
+    "bankNameError": "تنها حروف فارسی مجاز است.",
+    "ibanError": "تنها استفاده از اعداد مجاز است.",
+    "submitBtn": "ثبت اطلاعات",
+    "closeBtn": "بستن"
+  },
+  "orderHistory": {
+    "title": "فاکتورهای من",
+    "row": "ردیف",
+    "invoiceDate": "تاریخ فاکتور",
+    "invoiceNumber": "شماره فاکتور",
+    "amount": "مبلغ",
+    "actions": "عملیات",
+    "print": "پرینت فاکتور",
+    "viewInvoice": "مشاهده فاکتور"
+  },
+  "invoice": {
+    "title": "فاکتور شما",
+    "invoiceInfo": {
+      "number": "شماره فاکتور",
+      "date": "تاریخ فاکتور",
+      "customerName": "نام مشتری",
+      "address": "آدرس"
+    },
+    "tableInvoice": {
+      "row": "ردیف",
+      "productName": "نام کالا",
+      "quantity": "تعداد",
+      "price": "مبلغ",
+      "discount": "تخفیف",
+      "tax": "مالیات",
+      "total": "جمع کل"
+    },
+    "print": "پرینت فاکتور",
+    "closeBtn": "بستن"
+  }
+}

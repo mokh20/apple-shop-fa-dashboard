@@ -51,8 +51,12 @@ function ProductDetail({ product, setMessage, language }) {
 
   return (
     <section className="grid justify-center m-4">
-      <div className="border-b-2 border-b-gray-200 md:flex md:border-none lg:gap-12">
-        <div className="grid content-around">
+      <div className="border-b-2 border-b-gray-200 flex md:border-none justify-center lg:gap-12">
+        <div
+          className={`grid content-around ${
+            language === "fa" && "md:max-w-[85%]"
+          }`}
+        >
           <div className="grid justify-items-center md:flex md:justify-between md:items-start">
             <div className="grid gap-4 md:ml-8">
               <h2 className="text-2xl font-medium my-4 sm:font-semibold sm:text-3xl lg:w-[80%]">

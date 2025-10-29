@@ -6,13 +6,18 @@ import { supabase } from "../lib/supabaseClient";
 import Spinner from "../components/ui/Spinner";
 import OrderHistory from "../components/OrderHistory";
 import LanguageSwitcher from "../components/ui/LanguageSwitcher";
+import { useLanguage } from "../context/LanguageProvider";
+import { useTranslation } from "react-i18next";
 
 function Dashboard() {
-  const { cartItems } = useCart();
+  // states
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("orderHistory");
   const [userInfo, setUserInfo] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+  const { cartItems } = useCart();
+  const { language } = useLanguage();
   async function getData() {
     try {
       const { data } = await supabase.from("usersInfo").select("*");
@@ -40,7 +45,10 @@ function Dashboard() {
 
   return (
     <>
-      <div className="relative grid grid-cols-12" dir="rtl">
+      <div
+        className="relative grid grid-cols-12"
+        dir={language === "fa" && "rtl"}
+      >
         <Sidebar
           setActiveSection={setActiveSection}
           activeSection={activeSection}
@@ -100,10 +108,14 @@ function Sidebar({
   isMenuOpen,
   setIsMenuOpen,
 }) {
+  const { t } = useTranslation("dashboard");
+  const { language } = useLanguage();
   return (
     <div
       className={`h-screen bg-white fixed grid grid-cols-1 w-3xs col-span-2 px-4 justify-items-center items-center text-center pt-10 content-start gap-4 z-20 transition-all duration-500 ${
-        isMenuOpen ? "translate-x-0 visible " : "translate-x-full"
+        isMenuOpen
+          ? "translate-x-0 visible"
+          : `${language === "en" ? "-translate-x-full" : "translate-x-full"}`
       } lg:w-full lg:relative lg:translate-x-0 lg:justify-items-stretch`}
       dir="ltr"
     >
@@ -112,7 +124,7 @@ function Sidebar({
           className="fi fi-rr-cross-small mt-2 text-2xl absolute left-7 lg:hidden"
           onClick={() => setIsMenuOpen(false)}
         ></i>
-        <Link to="/">صفحه اصلی</Link>
+        <Link to="/">{t("sidebar.home")}</Link>
       </div>
       <div className="grid gap-6 justify-items-stretch w-full">
         <span
@@ -120,11 +132,11 @@ function Sidebar({
             setActiveSection(activeSection === "form" ? null : "form");
             setIsMenuOpen(false);
           }}
-          className={`cursor-pointer px-4 py-3 text-right ${
+          className={`sidebar-item  hover:text-blue-500 ${
             activeSection === "form" ? "active-sidebar-item" : ""
-          }`}
+          } ${language === "en" ? "text-left" : "text-right"}`}
         >
-          <h4>اطلاعات کاربر</h4>
+          <h4>{t("sidebar.userInfo")}</h4>
         </span>
         <span
           onClick={() => {
@@ -133,27 +145,27 @@ function Sidebar({
             );
             setIsMenuOpen(false);
           }}
-          className={`cursor-pointer px-4 py-3 text-right ${
+          className={`sidebar-item  hover:text-blue-500 ${
             activeSection === "paymentInfo" ? "active-sidebar-item" : ""
-          }`}
+          } ${language === "en" ? "text-left" : "text-right"}`}
         >
-          <h4>اطلاعات مالی</h4>
+          <h4>{t("sidebar.paymentInfo")}</h4>
         </span>
         <span
           onClick={() => {
             setActiveSection(activeSection === "cart" ? null : "cart");
             setIsMenuOpen(false);
           }}
-          className={`cursor-pointer px-4 py-3 text-right ${
+          className={`sidebar-item  hover:text-blue-500 ${
             activeSection === "cart" ? "active-sidebar-item" : ""
-          }`}
+          } ${language === "en" ? "text-left" : "text-right"}`}
         >
-          <h4>سفارشات</h4>
+          <h4>{t("sidebar.cart")}</h4>
         </span>
         <span
-          className={`cursor-pointer px-4 py-3 text-right ${
+          className={`sidebar-item  hover:text-blue-500 ${
             activeSection === "orderHistory" ? "active-sidebar-item" : ""
-          }`}
+          } ${language === "en" ? "text-left" : "text-right"}`}
           onClick={() => {
             setActiveSection(
               activeSection === "orderHistory" ? null : "orderHistory"
@@ -161,7 +173,7 @@ function Sidebar({
             setIsMenuOpen(false);
           }}
         >
-          <h4>فاکتورها</h4>
+          <h4>{t("sidebar.orderHistory")}</h4>
         </span>
       </div>
     </div>
@@ -169,6 +181,7 @@ function Sidebar({
 }
 
 function Navbar({ userInfo, setIsMenuOpen }) {
+  const { language } = useLanguage();
   return (
     <nav className="flex col-span-full flex-row-reverse justify-between items-center px-2 py-6 text-sm font-medium bg-white sm:p-6 sm:text-xl md:text-2xl md:p-8 ">
       <div className="flex gap-2 md:gap-4">
@@ -180,7 +193,9 @@ function Navbar({ userInfo, setIsMenuOpen }) {
           className="fi fi-br-bars-staggered mt-2.5 text-lg sm:text-xl md:text-2xl lg:hidden"
           onClick={() => setIsMenuOpen(true)}
         ></i>
-        <h2> سلام؛ {userInfo.userName}</h2>
+        <h2>
+          {language === "en" ? "Welcome" : "سلام"} , {userInfo.userName}
+        </h2>
       </div>
     </nav>
   );
@@ -188,6 +203,13 @@ function Navbar({ userInfo, setIsMenuOpen }) {
 
 function FormEdit({ userInfo, setActiveSection }) {
   const [newErrorValid, setNewErrorValid] = useState({});
+
+  // translate
+  const { t } = useTranslation("dashboard");
+  function useFormEditErrors() {
+    return (key) => t(`formEdit.formEditErrors.${key}`);
+  }
+  const tErr = useFormEditErrors();
   // validation nation code
   function isValidNationalCode(input) {
     if (!/^\d{10}$/.test(input)) return false;
@@ -204,7 +226,7 @@ function FormEdit({ userInfo, setActiveSection }) {
     if (!isValidNationalCode(value)) {
       setNewErrorValid((prev) => ({
         ...prev,
-        nationCode: "کد ملی معتبر نیست",
+        nationCode: tErr("nationCode"),
       }));
     } else {
       newErrorValid.nationCode = "";
@@ -220,7 +242,7 @@ function FormEdit({ userInfo, setActiveSection }) {
     if (!isValidIranianPhone(value)) {
       setNewErrorValid((prev) => ({
         ...prev,
-        number: "شماره موبایل معتبر نیست",
+        number: tErr("number"),
       }));
     } else {
       newErrorValid.number = "";
@@ -236,7 +258,7 @@ function FormEdit({ userInfo, setActiveSection }) {
     if (!isValidEmail(value)) {
       setNewErrorValid((prev) => ({
         ...prev,
-        email: "ایمیل معتبر نیست",
+        email: tErr("email"),
       }));
     } else {
       newErrorValid.email = "";
@@ -252,10 +274,7 @@ function FormEdit({ userInfo, setActiveSection }) {
   function handleUploadImg(e) {
     const file = e.target.files[0];
     if (!file) return;
-    if (!isValidImg(file.name))
-      alert(
-        "خطا در آپلود عکس ، لطفا از عکسی با فرمت png یا jpg استفاده کنید. "
-      );
+    if (!isValidImg(file.name)) alert(tErr("uploadImg"));
     setImgPreviewUrl(URL.createObjectURL(e.target.files[0]));
     setImgFile(file.name);
     e.target.value = "";
@@ -274,19 +293,17 @@ function FormEdit({ userInfo, setActiveSection }) {
     // invalid
     const allErrorValid = {};
     if (!isValidEmail(value.emailuser)) {
-      allErrorValid.email = "ایمیل معتبر نیست";
+      allErrorValid.email = tErr("email");
     }
     if (!isValidIranianPhone(value.number)) {
-      allErrorValid.number = "شماره موبایل معتبر نیست";
+      allErrorValid.number = tErr("number");
     }
 
     if (!isValidNationalCode(value.nationcode)) {
-      allErrorValid.nationCode = "کدملی معتبر نیست";
+      allErrorValid.nationCode = tErr("nationCode");
     }
     if (!isValidImg(value.uploadImg)) {
-      alert(
-        "خطا در آپلود عکس ، لطفا از عکسی با فرمت png یا jpg استفاده کنید. "
-      );
+      alert(tErr("uploadImg"));
       return;
     }
     setNewErrorValid(allErrorValid);
@@ -317,7 +334,7 @@ function FormEdit({ userInfo, setActiveSection }) {
   }
   return (
     <div className="grid  max-w-md items-center justify-center gap-4 text-center text-sm mb-8 p-2 rounded-lg bg-lightGray shadow-form sm:text-xl sm:p-6">
-      <h3>ویرایش اطلاعات</h3>
+      <h3>{t("formEdit.title")}</h3>
       <form
         ref={formRef}
         onSubmit={handleSubmit}
@@ -325,7 +342,7 @@ function FormEdit({ userInfo, setActiveSection }) {
       >
         <div className="grid text-center justify-center justify-items-end w-full">
           <div className="flex items-center gap-4 my-2 justify-items-end max-h-14 min-h-14">
-            <label htmlFor="nameuser">نام کاربری : </label>
+            <label htmlFor="nameuser">{t("formEdit.userName")} : </label>
             <input
               type="text"
               id="nameuser"
@@ -336,7 +353,7 @@ function FormEdit({ userInfo, setActiveSection }) {
             />
           </div>
           <div className=" items-center gap-2 my-2 justify-items-end max-h-14 min-h-14">
-            <label htmlFor="nationcode">کدملی : </label>
+            <label htmlFor="nationcode">{t("formEdit.nationCode")} : </label>
             <input
               type="text"
               id="nationcode"
@@ -346,11 +363,13 @@ function FormEdit({ userInfo, setActiveSection }) {
               className="input-edit-form"
             />
             {isValidNationalCode && (
-              <p className="text-red-500 text-sm">{newErrorValid.nationCode}</p>
+              <p className="text-red-500 text-sm text-left">
+                {newErrorValid.nationCode}
+              </p>
             )}
           </div>
           <div className="items-center gap-2 my-2 justify-items-end max-h-14 min-h-14">
-            <label htmlFor="number">شماره موبایل : </label>
+            <label htmlFor="number"> {t("formEdit.phone")} : </label>
             <input
               type="text"
               id="number"
@@ -364,7 +383,7 @@ function FormEdit({ userInfo, setActiveSection }) {
             )}
           </div>
           <div className="items-center my-2 justify-items-end max-h-14 min-h-14">
-            <label htmlFor="emailuser">ایمیل : </label>
+            <label htmlFor="emailuser">{t("formEdit.email")} : </label>
             <input
               type="email"
               id="emailuser"
@@ -390,7 +409,7 @@ function FormEdit({ userInfo, setActiveSection }) {
               htmlFor="uploadImg"
               className="flex gap-4 cursor-pointer my-4"
             >
-              <span>ویرایش عکس : </span>
+              <span>{t("formEdit.editImg")} : </span>
               <i className="fi fi-br-add-image text-lg sm:text-4xl"></i>
             </label>
 
@@ -406,13 +425,13 @@ function FormEdit({ userInfo, setActiveSection }) {
               className="border-2 border-gray-400 rounded-lg px-6 py-1"
               type="submit"
             >
-              ویرایش اطلاعات
+              {t("formEdit.submitBtn")}
             </button>
             <button
               onClick={() => setActiveSection(null)}
               className="border-2 border-gray-400 rounded-lg px-6 py-1"
             >
-              بستن
+              {t("formEdit.closeBtn")}
             </button>
           </div>
         </div>
@@ -424,6 +443,7 @@ function FormEdit({ userInfo, setActiveSection }) {
 function PaymentInfo({ setActiveSection, userInfo }) {
   const [value, setValue] = useState("");
   const formRef = useRef(null);
+  const { t } = useTranslation("dashboard");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -457,7 +477,7 @@ function PaymentInfo({ setActiveSection, userInfo }) {
   }
   return (
     <div className="grid  max-w-md items-center justify-center gap-4 text-center text-sm mb-8 p-2 rounded-lg bg-lightGray shadow-form sm:text-xl sm:p-6">
-      <h3>اطلاعات مالی</h3>
+      <h3>{t("paymentInfo.title")}</h3>
       <form
         onSubmit={handleSubmit}
         className="grid gap-4 justify-center"
@@ -466,7 +486,7 @@ function PaymentInfo({ setActiveSection, userInfo }) {
         <div className="grid text-center justify-center justify-items-end w-full">
           <div className="grid items-center mb-6 justify-items-center max-h-14 min-h-14">
             <label htmlFor="bankName">
-              <span className="mx-2">نام بانک :</span>
+              <span className="mx-2">{t("paymentInfo.bankName")} :</span>
               <input
                 type="text"
                 id="bankName"
@@ -477,13 +497,13 @@ function PaymentInfo({ setActiveSection, userInfo }) {
                 onChange={handlePersianInput}
               />
             </label>
-            <p className="text-gray-500 text-xs text-left mr-6 sm:mr-0 sm:ml-4">
-              تنها حروف فارسی مجاز است.
+            <p className="text-gray-500 text-xs text-left mr-6 sm:mr-0 sm:ml-8">
+              {t("paymentInfo.bankNameError")}
             </p>
           </div>
           <div className="grid items-center mb-6 justify-items-center max-h-14 min-h-14">
             <label htmlFor="IBAN">
-              <span className="ml-2">شماره شبا :</span>
+              <span className="ml-2">{t("paymentInfo.iban")} : </span>
               <input
                 type="number"
                 id="IBAN"
@@ -492,7 +512,7 @@ function PaymentInfo({ setActiveSection, userInfo }) {
               />
             </label>
             <p className="text-gray-500 text-xs text-left mr-10 sm:mr-0">
-              تنها استفاده از اعداد مجاز است.
+              {t("paymentInfo.ibanError")}
             </p>
           </div>
           <div className="text-sm mt-8 flex gap-8">
@@ -500,13 +520,13 @@ function PaymentInfo({ setActiveSection, userInfo }) {
               className="border-2 border-gray-400 rounded-lg px-6 py-1"
               type="submit"
             >
-              ویرایش اطلاعات
+              {t("paymentInfo.submitBtn")}
             </button>
             <button
               onClick={() => setActiveSection(null)}
               className="border-2 border-gray-400 rounded-lg px-6 py-1"
             >
-              بستن
+              {t("paymentInfo.closeBtn")}
             </button>
           </div>
         </div>

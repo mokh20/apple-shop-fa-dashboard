@@ -1,0 +1,64 @@
+{
+  "sidebar": {
+    "home": "Home",
+    "userInfo": "User Info",
+    "paymentInfo": "Payment Info",
+    "cart": "Cart",
+    "orderHistory": "Order History"
+  },
+  "formEdit": {
+    "formEditErrors": {
+      "nationCode": "NationCode not valid",
+      "number": "Number not valid",
+      "email": "Email not valid",
+      "uploadImg": "Upload error: only PNG and JPG image formats are supported"
+    },
+    "title": "Edit Info",
+    "userName": "UserName",
+    "nationCode": "NationCode",
+    "phone": "Phone",
+    "email": "Email",
+    "editImg": "Edit Image",
+    "submitBtn": "Submit Edit",
+    "closeBtn": "Close"
+  },
+  "paymentInfo": {
+    "title": "Payment Info",
+    "bankName": "Bank Name",
+    "iban": "IBAN",
+    "bankNameError": "Only Persian letters are allowed",
+    "ibanError": "Only numeric characters are allowed",
+    "submitBtn": "Submit Edit",
+    "closeBtn": "Close"
+  },
+  "orderHistory": {
+    "title": "My Invoices",
+    "row": "No.",
+    "invoiceDate": "Invoice Date",
+    "invoiceNumber": "Invoice Number",
+    "amount": "Amount",
+    "actions": "Actions",
+    "print": "Print Invoice",
+    "viewInvoice": "View Invoice"
+  },
+  "invoice": {
+    "title": "Your Invoice",
+    "invoiceInfo": {
+      "number": "Invoice Number",
+      "date": "Invoice Date",
+      "customerName": "Customer Name",
+      "address": "Address"
+    },
+    "tableInvoice": {
+      "row": "No.",
+      "productName": "Product Name",
+      "quantity": "Quantity",
+      "price": "Price",
+      "discount": "Discount",
+      "tax": "Tax",
+      "total": "Total"
+    },
+    "print": "Print Invoice",
+    "closeBtn": "Close"
+  }
+}
