@@ -2,7 +2,7 @@ import Select from "react-select";
 import { useLanguage } from "../../context/LanguageProvider";
 
 function LanguageSwitcher() {
-  const { language, changeLanguage, setLanguage } = useLanguage();
+  const { language, changeLanguage } = useLanguage();
   const options = [
     { value: "fa", label: "فارسی" },
     { value: "en", label: "EN" },
@@ -15,7 +15,7 @@ function LanguageSwitcher() {
         value={selectedOption}
         onChange={(option) => changeLanguage(option.value)}
         options={options}
-        className="w-20 sm:w-24 md:w-26 text-left appearance-none outline-none text-xs cursor-pointer xl:text-base hover:text-blue-500"
+        className="w-23 sm:w-24 md:w-26 text-left appearance-none outline-none text-xs cursor-pointer xl:text-base hover:text-blue-500"
         placeholder={language}
         isSearchable={false}
       />
