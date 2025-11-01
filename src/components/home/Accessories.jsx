@@ -1,53 +1,23 @@
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../context/LanguageProvider";
+import { useProducts } from "../../context/ProductsProvider";
+import { Link } from "react-router";
 
 function Accessories() {
-  const { t } = useTranslation("home");
   const { language } = useLanguage();
-  const data = [
-    {
-      name: "item1",
-      price: 49.0,
-      img: "/imgs/featured-iphone/iphone16-pink.png",
-      tag: "iPhone-pink",
-      id: 1,
-    },
-    {
-      name: "item2",
-      price: 49.0,
-      img: "/imgs/featured-iphone/iphone16-gold.png",
-      tag: "iPhone-gold",
-      id: 2,
-    },
-    {
-      name: "item3",
-      price: 59.0,
-      img: "/imgs/featured-iphone/iphone16-wallet.png",
-      tag: "iPhone-wallet",
-      id: 3,
-    },
-    {
-      name: "item4",
-      price: 249.0,
-      img: "/imgs/featured-iphone/airpods-pro2.png",
-      tag: "airpods",
-      id: 4,
-    },
-    {
-      name: "item5",
-      price: 39.0,
-      img: "/imgs/featured-iphone/iphone16-blue.png",
-      tag: "iPhone-blue",
-      id: 5,
-    },
-  ];
+  const { products } = useProducts();
+  const { t } = useTranslation("home");
+
+  const filteredProducts = products.filter(
+    (product) => product.category === "accessory"
+  );
   return (
     <section
       className="m-4 grid text-center justify-items-center md:justify-items-stretch md:m-8"
       dir="ltr"
     >
       <h2 className="text-3xl font-bold m-4">{t("accessories.title")}</h2>
-      <RenderData data={data} t={t} language={language} />
+      <RenderData data={filteredProducts} t={t} language={language} />
       <a
         href="https://www.apple.com/shop/iphone/accessories"
         className="text-[#06c] mt-12"
@@ -64,26 +34,33 @@ function RenderData({ data, t, language }) {
   function toPersianDigits(order) {
     return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   }
+  const tagClass = [
+    "iPhone-pink",
+    "iPhone-gold",
+    "iPhone-wallet",
+    "airpods",
+    "iPhone-blue",
+  ];
   return (
     <div className="grid layout-dashboard gap-2">
-      {data.map((item) => (
-        <div
-          className={`grid area-${item.tag} justify-items-center items-center w-full h-full bg-lightGray py-4 my-4 mx-0 rounded-2xl`}
+      {data.map((item, index) => (
+        <Link
+          className={`grid area-${tagClass[index]} justify-items-center items-center w-full h-full bg-lightGray py-4 my-4 mx-0 rounded-2xl`}
           key={item.id}
+          to={`products/${item.id}`}
         >
           <img
             src={item.img}
-            alt={item.tag}
+            alt={item.category}
             className="w-[150px]"
             loading="lazy"
           />
-          <a
-            href="https://www.apple.com/shop/iphone/accessories"
+          <p
             className="grid w-full text-center text-sm font-medium xl:text-base"
             dir={language === "fa" && "rtl"}
           >
-            {t(`accessories.items.${item.name}`)}
-          </a>
+            {language === "en" ? t(item.name) : item.name_fa}
+          </p>
           <p
             className="text-[#8E8E90] text-sm font-medium xl:text-base"
             dir={language === "fa" && "rtl"}
@@ -94,7 +71,7 @@ function RenderData({ data, t, language }) {
                   (item.price * 100000).toLocaleString()
                 )} تومان`}
           </p>
-        </div>
+        </Link>
       ))}
     </div>
   );

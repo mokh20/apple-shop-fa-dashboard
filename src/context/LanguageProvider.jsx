@@ -20,7 +20,7 @@ export function LanguageProvider({ children }) {
     localStorage.setItem("lng", lang);
   };
   return (
-    <LanguageContext.Provider value={{ language, changeLanguage }}>
+    <LanguageContext.Provider value={{ language, changeLanguage, setLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

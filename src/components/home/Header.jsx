@@ -36,7 +36,7 @@ function Header() {
             {t(`header.detail`)}
           </h5>
           <a
-            href="https://www.apple.com/shop/iphone/accessories"
+            href="https://react-shop-mkh.netlify.app/"
             className="text-[#06c] w-full text-xs sm:text-sm sm:w-7/12 md:text-xl xl:w-8/12 "
           >
             {t(`header.more`)} &gt;

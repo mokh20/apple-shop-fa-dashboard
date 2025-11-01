@@ -100,20 +100,22 @@ function RenderData({
           {orderList.map((order, index) => (
             <tr
               key={order.orderId}
-              className=" text-xs sm:text-sm md:text-lg lg:m-2 border-b border-gray-400"
+              className="text-xs sm:text-sm md:text-lg lg:m-2 border-b border-gray-400"
             >
               {/* ردیف  */}
               <td className="p-2 text-center">{formatByLang(index + 1)}</td>
 
               {/* تاریخ  */}
               <td className="p-2 text-center" dir="ltr">
-                <span className="mr-2">
-                  {formatByLang(order.date.split("T")[0].replace(/-/g, "/"))}
-                </span>
-                |
-                <span className="ml-2">
-                  {formatByLang(order.date.split("T")[1].slice(0, 5))}
-                </span>
+                <div className="flex flex-wrap text-[.6rem] sm:text-sm md:text-lg sm:block">
+                  <span className="mr-2">
+                    {formatByLang(order.date.split("T")[0].replace(/-/g, "/"))}
+                  </span>
+                  |
+                  <span className="ml-2">
+                    {formatByLang(order.date.split("T")[1].slice(0, 5))}
+                  </span>
+                </div>
               </td>
 
               {/* شماره فاکتور  */}
@@ -220,7 +222,7 @@ function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
                 </td>
                 <td className="w-1/3">
                   <div className="py-4 px-2 flex justify-end gap-2 text-right">
-                    <h4> {t("invoice.invoiceInfo.date")} : </h4>
+                    <h4 className="w-22">{t("invoice.invoiceInfo.date")} : </h4>
                     <div className="flex gap-4 flex-row-reverse">
                       <span>
                         {formatByLang(

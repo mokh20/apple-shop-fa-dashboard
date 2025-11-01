@@ -1,21 +1,24 @@
+import Select from "react-select";
 import { useLanguage } from "../../context/LanguageProvider";
 
 function LanguageSwitcher() {
-  const { language, changeLanguage } = useLanguage();
+  const { language, changeLanguage, setLanguage } = useLanguage();
+  const options = [
+    { value: "fa", label: "فارسی" },
+    { value: "en", label: "EN" },
+  ];
+  const selectedOption = options.find((opt) => opt.value === language);
 
-  function handlerLanguage(e) {
-    changeLanguage(e.target.value);
-  }
   return (
-    <div className="flex items-center gap-4 relative mr-6" dir="rtl">
-      <select
-        className="appearance-none outline-none text-xs cursor-pointer ml-2 xl:text-base hover:text-blue-500"
-        value={language}
-        onChange={(e) => handlerLanguage(e)}
-      >
-        <option value="fa">فارسی</option>
-        <option value="en">EN</option>
-      </select>
+    <div className="mx-4" dir="ltr">
+      <Select
+        value={selectedOption}
+        onChange={(option) => changeLanguage(option.value)}
+        options={options}
+        className="w-20 sm:w-24 md:w-26 text-left appearance-none outline-none text-xs cursor-pointer xl:text-base hover:text-blue-500"
+        placeholder={language}
+        isSearchable={false}
+      />
     </div>
   );
 }
