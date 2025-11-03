@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../context/LanguageProvider";
+import toPersianDigits from "../../utils/toPersianDigits";
 
 function Footer() {
   const [items, setItems] = useState([]);
@@ -100,10 +101,6 @@ function Navigate({ language }) {
 }
 
 function QuickAccess({ items, language }) {
-  //  convert digit to persian
-  function toPersianDigits(order) {
-    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-  }
   const groups = [
     [0, 2],
     [2, 4],

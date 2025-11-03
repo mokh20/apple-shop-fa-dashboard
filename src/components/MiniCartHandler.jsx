@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router";
 import { useCart } from "../context/CartProvider";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../context/LanguageProvider";
+import toPersianDigits from "../utils/toPersianDigits";
 
 function MiniCartHandler({ showCart, setShowCart }) {
   const { cartItems } = useCart();
@@ -14,11 +15,6 @@ function MiniCartHandler({ showCart, setShowCart }) {
     setShowCart(false);
     window.scrollTo(0, 0);
   }, [pathname]);
-
-  //  convert digit to persian
-  function toPersianDigits(order) {
-    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-  }
   return (
     <div
       className={`w-full min-h-[400px] absolute bg-[#F9F9FC] transition-all z-10 ${

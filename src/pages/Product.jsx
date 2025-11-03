@@ -5,6 +5,7 @@ import { useCart } from "../context/CartProvider";
 import { useEffect, useState } from "react";
 import PopupMessage from "../components/PopupMessage";
 import { useLanguage } from "../context/LanguageProvider";
+import toPersianDigits from "../utils/toPersianDigits";
 
 function Product() {
   const { id } = useParams();
@@ -44,10 +45,6 @@ function Product() {
 function ProductDetail({ product, setMessage, language }) {
   const { addToCart, cartItems } = useCart();
   const isInCart = cartItems.some((item) => item.id === product.id);
-  //  convert digit to persian
-  function toPersianDigits(order) {
-    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-  }
 
   return (
     <section className="grid justify-center m-4">

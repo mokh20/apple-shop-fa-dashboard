@@ -8,6 +8,7 @@ import MiniCartHandler from "../MiniCartHandler";
 import LanguageSwitcher from "../ui/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../context/LanguageProvider";
+import toPersianDigits from "../../utils/toPersianDigits";
 
 function Navbar({ showCart, setShowCart }) {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -17,11 +18,6 @@ function Navbar({ showCart, setShowCart }) {
   const { language } = useLanguage();
   // return object
   const navbarItems = t("navbar", { returnObjects: true });
-
-  //  convert digit to persian
-  function toPersianDigits(order) {
-    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-  }
   return (
     <section
       className="sticky top-0 z-20 flex justify-between items-center py-8 bg-[#f9f9fc] border-b border-b-[#d1d1d3]"

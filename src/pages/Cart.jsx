@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { supabase } from "../lib/supabaseClient";
 import { useLanguage } from "../context/LanguageProvider";
 import { useTranslation } from "react-i18next";
+import toPersianDigits from "../utils/toPersianDigits";
 
 function Cart({ thumbnailSize }) {
   const { deleteItem, cartItems, setCartItems } = useCart();
@@ -36,10 +37,6 @@ function Cart({ thumbnailSize }) {
       .eq("id", id)
       .select();
     console.log(data);
-  }
-  //  convert digit to persian
-  function toPersianDigits(order) {
-    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   }
   return (
     <table

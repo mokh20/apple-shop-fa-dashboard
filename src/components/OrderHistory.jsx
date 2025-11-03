@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabaseClient";
 import Spinner from "./ui/Spinner";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../context/LanguageProvider";
+import toPersianDigits from "../utils/toPersianDigits";
 
 function OrderHistory() {
   const [orderList, setOrderList] = useState([]);
@@ -66,10 +67,6 @@ function RenderData({
 }) {
   const { t } = useTranslation("dashboard");
   const { language } = useLanguage();
-  //  convert digit to persian
-  function toPersianDigits(order) {
-    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-  }
 
   function formatByLang(value) {
     return language === "en" ? value : toPersianDigits(value);
@@ -182,10 +179,6 @@ function OrderInfo({ setShowOrder, orderId, orderList, printBtn, printOrder }) {
     0
   );
 
-  //  convert digit to persian
-  function toPersianDigits(order) {
-    return String(order).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-  }
   return (
     <div className="fixed inset-0 z-30 flex items-center justify-center">
       {/* backdrop */}
