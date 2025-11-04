@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useProducts } from "../context/ProductsProvider";
 import Slider from "../components/ui/Slider";
 import { useCart } from "../context/CartProvider";
@@ -12,6 +12,8 @@ function Product() {
   const { products } = useProducts();
   const filteredProduct = products.find((data) => data.id == id);
   const { language } = useLanguage();
+  const location = useLocation();
+  console.log(location.pathname);
   //  states
   const [message, setMessage] = useState("");
   // popup message status

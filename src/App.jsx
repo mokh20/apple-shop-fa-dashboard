@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router";
+import { Outlet, Route, Routes, useLocation } from "react-router";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import Footer from "./components/layout/Footer";
@@ -8,6 +8,7 @@ import Cart from "./pages/Cart";
 import Dashboard from "./pages/Dashboard";
 import { useLanguage } from "./context/LanguageProvider";
 import Spinner from "./components/ui/Spinner";
+import SignIn from "./components/auth/SignIn";
 
 function App() {
   const [showCart, setShowCart] = useState(false);
@@ -39,12 +40,7 @@ function App() {
             <Navbar showCart={showCart} setShowCart={setShowCart} />
           )}
           <main className={`${showCart & !hideLayout ? "blur-xs" : ""}`}>
-            <Routes>
-              <Route index element={<Home />} />
-              <Route path="/products/:id" element={<Product />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
+            <Outlet />
           </main>
           {!hideLayout && <Footer />}
         </>
