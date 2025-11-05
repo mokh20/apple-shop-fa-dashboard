@@ -6,11 +6,13 @@ import commonEn from "../locales/common/en.json";
 import homeEn from "../locales/home/en.json";
 import footerEn from "../locales/footer/en.json";
 import dashboardEn from "../locales/dashboard/en.json";
+import authEn from "../locales/auth/en.json";
 // Persian
 import commonFa from "../locales/common/fa.json";
 import homeFa from "../locales/home/fa.json";
 import footerFa from "../locales/footer/fa.json";
 import dashboardFa from "../locales/dashboard/fa.json";
+import authFa from "../locales/auth/fa.json";
 
 const resources = {
   en: {
@@ -18,12 +20,14 @@ const resources = {
     home: homeEn,
     footer: footerEn,
     dashboard: dashboardEn,
+    auth: authEn,
   },
   fa: {
     common: commonFa,
     home: homeFa,
     footer: footerFa,
     dashboard: dashboardFa,
+    auth: authFa,
   },
 };
 
@@ -31,7 +35,7 @@ i18n.use(initReactI18next).init({
   resources,
   fallbackLng: "en",
   lng: "en",
-  ns: ["common", "home", "footer", "dashboard"],
+  ns: ["common", "home", "footer", "dashboard", "auth"],
   defaultNS: "common",
   interpolation: {
     escapeValue: false,

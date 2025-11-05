@@ -51,13 +51,9 @@ function ProductDetail({ product, setMessage, language }) {
   return (
     <section className="grid justify-center m-4">
       <div className="border-b-2 border-b-gray-200 flex md:border-none justify-center lg:gap-12">
-        <div
-          className={`grid content-around ${
-            language === "fa" && "md:max-w-[85%]"
-          }`}
-        >
+        <div className="grid content-around">
           <div className="grid justify-items-center md:flex md:justify-between md:items-start">
-            <div className="grid gap-4 md:ml-8">
+            <div className="grid gap-4 md:ml-8 md:max-w-3xl">
               <h2 className="text-2xl font-medium my-4 sm:font-semibold sm:text-3xl lg:w-[80%]">
                 {language === "en" ? product?.name : product?.name_fa}
               </h2>
@@ -78,7 +74,12 @@ function ProductDetail({ product, setMessage, language }) {
                 </div>
               </div>
             </div>
-            <img src={`${product?.img}`} alt={product?.name} loading="lazy" />
+            <img
+              src={`${product?.img}`}
+              alt={product?.name}
+              loading="lazy"
+              className="md:max-w-sm"
+            />
           </div>
           <div className="grid my-4 gap-4 md:items-end md:ml-8">
             <span className="flex items-center gap-2">

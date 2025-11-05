@@ -1,0 +1,11 @@
+{
+  "signIn": {
+    "signInErrors": {
+      "emailNumber": "Please enter a valid email or mobile number.",
+      "password": "Your password must contain between 6 and 12 characters."
+    },
+    "title": "Sign In",
+    "email": "Email",
+    "password": "Password"
+  }
+}
