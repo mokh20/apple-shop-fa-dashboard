@@ -1,11 +1,14 @@
 {
-  "signIn": {
-    "signInErrors": {
-      "emailNumber": "Please enter a valid email or mobile number.",
-      "password": "Your password must contain between 6 and 12 characters."
-    },
-    "title": "Sign In",
-    "email": "Email",
-    "password": "Password"
-  }
+  "errors": {
+    "email": "Please enter a valid email.",
+    "phone": "Please enter a valid mobile number.",
+    "password": "Your password must contain between 6 and 12 characters."
+  },
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "userName": "Username",
+  "email": "Email",
+  "password": "Password",
+  "noAccount": "Don't have an account yet?",
+  "haveAccount": "Already have an account?"
 }

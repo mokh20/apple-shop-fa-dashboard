@@ -8,26 +8,17 @@ import OrderHistory from "../components/OrderHistory";
 import LanguageSwitcher from "../components/ui/LanguageSwitcher";
 import { useLanguage } from "../context/LanguageProvider";
 import { useTranslation } from "react-i18next";
+import { UserAuth } from "../context/AuthProvider";
 
 function Dashboard() {
   // states
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("orderHistory");
-  const [userInfo, setUserInfo] = useState("");
+  const { userInfo } = UserAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   const { cartItems } = useCart();
   const { language } = useLanguage();
-  async function getData() {
-    try {
-      const { data } = await supabase.from("usersInfo").select("*");
-      setUserInfo(data[0]);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   useEffect(() => {
     if (activeSection) {
@@ -38,10 +29,6 @@ function Dashboard() {
       return () => clearTimeout(timer);
     }
   }, [activeSection]);
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <>
@@ -110,6 +97,7 @@ function Sidebar({
 }) {
   const { t } = useTranslation("dashboard");
   const { language } = useLanguage();
+  const { signOut } = UserAuth();
   return (
     <div
       className={`h-screen bg-white fixed grid grid-cols-1 w-3xs col-span-2 px-4 justify-items-center items-center text-center pt-10 content-start gap-4 z-20 transition-all duration-500 ${
@@ -175,6 +163,15 @@ function Sidebar({
         >
           <h4>{t("sidebar.orderHistory")}</h4>
         </span>
+        <Link
+          to={"/"}
+          className={`sidebar-item  hover:text-blue-500  ${
+            language === "en" ? "text-left" : "text-right"
+          }`}
+          onClick={signOut}
+        >
+          <h4>{t("sidebar.signOut")}</h4>
+        </Link>
       </div>
     </div>
   );

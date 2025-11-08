@@ -4,7 +4,8 @@
     "userInfo": "اطلاعات کاربر",
     "paymentInfo": "اطلاعات مالی",
     "cart": "سفارشات",
-    "orderHistory": "فاکتورها"
+    "orderHistory": "فاکتورها",
+    "signOut": "خروج از حساب"
   },
   "formEdit": {
     "formEditErrors": {

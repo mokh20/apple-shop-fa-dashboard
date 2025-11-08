@@ -7,15 +7,18 @@ import { LanguageProvider } from "./context/LanguageProvider.jsx";
 import "./components/i18n.js";
 import "./main.css";
 import { router } from "./routes/router.jsx";
+import { AuthProvider } from "./context/AuthProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <LanguageProvider>
-      <ProductsProvider>
-        <CartProvider>
-          <RouterProvider router={router} />
-        </CartProvider>
-      </ProductsProvider>
-    </LanguageProvider>
+    <AuthProvider>
+      <LanguageProvider>
+        <ProductsProvider>
+          <CartProvider>
+            <RouterProvider router={router} />
+          </CartProvider>
+        </ProductsProvider>
+      </LanguageProvider>
+    </AuthProvider>
   </StrictMode>
 );

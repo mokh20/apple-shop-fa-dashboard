@@ -4,7 +4,8 @@
     "userInfo": "User Info",
     "paymentInfo": "Payment Info",
     "cart": "Cart",
-    "orderHistory": "Order History"
+    "orderHistory": "Order History",
+    "signOut": "Sign Out"
   },
   "formEdit": {
     "formEditErrors": {

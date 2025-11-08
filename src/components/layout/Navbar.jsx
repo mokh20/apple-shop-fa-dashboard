@@ -9,6 +9,7 @@ import LanguageSwitcher from "../ui/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../context/LanguageProvider";
 import toPersianDigits from "../../utils/toPersianDigits";
+import { UserAuth } from "../../context/AuthProvider";
 
 function Navbar({ showCart, setShowCart }) {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -16,6 +17,7 @@ function Navbar({ showCart, setShowCart }) {
   const { cartItems } = useCart();
   const { t } = useTranslation();
   const { language } = useLanguage();
+  const { userInfo } = UserAuth();
   // return object
   const navbarItems = t("navbar", { returnObjects: true });
   return (
@@ -63,14 +65,16 @@ function Navbar({ showCart, setShowCart }) {
           }`}
           onClick={() => setShowCart(false)}
         ></div>
-        <i
-          className="fi fi-sr-user cursor-pointer"
-          onMouseEnter={() => {
-            setShowCart(false);
-            setIsLoginOpen(true);
-          }}
-          onMouseLeave={() => setIsLoginOpen(false)}
-        ></i>
+        <Link to={userInfo.length === 0 && "/signUp"}>
+          <i
+            className="fi fi-sr-user cursor-pointer"
+            onMouseEnter={() => {
+              setShowCart(false);
+              setIsLoginOpen(true);
+            }}
+            onMouseLeave={() => setIsLoginOpen(false)}
+          ></i>
+        </Link>
         <div className="block md:hidden" onClick={() => setIsMenuOpen(true)}>
           <i className="fi fi-rr-menu-burger"></i>
         </div>
