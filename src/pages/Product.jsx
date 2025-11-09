@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useProducts } from "../context/ProductsProvider";
 import Slider from "../components/ui/Slider";
 import { useCart } from "../context/CartProvider";
@@ -12,8 +12,6 @@ function Product() {
   const { products } = useProducts();
   const filteredProduct = products.find((data) => data.id == id);
   const { language } = useLanguage();
-  const location = useLocation();
-  console.log(location.pathname);
   //  states
   const [message, setMessage] = useState("");
   // popup message status
@@ -46,8 +44,8 @@ function Product() {
 
 function ProductDetail({ product, setMessage, language }) {
   const { addToCart, cartItems } = useCart();
-  const isInCart = cartItems.some((item) => item.id === product.id);
-
+  const isInCart =
+    cartItems && cartItems.some((item) => item.product_id === product.id);
   return (
     <section className="grid justify-center m-4">
       <div className="border-b-2 border-b-gray-200 flex md:border-none justify-center lg:gap-12">

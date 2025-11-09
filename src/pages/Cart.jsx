@@ -4,18 +4,21 @@ import { supabase } from "../lib/supabaseClient";
 import { useLanguage } from "../context/LanguageProvider";
 import { useTranslation } from "react-i18next";
 import toPersianDigits from "../utils/toPersianDigits";
+import { UserAuth } from "../context/AuthProvider";
 
 function Cart({ thumbnailSize }) {
   const { deleteItem, cartItems, setCartItems } = useCart();
   const { language } = useLanguage();
   const { t } = useTranslation();
+  const { userData } = UserAuth();
   // count total price cart
-  const totalPrice = cartItems.length
-    ? cartItems.reduce(
-        (sum, product) => sum + product.quantity * product.price,
-        0
-      )
-    : 0;
+  const totalPrice =
+    cartItems && cartItems.length
+      ? cartItems.reduce(
+          (sum, product) => sum + product.quantity * product.price,
+          0
+        )
+      : 0;
   // title of table
   const titleName = [
     { key: "row", className: "w-1/12" },
@@ -29,15 +32,18 @@ function Cart({ thumbnailSize }) {
   async function handleQuantity(e, id) {
     const quantity = Number(e.target.value);
     setCartItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+      prev.map((item) =>
+        item.product_id === id ? { ...item, quantity } : item
+      )
     );
-    const { data } = await supabase
+    await supabase
       .from("cart")
       .update({ quantity: quantity })
-      .eq("id", id)
+      .eq("user_id", userData.id)
+      .eq("product_id", id)
       .select();
-    console.log(data);
   }
+  console.log(cartItems);
   return (
     <table
       dir={language === "en" ? "ltr" : "rtl"}
@@ -57,7 +63,7 @@ function Cart({ thumbnailSize }) {
       </thead>
 
       <tbody className="text-center">
-        {!cartItems.length ? (
+        {cartItems && !cartItems.length ? (
           <tr>
             <td
               colSpan={titleName.length}
@@ -72,61 +78,62 @@ function Cart({ thumbnailSize }) {
           </tr>
         ) : (
           <>
-            {cartItems.map((data, index) => (
-              <tr key={data.id} className="border-b">
-                <td>
-                  {language === "en" ? index + 1 : toPersianDigits(index + 1)}
-                </td>
-                <td className="sm:p-4">
-                  <img
-                    src={data.img}
-                    alt={data.title}
-                    className={`${
-                      thumbnailSize ? "w-12 sm:w-16" : "w-40"
-                    } mx-auto`}
-                    loading="lazy"
-                  />
-                </td>
-                <td className="p-4">
-                  <Link
-                    to={`/products/${data.id}`}
-                    className="hover:underline hover:text-blue-700"
-                  >
+            {cartItems &&
+              cartItems.map((data, index) => (
+                <tr key={data.product_id} className="border-b">
+                  <td>
+                    {language === "en" ? index + 1 : toPersianDigits(index + 1)}
+                  </td>
+                  <td className="sm:p-4">
+                    <img
+                      src={data.img}
+                      alt={data.title}
+                      className={`${
+                        thumbnailSize ? "w-12 sm:w-16" : "w-40"
+                      } mx-auto`}
+                      loading="lazy"
+                    />
+                  </td>
+                  <td className="p-4">
+                    <Link
+                      to={`/products/${data.product_id}`}
+                      className="hover:underline hover:text-blue-700"
+                    >
+                      {language === "en"
+                        ? data.name
+                        : toPersianDigits(data.name_fa)}
+                    </Link>
+                  </td>
+                  <td className="p-4">
+                    <select
+                      value={data.quantity}
+                      onChange={(e) => handleQuantity(e, data.product_id)}
+                      className="outline-0"
+                    >
+                      {[1, 2, 3, 4, 5].map((num) => (
+                        <option key={num} value={num}>
+                          {language === "en" ? num : toPersianDigits(num)}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td className="p-4 font-medium">
                     {language === "en"
-                      ? data.name
-                      : toPersianDigits(data.name_fa)}
-                  </Link>
-                </td>
-                <td className="p-4">
-                  <select
-                    value={data.quantity}
-                    onChange={(e) => handleQuantity(e, data.id)}
-                    className="outline-0"
-                  >
-                    {[1, 2, 3, 4, 5].map((num) => (
-                      <option key={num} value={num}>
-                        {language === "en" ? num : toPersianDigits(num)}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td className="p-4 font-medium">
-                  {language === "en"
-                    ? `$${data.price?.toFixed(2)}`
-                    : `${toPersianDigits(
-                        (data.price * 100000).toLocaleString()
-                      )} تومان`}
-                </td>
-                <td className="p-4">
-                  <p
-                    className="text-blue-500 cursor-pointer text-center"
-                    onClick={() => deleteItem(data.id)}
-                  >
-                    <i className="fi fi-rr-trash text-lg"></i>
-                  </p>
-                </td>
-              </tr>
-            ))}
+                      ? `$${data.price?.toFixed(2)}`
+                      : `${toPersianDigits(
+                          (data.price * 100000).toLocaleString()
+                        )} تومان`}
+                  </td>
+                  <td className="p-4">
+                    <p
+                      className="text-blue-500 cursor-pointer text-center"
+                      onClick={() => deleteItem(data.product_id)}
+                    >
+                      <i className="fi fi-rr-trash text-lg"></i>
+                    </p>
+                  </td>
+                </tr>
+              ))}
             <tr>
               <td
                 colSpan={titleName.length}

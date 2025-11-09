@@ -17,7 +17,7 @@ function Navbar({ showCart, setShowCart }) {
   const { cartItems } = useCart();
   const { t } = useTranslation();
   const { language } = useLanguage();
-  const { userInfo } = UserAuth();
+  const { userData } = UserAuth();
   // return object
   const navbarItems = t("navbar", { returnObjects: true });
   return (
@@ -49,23 +49,25 @@ function Navbar({ showCart, setShowCart }) {
       </div>
       <div className="flex gap-6 mx-4 sm:text-xl md:text-lg lg:text-2xl lg:mr-12">
         <i className="fi fi-rr-search"></i>
+        {/* <Link to={cartItems?.length ?? 0 && "/cart"}> */}
         <i
           className="fi fi-rr-basket-shopping-simple relative cursor-pointer"
           onClick={() => setShowCart((prev) => !prev)}
         >
           <span className="absolute flex items-center justify-center top-2 left-2 h-4 w-4 text-[10px] bg-black text-white text-center font-medium rounded-full md:text-sm md:w-5 md:h-5 md:left-3 md:top-4">
             {language === "en"
-              ? cartItems.length
-              : toPersianDigits(cartItems.length)}
+              ? cartItems?.length ?? 0
+              : toPersianDigits(cartItems?.length ?? 0)}
           </span>
         </i>
+        {/* </Link> */}
         <div
           className={`fixed inset-0 bg-[#0000002c] top-32 ${
             showCart ? "visible" : "invisible"
           }`}
           onClick={() => setShowCart(false)}
         ></div>
-        <Link to={userInfo.length === 0 && "/signUp"}>
+        <Link to={userData && userData.length === 0 && "/signUp"}>
           <i
             className="fi fi-sr-user cursor-pointer"
             onMouseEnter={() => {

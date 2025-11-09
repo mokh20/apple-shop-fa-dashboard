@@ -18,9 +18,9 @@ function MiniCartHandler({ showCart, setShowCart }) {
   return (
     <div
       className={`w-full min-h-[400px] absolute bg-[#F9F9FC] transition-all z-10 ${
-        showCart & (cartItems.length >= 3)
+        showCart & (cartItems?.length >= 3)
           ? "translate-y-72"
-          : showCart & (cartItems.length < 3)
+          : showCart & (cartItems?.length < 3)
           ? "translate-y-56"
           : "invisible translate-y-0"
       }`}
@@ -35,11 +35,11 @@ function MiniCartHandler({ showCart, setShowCart }) {
             </button>
           </Link>
         </div>
-        {!cartItems.length ? (
+        {!cartItems?.length ? (
           <p className="md:text-xl">{t("miniCart.emptyBag")}</p>
         ) : (
           cartItems.slice(0, 3).map((data) => (
-            <Link to={`/products/${data.id}`} key={data.id}>
+            <Link to={`/products/${data.product_id}`} key={data.product_id}>
               <div className="flex items-center gap-4">
                 <img src={data.img} alt="" className="w-24" loading="lazy" />
                 <p className="text-xs sm:text-sm md:text-base hover:underline hover:text-blue-700">
@@ -51,12 +51,12 @@ function MiniCartHandler({ showCart, setShowCart }) {
             </Link>
           ))
         )}
-        {cartItems.length > 3 && (
+        {cartItems?.length > 3 && (
           <p className="text-gray-500 mt-4">
             +{" "}
             {language === "en"
-              ? cartItems.length - 3
-              : toPersianDigits(cartItems.length - 3)}{" "}
+              ? cartItems?.length - 3
+              : toPersianDigits(cartItems?.length - 3)}{" "}
             {t("miniCart.quantityInfo")}
           </p>
         )}

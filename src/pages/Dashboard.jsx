@@ -14,7 +14,7 @@ function Dashboard() {
   // states
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("orderHistory");
-  const { userInfo } = UserAuth();
+  const { userData } = UserAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   const { cartItems } = useCart();
@@ -44,7 +44,7 @@ function Dashboard() {
         />
         <section className="flex flex-col col-span-12 lg:col-span-10">
           <Navbar
-            userInfo={userInfo}
+            userData={userData}
             cartItems={cartItems}
             setActiveSection={setActiveSection}
             setIsMenuOpen={setIsMenuOpen}
@@ -68,14 +68,14 @@ function Dashboard() {
               <>
                 {activeSection === "form" && (
                   <FormEdit
-                    userInfo={userInfo}
+                    userData={userData}
                     setActiveSection={setActiveSection}
                   />
                 )}
                 {activeSection === "paymentInfo" && (
                   <PaymentInfo
                     setActiveSection={setActiveSection}
-                    userInfo={userInfo}
+                    userData={userData}
                   />
                 )}
                 {activeSection === "cart" && <Cart thumbnailSize />}
@@ -177,13 +177,13 @@ function Sidebar({
   );
 }
 
-function Navbar({ userInfo, setIsMenuOpen }) {
+function Navbar({ userData, setIsMenuOpen }) {
   const { language } = useLanguage();
   return (
     <nav className="flex col-span-full flex-row-reverse justify-between items-center px-2 py-6 text-sm font-medium bg-white sm:p-6 sm:text-xl md:text-2xl md:p-8 ">
       <div className="flex gap-2 md:gap-4">
         <LanguageSwitcher />
-        <img src={userInfo.profilePic} className="w-10" loading="lazy"></img>
+        <img src={userData.profilePic} className="w-10" loading="lazy"></img>
       </div>
       <div className="flex gap-8 items-center">
         <i
@@ -191,14 +191,14 @@ function Navbar({ userInfo, setIsMenuOpen }) {
           onClick={() => setIsMenuOpen(true)}
         ></i>
         <h2>
-          {language === "en" ? "Welcome" : "سلام"} , {userInfo.userName}
+          {language === "en" ? "Welcome" : "سلام"} , {userData.userName}
         </h2>
       </div>
     </nav>
   );
 }
 
-function FormEdit({ userInfo, setActiveSection }) {
+function FormEdit({ userData, setActiveSection }) {
   const [newErrorValid, setNewErrorValid] = useState({});
 
   // translate
@@ -319,12 +319,12 @@ function FormEdit({ userInfo, setActiveSection }) {
       email: value.emailuser,
       profilePic: `/imgs/${value.uploadImg}`,
     };
-    const newUserInfo = { ...userInfo, ...updatedField };
+    const newUserData = { ...userData, ...updatedField };
     try {
       await supabase
         .from("usersInfo")
-        .update(newUserInfo)
-        .eq("id", userInfo.id);
+        .update(newUserData)
+        .eq("id", userData.id);
     } catch (error) {
       throw new Error(error);
     }
@@ -344,7 +344,7 @@ function FormEdit({ userInfo, setActiveSection }) {
               type="text"
               id="nameuser"
               name="nameuser"
-              defaultValue={userInfo.userName}
+              defaultValue={userData.userName}
               readOnly
               className="input-edit-form text-right"
             />
@@ -437,7 +437,7 @@ function FormEdit({ userInfo, setActiveSection }) {
   );
 }
 
-function PaymentInfo({ setActiveSection, userInfo }) {
+function PaymentInfo({ setActiveSection, userData }) {
   const [value, setValue] = useState("");
   const formRef = useRef(null);
   const { t } = useTranslation("dashboard");
@@ -455,12 +455,12 @@ function PaymentInfo({ setActiveSection, userInfo }) {
       bankName: value.bankName,
       IBAN: value.IBAN,
     };
-    const newUserInfo = { ...userInfo, ...updatedField };
+    const newUserData = { ...userData, ...updatedField };
     try {
       await supabase
         .from("usersInfo")
-        .update(newUserInfo)
-        .eq("id", userInfo.id);
+        .update(newUserData)
+        .eq("id", userData.id);
     } catch (error) {
       throw new Error(error);
     }

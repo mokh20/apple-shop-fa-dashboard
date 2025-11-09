@@ -4,7 +4,19 @@ import { supabase } from "../lib/supabaseClient";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [userInfo, setUserInfo] = useState([]);
+  const storedUser = localStorage.getItem("userData");
+
+  const [userData, setUserData] = useState(
+    storedUser ? JSON.parse(storedUser) : []
+  );
+  const getSessionId = () => {
+    let sessionId = localStorage.getItem("session_id");
+    if (!sessionId) {
+      sessionId = crypto.randomUUID(); // generates unique ID
+      localStorage.setItem("session_id", sessionId);
+    }
+    return sessionId;
+  };
   // Sign Up New User
   async function signUp({ userName, email, password }) {
     try {
@@ -17,7 +29,11 @@ export function AuthProvider({ children }) {
         .from("usersInfo")
         .insert([newUser])
         .select("*");
-      setUserInfo((prev) => [...prev, ...data]);
+
+      userData && userData.length > 0
+        ? setUserData((prev) => [...prev, ...(data ?? [])])
+        : setUserData([...data]);
+      transferCartToUser(data.id);
       await signIn(email, password);
       if (error) {
         return { success: false, error };
@@ -40,26 +56,40 @@ export function AuthProvider({ children }) {
       if (!data) {
         return { success: false, error: error };
       }
-      localStorage.setItem("user", JSON.stringify(data));
-      setUserInfo(data);
+      const { password: _discardPassword, ...localData } = data;
+      localStorage.setItem("userData", JSON.stringify(localData));
+      setUserData(data);
+      transferCartToUser(data.id);
       return { success: true };
     } catch (error) {
       console.error("an error occurred: ", error);
     }
   }
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("userData");
     if (storedUser) {
-      setUserInfo(JSON.parse(storedUser));
+      setUserData(JSON.parse(storedUser));
     }
   }, []);
   //   Sign out
   const signOut = () => {
-    localStorage.removeItem("user");
-    setUserInfo("");
+    localStorage.removeItem("userData");
+    setUserData("");
+    window.location.reload();
   };
+  // transfer cart from guest to user
+  async function transferCartToUser(userId) {
+    const sessionId = getSessionId();
+    // transfer rows
+    const { error } = await supabase
+      .from("cart")
+      .update({ user_id: userId, session_id: null })
+      .eq("session_id", sessionId);
+
+    if (error) console.error("Cart transfer error:", error);
+  }
   return (
-    <AuthContext.Provider value={{ signUp, signIn, signOut, userInfo }}>
+    <AuthContext.Provider value={{ signUp, signIn, signOut, userData }}>
       {children}
     </AuthContext.Provider>
   );
