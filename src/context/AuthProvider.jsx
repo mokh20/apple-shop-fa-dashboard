@@ -1,9 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  const { t } = useTranslation("auth");
   const storedUser = localStorage.getItem("userData");
 
   const [userData, setUserData] = useState(
@@ -18,29 +21,51 @@ export function AuthProvider({ children }) {
     return sessionId;
   };
   // Sign Up New User
-  async function signUp({ userName, email, password }) {
-    try {
-      const newUser = {
-        userName: userName,
-        email: String(email),
-        password: String(password),
-      };
-      const { data, error } = await supabase
-        .from("usersInfo")
-        .insert([newUser])
-        .select("*");
+  async function signUp({
+    userName,
+    email,
+    password,
+    setUserName,
+    setEmail,
+    setPassword,
+  }) {
+    const { data } = await supabase.from("usersInfo").select("*");
+    const emailInUse = data.find((data) => data.email === email);
+    const userInUse = data.find((data) => data.userName === userName);
+    // error toast auth
+    console.log(userInUse);
+    userInUse && toast.error(t("errors.userNameInUse"));
+    emailInUse && toast.error(t("errors.emailInUse"));
+    password.length < 6 && toast.error(t("errors.passwordInUse"));
+    // clear input in auth
+    if (userInUse || emailInUse || password.length < 6) {
+      setUserName("");
+      setEmail("");
+      setPassword("");
+    } else {
+      try {
+        const newUser = {
+          userName: userName,
+          email: String(email),
+          password: String(password),
+        };
+        const { data, error } = await supabase
+          .from("usersInfo")
+          .insert([newUser])
+          .select("*");
 
-      userData && userData.length > 0
-        ? setUserData((prev) => [...prev, ...(data ?? [])])
-        : setUserData([...data]);
-      transferCartToUser(data.id);
-      await signIn(email, password);
-      if (error) {
-        return { success: false, error };
+        userData && userData.length > 0
+          ? setUserData((prev) => [...prev, ...(data ?? [])])
+          : setUserData([...data]);
+        transferCartToUser(data.id);
+        await signIn(email, password);
+        if (error) {
+          return { success: false, error };
+        }
+        return { success: true, data };
+      } catch (error) {
+        throw new Error(error);
       }
-      return { success: true, data };
-    } catch (error) {
-      throw new Error(error);
     }
   }
 

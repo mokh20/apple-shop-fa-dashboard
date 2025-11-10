@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useCart } from "../context/CartProvider";
 import { useEffect, useRef, useState } from "react";
 import Cart from "./Cart";
@@ -14,11 +14,18 @@ function Dashboard() {
   // states
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("orderHistory");
-  const { userData } = UserAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   const { cartItems } = useCart();
   const { language } = useLanguage();
+  const { userData } = UserAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userData || userData.length === 0) {
+      navigate("/");
+    }
+  }, [userData, navigate]);
 
   useEffect(() => {
     if (activeSection) {

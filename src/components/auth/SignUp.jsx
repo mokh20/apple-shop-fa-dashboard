@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import toPersianDigits from "../../utils/toPersianDigits";
 import { Link, useNavigate } from "react-router";
 import { UserAuth } from "../../context/AuthProvider";
+import { ToastContainer } from "react-toastify";
 
 function SignUp() {
   const { t } = useTranslation("auth");
@@ -87,13 +88,20 @@ function FormData() {
     if (loading) return;
     setLoading(true);
     try {
-      const result = await signUp({ userName, email, password });
+      const result = await signUp({
+        userName,
+        email,
+        password,
+        setUserName,
+        setEmail,
+        setPassword,
+      });
       if (result.success) {
         navigate("/dashboard");
       }
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      setLoading(false);
       setNewErrorValid({
         email: "Invalid email",
         password: "Password must be at least 6 characters",
@@ -106,6 +114,19 @@ function FormData() {
         language === "en" ? "text-left" : "text-right"
       }`}
     >
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={language === "fa" && true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+
       <form className="grid justify-center gap-4" onSubmit={handleSignUp}>
         {/* userName */}
         <div className="relative">

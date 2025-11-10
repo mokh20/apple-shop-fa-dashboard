@@ -11,14 +11,14 @@ import { AuthProvider } from "./context/AuthProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <LanguageProvider>
+    <LanguageProvider>
+      <AuthProvider>
         <ProductsProvider>
           <CartProvider>
             <RouterProvider router={router} />
           </CartProvider>
         </ProductsProvider>
-      </LanguageProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </LanguageProvider>
   </StrictMode>
 );
