@@ -5,7 +5,9 @@
     "password": "Your password must contain between 6 and 12 characters.",
     "emailInUse": "This email is already registered.",
     "userNameInUse": "This username is already taken.",
-    "passwordInUse": "Password must be at least 6 characters."
+    "userNameEmpty": "Username cannot be empty.",
+    "passwordInUse": "Password must be at least 6 characters.",
+    "wrongInfo": "Incorrect email or password."
   },
   "signIn": "Sign In",
   "signUp": "Sign Up",

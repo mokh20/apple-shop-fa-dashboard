@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard";
 import SignIn from "../components/auth/SignIn";
 import SignUp from "../components/auth/SignUp";
 import Home from "../pages/Home";
+import RequireAuth from "./RequireAuth";
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +17,14 @@ export const router = createBrowserRouter([
       { path: "products", element: <Navigate to="1" replace /> },
       { path: "products/:id", element: <Product /> },
       { path: "cart", element: <Cart /> },
-      { path: "dashboard", element: <Dashboard /> },
+      {
+        path: "dashboard",
+        element: (
+          <RequireAuth>
+            <Dashboard />
+          </RequireAuth>
+        ),
+      },
       { path: "signup", element: <SignUp /> },
       { path: "signin", element: <SignIn /> },
     ],

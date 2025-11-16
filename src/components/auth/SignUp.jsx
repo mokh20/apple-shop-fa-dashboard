@@ -4,14 +4,14 @@ import { useTranslation } from "react-i18next";
 import toPersianDigits from "../../utils/toPersianDigits";
 import { Link, useNavigate } from "react-router";
 import { UserAuth } from "../../context/AuthProvider";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 function SignUp() {
   const { t } = useTranslation("auth");
   const { language } = useLanguage();
   return (
     <div className="grid justify-center items-center gap-4 my-8">
-      <h2 className="text-lg font-medium" dir={language === "fa" && "rtl"}>
+      <h2 className="text-lg font-medium" dir={language === "fa" ? "rtl" : ""}>
         {t("signUp")}
       </h2>
       <FormData />
@@ -30,8 +30,9 @@ function FormData() {
   const navigate = useNavigate();
 
   const [newErrorValid, setNewErrorValid] = useState({
-    email: "",
-    password: "",
+    userName: false,
+    email: false,
+    password: false,
   });
 
   // validation email
@@ -41,21 +42,34 @@ function FormData() {
 
   function handleInput(e, input) {
     const value = e.target.value;
+    // Check userName
     if (input === "userName") {
       setUserName(value);
+      if (value.length === 0) {
+        setNewErrorValid((prev) => ({
+          ...prev,
+          userName: true,
+        }));
+      } else {
+        setNewErrorValid((prev) => ({
+          ...prev,
+          userName: false,
+        }));
+      }
     }
+
     // Check email
     if (input === "email") {
       setEmail(value);
       if (!isValidEmail(value)) {
         setNewErrorValid((prev) => ({
           ...prev,
-          email: "Invalid email",
+          email: true,
         }));
       } else {
         setNewErrorValid((prev) => ({
           ...prev,
-          email: "",
+          email: false,
         }));
       }
     }
@@ -65,12 +79,12 @@ function FormData() {
       if (value.length < 6) {
         setNewErrorValid((prev) => ({
           ...prev,
-          password: "Password must be at least 6 characters",
+          password: true,
         }));
       } else {
         setNewErrorValid((prev) => ({
           ...prev,
-          password: "",
+          password: false,
         }));
       }
     }
@@ -103,8 +117,9 @@ function FormData() {
     } catch (error) {
       setLoading(false);
       setNewErrorValid({
-        email: "Invalid email",
-        password: "Password must be at least 6 characters",
+        userName: true,
+        email: true,
+        password: true,
       });
     }
   }
@@ -155,7 +170,7 @@ function FormData() {
               className="text-red-500 text-sm pb-2 pt-1"
               dir={language === "fa" && "rtl"}
             >
-              {t("errors.userName")}
+              {t("errors.userNameEmpty")}
             </p>
           )}
         </div>

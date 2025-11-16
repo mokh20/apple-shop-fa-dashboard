@@ -33,7 +33,6 @@ export function AuthProvider({ children }) {
     const emailInUse = data.find((data) => data.email === email);
     const userInUse = data.find((data) => data.userName === userName);
     // error toast auth
-    console.log(userInUse);
     userInUse && toast.error(t("errors.userNameInUse"));
     emailInUse && toast.error(t("errors.emailInUse"));
     password.length < 6 && toast.error(t("errors.passwordInUse"));

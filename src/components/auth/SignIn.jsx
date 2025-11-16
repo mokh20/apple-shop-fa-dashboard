@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import toPersianDigits from "../../utils/toPersianDigits";
 import { Link, useNavigate } from "react-router";
 import { UserAuth } from "../../context/AuthProvider";
+import { toast, ToastContainer } from "react-toastify";
 
 function SignIn() {
   const { t } = useTranslation("auth");
@@ -22,8 +23,8 @@ function FormData() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newErrorValid, setNewErrorValid] = useState({
-    email: "",
-    password: "",
+    email: false,
+    password: false,
   });
 
   const { language } = useLanguage();
@@ -46,12 +47,12 @@ function FormData() {
       if (!isValidEmail(value) && !isValidIranianPhone(value)) {
         setNewErrorValid((prev) => ({
           ...prev,
-          email: "Invalid email or phone number",
+          email: true,
         }));
       } else {
         setNewErrorValid((prev) => ({
           ...prev,
-          email: "",
+          email: false,
         }));
       }
     }
@@ -61,12 +62,12 @@ function FormData() {
       if (value.length < 6) {
         setNewErrorValid((prev) => ({
           ...prev,
-          password: "Password must be at least 6 characters",
+          password: true,
         }));
       } else {
         setNewErrorValid((prev) => ({
           ...prev,
-          password: "",
+          password: false,
         }));
       }
     }
@@ -88,14 +89,19 @@ function FormData() {
       } else {
         setEmail("");
         setPassword("");
+        setNewErrorValid({
+          email: true,
+          password: true,
+        });
+        toast.error(t("errors.wrongInfo"));
       }
     } catch (error) {
       console.log(error);
       setEmail("");
       setPassword("");
       setNewErrorValid({
-        email: "Invalid email",
-        password: "Password must be at least 6 characters",
+        email: true,
+        password: true,
       });
     }
   }
@@ -105,6 +111,18 @@ function FormData() {
         language === "en" ? "text-left" : "text-right"
       }`}
     >
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={language === "fa" && true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <form className="grid justify-center gap-4" onSubmit={handleSubmit}>
         {/* email */}
         <div className="relative">
